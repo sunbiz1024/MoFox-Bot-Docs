@@ -1,146 +1,52 @@
-# 🚀 快速开始指南
+# 🚀 快速开始：创建你的第一个全功能插件
 
-本指南将带你从零开始创建一个功能完整的MoFox_Bot插件。
+欢迎来到 MoFox_Bot 插件开发的世界！本指南将带你从零开始，创建一个包含 **Action**、**Command**、**Tool** 和 **Event Handler** 四大核心组件的 `hello_world` 插件。
 
-## 📖 概述
+通过这个过程，你将掌握插件系统的基本结构和开发流程。
 
-这个指南将带你快速创建你的第一个MoFox_Bot插件。我们将创建一个简单的问候插件，展示插件系统的基本概念。
+## 📂 步骤一：创建插件基础结构
 
-以下代码都在我们的`plugins/hello_world_plugin/`目录下。
-
-### 一个方便的小设计
-
-在开发中，我们在`__init__.py`中定义了一个`__all__`变量，包含了所有需要导出的类和函数。
-这样在其他地方导入时，可以直接使用 `from src.plugin_system import *` 来导入所有插件相关的类和函数。
-或者你可以直接使用 `from src.plugin_system import BasePlugin, register_plugin, ComponentInfo` 之类的方式来导入你需要的部分。
-
-### 📂 准备工作
-
-确保你已经：
-
-1. 克隆了MoFox_Bot项目
-2. 安装了Python依赖
-3. 了解基本的Python语法
-
-## 🏗️ 创建插件
+首先，我们需要为插件创建一个家。
 
 ### 1. 创建插件目录
 
-在项目根目录的 `plugins/` 文件夹下创建你的插件目录
+在项目根目录的 `plugins/` 文件夹下，创建一个新的目录，命名为 `hello_world_plugin`。
 
-这里我们创建一个名为 `hello_world_plugin` 的目录
+### 2. 创建清单文件 `_manifest.json`
 
-### 2. 创建`_manifest.json`文件
-
-在插件目录下面创建一个 `_manifest.json` 文件，内容如下：
+每个插件都需要一个清单文件来描述它的基本信息。在 `hello_world_plugin` 目录下创建 `_manifest.json` 文件，并填入以下内容：
 
 ```json
 {
   "manifest_version": 1,
   "name": "Hello World 插件",
-  "version": "1.0.0",
-  "description": "一个简单的 Hello World 插件",
+  "version": "1.0.1",
+  "description": "一个包含四大核心组件的入门示例插件。",
   "author": {
     "name": "你的名字"
   }
 }
 ```
 
-有关 `_manifest.json` 的详细说明，请参考 [Manifest文件指南](./manifest-guide.md)。
+这个文件告诉 MoFox_Bot 你的插件叫什么、版本号以及它的功能。
 
-### 3. 创建最简单的插件
+### 3. 创建主文件 `plugin.py`
 
-让我们从最基础的开始！创建 `plugin.py` 文件：
-
-```python
-from typing import List, Tuple, Type
-from src.plugin_system import BasePlugin, register_plugin, ComponentInfo
-
-@register_plugin # 注册插件
-class HelloWorldPlugin(BasePlugin):
-    """Hello World插件 - 你的第一个MoFox_Bot插件"""
-
-    # 以下是插件基本信息和方法（必须填写）
-    plugin_name = "hello_world_plugin"
-    enable_plugin = True  # 启用插件
-    dependencies = []  # 插件依赖列表（目前为空）
-    python_dependencies = []  # Python依赖列表（目前为空）
-    config_file_name = "config.toml"  # 配置文件名
-    config_schema = {}  # 配置文件模式（目前为空）
-
-    def get_plugin_components(self) -> List[Tuple[ComponentInfo, Type]]: # 获取插件组件
-        """返回插件包含的组件列表（目前是空的）"""
-        return []
-```
-
-🎉 恭喜！你刚刚创建了一个最简单但完整的MoFox_Bot插件！
-
-**解释一下这些代码：**
-
-- 首先，我们在`plugin.py`中定义了一个HelloWorldPlugin插件类，继承自 `BasePlugin` ，提供基本功能。
-- 通过给类加上，`@register_plugin` 装饰器，我们告诉系统"这是一个插件"
-- `plugin_name` 等是插件的基本信息，必须填写
-- `get_plugin_components()` 返回插件的功能组件，现在我们没有定义任何 Action, Command 或者 EventHandler，所以返回空列表。
-
-### 4. 测试基础插件
-
-现在就可以测试这个插件了！启动MoFox_Bot：
-
-直接通过启动器运行MoFox_Bot或者 `python bot.py`
-
-在日志中你应该能看到插件被加载的信息。虽然插件还没有任何功能，但它已经成功运行了！
-
-![1750326700269](../assets/1750326700269.png)
-
-### 5. 添加第一个功能：问候Action
-
-现在我们要给插件加入一个有用的功能，我们从最好玩的Action做起
-
-Action是一类可以让MoFox_Bot根据自身意愿选择使用的“动作”，在MoFox_Bot中，不论是“回复”还是“不回复”，或者“发送表情”以及“禁言”等等，都是通过Action实现的。
-
-你可以通过编写动作，来拓展MoFox_Bot的能力，包括发送语音，截图，甚至操作文件，编写代码......
-
-现在让我们给插件添加第一个简单的功能。这个Action可以对用户发送一句问候语。
-
-在 `plugin.py` 文件中添加Action组件，完整代码如下：
+这是插件的灵魂所在。在 `hello_world_plugin` 目录下创建 `plugin.py` 文件。我们先写一个最基础的框架：
 
 ```python
 from typing import List, Tuple, Type
 from src.plugin_system import (
-    BasePlugin, register_plugin, BaseAction, 
-    ComponentInfo, ActionActivationType, ChatMode
+    BasePlugin, 
+    register_plugin, 
+    ComponentInfo
 )
 
-# ===== Action组件 =====
-
-class HelloAction(BaseAction):
-    """问候Action - 简单的问候动作"""
-
-    # === 基本信息（必须填写）===
-    action_name = "hello_greeting"
-    action_description = "向用户发送问候消息"
-    activation_type = ActionActivationType.ALWAYS  # 始终激活
-
-    # === 功能描述（必须填写）===
-    action_parameters = {"greeting_message": "要发送的问候消息"}
-    action_require = ["需要发送友好问候时使用", "当有人向你问好时使用", "当你遇见没有见过的人时使用"]
-    associated_types = ["text"]
-
-    async def execute(self) -> Tuple[bool, str]:
-        """执行问候动作 - 这是核心功能"""
-        # 发送问候消息
-        greeting_message = self.action_data.get("greeting_message", "")
-        base_message = self.get_config("greeting.message", "嗨！很开心见到你！😊")
-        message = base_message + greeting_message
-        await self.send_text(message)
-
-        return True, "发送了问候消息"
-
 @register_plugin
 class HelloWorldPlugin(BasePlugin):
-    """Hello World插件 - 你的第一个MoFox_Bot插件"""
+    """一个包含四大核心组件的入门示例插件。"""
 
-    # 插件基本信息
+    # --- 插件基础信息 ---
     plugin_name = "hello_world_plugin"
     enable_plugin = True
     dependencies = []
@@ -149,275 +55,344 @@ class HelloWorldPlugin(BasePlugin):
     config_schema = {}
 
     def get_plugin_components(self) -> List[Tuple[ComponentInfo, Type]]:
-        """返回插件包含的组件列表"""
-        return [
-            # 添加我们的问候Action
-            (HelloAction.get_action_info(), HelloAction),
-        ]
-```
-
-**解释一下这些代码：**
-
-- `HelloAction` 是我们定义的问候动作类，继承自 `BaseAction`，并实现了核心功能。
-- 在 `HelloWorldPlugin` 中，我们通过 `get_plugin_components()` 方法，通过调用`get_action_info()`这个内置方法将 `HelloAction` 注册为插件的一个组件。
-- 这样一来，当插件被加载时，问候动作也会被一并加载，并可以在MoFox_Bot中使用。
-- `execute()` 函数是Action的核心，定义了当Action被MoFox_Bot选择后，具体要做什么
-- `self.send_text()` 是发送文本消息的便捷方法
-
-Action 组件中有关`activation_type`、`action_parameters`、`action_require`、`associated_types` 等的详细说明请参考 [Action组件指南](./action-components.md)。
-
-### 6. 测试问候Action
-
-重启MoFox_Bot，然后在聊天中发送任意消息，比如：
+        """注册插件的所有功能组件。"""
+        return []
 
 ```
-你好
-```
 
-MoFox_Bot可能会选择使用你的问候Action，发送回复：
-
-```
-嗨！很开心见到你！😊
-```
-
-![1750332508760](../assets/1750332508760.png)
-
-> **💡 小提示**：MoFox_Bot会智能地决定什么时候使用它。如果没有立即看到效果，多试几次不同的消息。
-
-🎉 太棒了！你的插件已经有实际功能了！
-
-### 7. 添加第二个功能：时间查询Command
-
-现在让我们添加一个Command组件。Command和Action不同，它是直接响应用户命令的：
-
-Command是最简单，最直接的响应，不由LLM判断选择使用
-
-```python
-# 在现有代码基础上，添加Command组件
-import datetime
-from src.plugin_system import BaseCommand
-#导入Command基类
-
-class TimeCommand(BaseCommand):
-    """时间查询Command - 响应/time命令"""
-
-    command_name = "time"
-    command_description = "查询当前时间"
-
-    # === 命令设置（必须填写）===
-    command_pattern = r"^/time$"  # 精确匹配 "/time" 命令
-
-    async def execute(self) -> Tuple[bool, Optional[str], bool]:
-        """执行时间查询"""
-        # 获取当前时间
-        time_format: str = "%Y-%m-%d %H:%M:%S"
-        now = datetime.datetime.now()
-        time_str = now.strftime(time_format)
-
-        # 发送时间信息
-        message = f"⏰ 当前时间：{time_str}"
-        await self.send_text(message)
-
-        return True, f"显示了当前时间: {time_str}", True
-
-@register_plugin
-class HelloWorldPlugin(BasePlugin):
-    """Hello World插件 - 你的第一个MoFox_Bot插件"""
-
-    # 插件基本信息
-    plugin_name = "hello_world_plugin"
-    enable_plugin = True
-    dependencies = []
-    python_dependencies = []
-    config_file_name = "config.toml"
-    config_schema = {}
-
-    def get_plugin_components(self) -> List[Tuple[ComponentInfo, Type]]:
-        return [
-            (HelloAction.get_action_info(), HelloAction),
-            (TimeCommand.get_command_info(), TimeCommand),
-        ]
-```
-
-同样的，我们通过 `get_plugin_components()` 方法，通过调用`get_action_info()`这个内置方法将 `TimeCommand` 注册为插件的一个组件。
-
-**Command组件解释：**
-
-- `command_pattern` 使用正则表达式匹配用户输入
-- `^/time$` 表示精确匹配 "/time"
-
-有关 Command 组件的更多信息，请参考 [Command组件指南](./PLUS_COMMAND_GUIDE.md)。
-
-### 8. 测试时间查询Command
-
-重启MoFox_Bot，发送命令：
-
-```
-/time
-```
-
-你应该会收到回复：
-
-```
-⏰ 当前时间：2024-01-01 12:00:00
-```
-
-🎉 太棒了！现在你已经了解了基本的 Action 和 Command 组件的使用方法。你可以根据自己的需求，继续扩展插件的功能，添加更多的 Action 和 Command 组件，让你的插件更加丰富和强大！
+到这里，你的插件已经可以被系统加载了，虽然它现在还什么都做不了。
 
 ---
 
-## 进阶教程
+## 🛠️ 步骤二：逐一添加四大组件
 
-如果你想让插件更加灵活和强大，可以参考接下来的进阶教程。
+现在，让我们开始为插件添加真正的功能。我们将在 `plugin.py` 文件中添加代码。
 
-### 1. 添加配置文件
+### 1. 添加 Event Handler (事件处理器)
 
-想要为插件添加配置文件吗？让我们一起来配置`config_schema`属性！
+**功能**：我们想在机器人启动时，在控制台打印一条消息，证明插件已成功加载。
 
-> **🚨 重要：不要手动创建config.toml文件！**
->
-> 我们需要在插件代码中定义配置Schema，让系统自动生成配置文件。
-
-首先，在插件类中定义配置Schema：
+将以下代码添加到 `plugin.py` 的顶部：
 
 ```python
-from src.plugin_system import ConfigField
+# (放在 import 语句下方)
+from src.plugin_system import BaseEventHandler, EventType
+from src.plugin_system.base.base_event import HandlerResult
+import logging
+
+# ... (其他 import)
+
+class StartupMessageHandler(BaseEventHandler):
+    """启动时打印消息的事件处理器。"""
+    handler_name = "hello_world_startup_handler"
+    handler_description = "在机器人启动时打印一条日志。"
+    init_subscribe = [EventType.ON_START]  # 订阅启动事件
+
+    async def execute(self, params: dict) -> HandlerResult:
+        logging.info("🎉 Hello World 插件已启动，准备就绪！")
+        return HandlerResult(success=True, continue_process=True)
+```
+
+- `BaseEventHandler`: 所有事件处理器的父类。
+- `init_subscribe`: 告诉系统我们关心哪个事件，这里是 `EventType.ON_START` (启动事件)。
+- `execute`: 事件发生时，这里的代码会被执行。
+
+### 2. 添加 Tool (工具)
+
+**功能**：创建一个简单的工具，可以提供一些固定的系统信息。这个工具本身不被调用，仅用于展示结构。
+
+将以下代码添加到 `StartupMessageHandler` 类的下方：
+
+```python
+from src.plugin_system import BaseTool, ToolParamType
+from typing import Dict, Any
+
+# ... (其他类定义)
+
+class GetSystemInfoTool(BaseTool):
+    """一个提供系统信息的示例工具。"""
+    name = "get_system_info"
+    description = "获取当前系统的模拟版本和状态信息。"
+    available_for_llm = True  # 允许被 LLM 发现和使用
+    parameters = []  # 这个工具不需要参数
+
+    async def execute(self, function_args: Dict[str, Any]) -> Dict[str, Any]:
+        return {
+            "name": self.name,
+            "content": "系统版本: 1.0.1, 状态: 运行正常"
+        }
+```
+
+- `BaseTool`: 所有工具的父类。
+- `name`, `description`, `parameters`: 这三者定义了工具的“签名”，LLM 会根据这些信息来决定是否以及如何使用它。
+
+### 3. 添加 Command (命令)
+
+**功能**：让用户可以通过输入 `/hello` 来获得一句问候。
+
+这里我们使用更现代的 `PlusCommand`。将以下代码添加到 `GetSystemInfoTool` 类的下方：
+
+```python
+from src.plugin_system import PlusCommand, CommandArgs, ChatType
+from typing import Tuple, Optional
+
+# ... (其他类定义)
+
+class HelloCommand(PlusCommand):
+    """一个简单的 /hello 命令。"""
+    command_name = "hello"
+    command_description = "向机器人发送一个简单的问候。"
+    command_aliases = ["hi", "你好"]  # 命令的别名
+    chat_type_allow = ChatType.ALL  # 在群聊和私聊中都可用
+
+    async def execute(self, args: CommandArgs) -> Tuple[bool, Optional[str], bool]:
+        await self.send_text("Hello, World! 我是一个由 MoFox_Bot 驱动的插件。")
+        return True, "成功发送问候", True
+```
+
+- `PlusCommand`: 推荐使用的命令基类，无需编写正则表达式。
+- `command_name`, `command_aliases`: 定义了用户如何触发这个命令。
+- `execute`: 当命令被触发时，这里的代码会被执行。`self.send_text` 是一个方便的内置方法，用于发送文本消息。
+
+### 4. 添加 Action (动作)
+
+**功能**：让机器人有时会“自发地”发送一个随机表情，增加一点趣味性。
+
+将以下代码添加到 `HelloCommand` 类的下方：
+
+```python
+from src.plugin_system import BaseAction, ActionActivationType
+import random
+
+# ... (其他类定义)
+
+class RandomEmojiAction(BaseAction):
+    """一个随机发送表情的动作。"""
+    action_name = "random_emoji"
+    action_description = "随机发送一个表情符号，增加聊天的趣味性。"
+    
+    # --- 激活控制 (第一层决策) ---
+    activation_type = ActionActivationType.RANDOM
+    random_activation_probability = 0.1  # 10% 的概率被激活
+
+    # --- 使用条件 (第二层决策) ---
+    action_require = ["当对话气氛轻松时", "可以用来回应简单的情感表达"]
+    associated_types = ["text"]
+
+    async def execute(self) -> Tuple[bool, str]:
+        emojis = ["😊", "😂", "👍", "🎉", "🤔", "🤖"]
+        await self.send_text(random.choice(emojis))
+        return True, "成功发送了一个随机表情"
+```
+
+- `BaseAction`: 所有动作的父类。
+- `activation_type`: 定义了动作如何进入“备选池”。这里使用 `RANDOM`，意味着它有一定概率被考虑。
+- `action_require`: 告诉 LLM 在什么情境下**选择**使用这个动作。
+- `execute`: 当 LLM 最终决定使用这个动作时，这里的代码会被执行。
+
+---
+
+## ✅ 步骤三：注册所有组件
+
+现在我们已经定义好了四个组件，最后一步是告诉插件主类它们的存在。
+
+回到 `HelloWorldPlugin` 类，修改 `get_plugin_components` 方法，将所有组件注册进去。
+
+```python
+# (修改 HelloWorldPlugin 类)
+
+# ... (所有组件的类定义) ...
 
 @register_plugin
 class HelloWorldPlugin(BasePlugin):
-    """Hello World插件 - 你的第一个MaiCore插件"""
+    """一个包含四大核心组件的入门示例插件。"""
 
-    # 插件基本信息
-    plugin_name: str = "hello_world_plugin"  # 内部标识符
-    enable_plugin: bool = True
-    dependencies: List[str] = []  # 插件依赖列表
-    python_dependencies: List[str] = []  # Python包依赖列表
-    config_file_name: str = "config.toml"  # 配置文件名
+    # --- 插件基础信息 (保持不变) ---
+    plugin_name = "hello_world_plugin"
+    enable_plugin = True
+    dependencies = []
+    python_dependencies = []
+    config_file_name = "config.toml"
+    config_schema = {}
 
-    # 配置Schema定义
-    config_schema: dict = {
-        "plugin": {
-            "name": ConfigField(type=str, default="hello_world_plugin", description="插件名称"),
-            "version": ConfigField(type=str, default="1.0.0", description="插件版本"),
-            "enabled": ConfigField(type=bool, default=False, description="是否启用插件"),
-        },
+    def get_plugin_components(self) -> List[Tuple[ComponentInfo, Type]]:
+        """注册插件的所有功能组件。"""
+        return [
+            (StartupMessageHandler.get_handler_info(), StartupMessageHandler),
+            (GetSystemInfoTool.get_tool_info(), GetSystemInfoTool),
+            (HelloCommand.get_command_info(), HelloCommand),
+            (RandomEmojiAction.get_action_info(), RandomEmojiAction),
+        ]
+```
+
+- 每个组件都有一个 `get_..._info()` 的类方法，用于获取其元信息。
+- 我们将每个组件的元信息和类本身作为一个元组，添加到返回的列表中。
+
+---
+
+## 🎉 恭喜！
+
+你已经成功创建了一个功能完整的 `hello_world` 插件！重启你的 MoFox_Bot，你将会：
+
+1.  在控制台看到 "🎉 Hello World 插件已启动，准备就绪！" 的消息。
+2.  可以向机器人发送 `/hello` 或 `!你好`，并收到回复。
+3.  在与机器人聊天时，偶尔会收到一个随机的表情符号。
+4.  虽然 `get_system_info` 工具不会被直接触发，但它已经作为一项能力被注册到了系统中。
+
+现在，你已经掌握了插件开发的基础。可以尝试修改这个插件，或者创建属于你自己的全新插件了！
+
+---
+
+## 🚀 进阶：让插件更灵活
+
+硬编码的文本不是一个好习惯。让我们学习如何使用配置文件，让你的插件可以由用户自由配置。
+
+### 1. 定义配置 Schema
+
+首先，我们需要告诉系统插件需要哪些配置项。这通过在插件主类中定义 `config_schema` 属性来完成。
+
+**🚨 重要：你不需要手动创建 `config.toml` 文件！系统会根据你的定义自动生成它。**
+
+修改 `plugin.py` 中的 `HelloWorldPlugin` 类：
+
+```python
+# (在 plugin.py 顶部)
+from src.plugin_system import ConfigField # 别忘了导入 ConfigField
+
+# ... (其他代码)
+
+@register_plugin
+class HelloWorldPlugin(BasePlugin):
+    # ... (其他基础信息)
+    
+    # --- 配置文件定义 ---
+    config_schema = {
         "greeting": {
-            "message": ConfigField(type=str, default="嗨！很开心见到你！😊", description="默认问候消息"),
-            "enable_emoji": ConfigField(type=bool, default=True, description="是否启用表情符号"),
+            "message": ConfigField(
+                type=str,
+                default="这是来自配置文件的问候！👋",
+                description="HelloCommand 使用的问候语。"
+            ),
         },
-        "time": {"format": ConfigField(type=str, default="%Y-%m-%d %H:%M:%S", description="时间显示格式")},
     }
 
     def get_plugin_components(self) -> List[Tuple[ComponentInfo, Type]]:
-        return [
-            (HelloAction.get_action_info(), HelloAction),
-            (TimeCommand.get_command_info(), TimeCommand),
-        ]
+        # ... (保持不变)
 ```
 
-这会生成一个如下的 `config.toml` 文件：
+- `config_schema` 是一个字典，定义了配置的结构。
+- `ConfigField` 用于详细定义每个配置项的类型、默认值和描述。
 
-```toml
-# hello_world_plugin - 自动生成的配置文件
-# 我的第一个MoFox_Bot插件，包含问候功能和时间查询等基础示例
+### 2. 在代码中使用配置
 
-# 插件基本信息
-[plugin]
+定义好 Schema 后，我们就可以在组件中通过 `self.get_config()` 方法来读取配置值了。
 
-# 插件名称
-name = "hello_world_plugin"
-
-# 插件版本
-version = "1.0.0"
-
-# 是否启用插件
-enabled = false
-
-
-# 问候功能配置
-[greeting]
-
-# 默认问候消息
-message = "嗨！很开心见到你！😊"
-
-# 是否启用表情符号
-enable_emoji = true
-
-
-# 时间查询配置
-[time]
-
-# 时间显示格式
-format = "%Y-%m-%d %H:%M:%S"
-```
-
-然后修改Action和Command代码，通过 `get_config()` 方法让它们读取配置（配置的键是命名空间式的）：
+修改 `HelloCommand` 的 `execute` 方法：
 
 ```python
-class HelloAction(BaseAction):
-    """问候Action - 简单的问候动作"""
+class HelloCommand(PlusCommand):
+    # ... (基础信息不变)
 
-    # === 基本信息（必须填写）===
-    action_name = "hello_greeting"
-    action_description = "向用户发送问候消息"
-    activation_type = ActionActivationType.ALWAYS  # 始终激活
-
-    # === 功能描述（必须填写）===
-    action_parameters = {"greeting_message": "要发送的问候消息"}
-    action_require = ["需要发送友好问候时使用", "当有人向你问好时使用", "当你遇见没有见过的人时使用"]
-    associated_types = ["text"]
-
-    async def execute(self) -> Tuple[bool, str]:
-        """执行问候动作 - 这是核心功能"""
-        # 发送问候消息
-        greeting_message = self.action_data.get("greeting_message", "")
-        base_message = self.get_config("greeting.message", "嗨！很开心见到你！😊")
-        message = base_message + greeting_message
-        await self.send_text(message)
-
-        return True, "发送了问候消息"
-
-class TimeCommand(BaseCommand):
-    """时间查询Command - 响应/time命令"""
-
-    command_name = "time"
-    command_description = "查询当前时间"
-
-    # === 命令设置（必须填写）===
-    command_pattern = r"^/time$"  # 精确匹配 "/time" 命令
-
-    async def execute(self) -> Tuple[bool, str, bool]:
-        """执行时间查询"""
-        import datetime
-
-        # 获取当前时间
-        time_format: str = self.get_config("time.format", "%Y-%m-%d %H:%M:%S")  # type: ignore
-        now = datetime.datetime.now()
-        time_str = now.strftime(time_format)
-
-        # 发送时间信息
-        message = f"⏰ 当前时间：{time_str}"
-        await self.send_text(message)
-
-        return True, f"显示了当前时间: {time_str}", True
+    async def execute(self, args: CommandArgs) -> Tuple[bool, Optional[str], bool]:
+        # 从配置文件读取问候语，如果找不到则使用默认值
+        greeting = str(self.get_config("greeting.message", "Hello, World! 我是一个由 MoFox_Bot 驱动的插件。"))
+        await self.send_text(greeting)
+        return True, "成功发送问候", True
 ```
 
-**配置系统工作流程：**
+- `self.get_config("greeting.message", ...)`: 第一个参数是配置的路径（`[greeting]` 下的 `message`），第二个是找不到配置时的默认值。
+- 我们用 `str()` 确保最终得到的是一个字符串，以保证类型安全。
 
-1. **定义Schema**: 在插件代码中定义配置结构
-2. **自动生成**: 启动插件时，系统会自动生成 `config.toml` 文件
-3. **用户修改**: 用户可以修改生成的配置文件
-4. **代码读取**: 使用 `self.get_config()` 读取配置值
+### 3. 它是如何工作的？
 
-**绝对不要手动创建 `config.toml` 文件！**
+1.  **首次启动**: 当 MoFox_Bot 第一次加载你的插件时，它会检查 `config_schema`。
+2.  **生成文件**: 它会在 `config/plugins/hello_world_plugin/` 目录下自动生成一个 `config.toml` 文件，内容如下：
+    ```toml
+    # hello_world_plugin - 自动生成的配置文件
+    # 一个包含四大核心组件和配置功能的入门示例插件。
 
-更详细的配置系统介绍请参考 [配置指南](./configuration-guide.md)。
+    # greeting
+    [greeting]
 
-### 2. 创建说明文档
+    # HelloCommand 使用的问候语。
+    message = "这是来自配置文件的问候！👋"
+    ```
+3.  **用户修改**: 用户可以随时修改这个 `config.toml` 文件中的 `message` 值。
+4.  **读取配置**: 下次 `/hello` 命令被触发时，`get_config` 就会读取用户修改后的新值。
 
-你可以创建一个 `README.md` 文件，描述插件的功能和使用方法。
+现在，你的插件不仅功能完整，而且变得更加灵活和强大了！
 
+### 4. 终极技巧：组件开关与配置版本
 
----
+我们还可以做得更专业。通过配置文件，我们不仅可以改变文本，甚至可以控制插件的哪些部分需要加载！
 
-🎉 恭喜你！你已经成功的创建了自己的插件了！
+#### a. 添加组件开关和版本号
+
+让我们再次升级 `config_schema`，加入组件开关和版本号：
+
+```python
+@register_plugin
+class HelloWorldPlugin(BasePlugin):
+    # ... (基础信息)
+    
+    config_schema = {
+        "meta": {
+            "config_version": ConfigField(
+                type=int,
+                default=1,
+                description="配置文件版本，请勿手动修改。"
+            ),
+        },
+        "greeting": {
+            "message": ConfigField(
+                type=str,
+                default="这是来自配置文件的问候！👋",
+                description="HelloCommand 使用的问候语。"
+            ),
+        },
+        "components": {
+            "hello_command_enabled": ConfigField(
+                type=bool,
+                default=True,
+                description="是否启用 /hello 命令。"
+            ),
+            "random_emoji_action_enabled": ConfigField(
+                type=bool,
+                default=True,
+                description="是否启用随机表情动作。"
+            ),
+        }
+    }
+    # ...
+```
+
+- **`[meta]`**: 我们添加了一个 `meta` 表，用于存放元信息，比如 `config_version`。这对于未来管理插件配置的更新非常有帮助。
+- **`[components]`**: 在这里，我们为 `HelloCommand` 和 `RandomEmojiAction` 分别添加了一个布尔类型的开关。
+
+#### b. 动态加载组件
+
+最后，也是最关键的一步，修改 `get_plugin_components` 方法，让它在加载组件前先读取配置：
+
+```python
+    def get_plugin_components(self) -> List[Tuple[ComponentInfo, Type]]:
+        """根据配置文件动态注册插件的功能组件。"""
+        components: List[Tuple[ComponentInfo, Type]] = []
+
+        # 总是注册这两个基础组件
+        components.append((StartupMessageHandler.get_handler_info(), StartupMessageHandler))
+        components.append((GetSystemInfoTool.get_tool_info(), GetSystemInfoTool))
+
+        # 根据配置决定是否注册 HelloCommand
+        if self.get_config("components.hello_command_enabled", True):
+            components.append((HelloCommand.get_command_info(), HelloCommand))
+        
+        # 根据配置决定是否注册 RandomEmojiAction
+        if self.get_config("components.random_emoji_action_enabled", True):
+            components.append((RandomEmojiAction.get_action_info(), RandomEmojiAction))
+
+        return components
+```
+
+现在，用户可以直接在 `config.toml` 文件中将 `hello_command_enabled` 设置为 `false`，重启后 `/hello` 命令就会失效，而插件的其他部分（如随机表情）仍然可以正常工作。
+
+这为用户提供了极大的灵活性，也让你的插件变得更加健壮和专业。
