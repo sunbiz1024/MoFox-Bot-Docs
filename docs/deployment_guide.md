@@ -58,10 +58,16 @@ uv pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple --u
 ### 第四步：配置 MoFox_Bot 和 Adapter
 
 **1. MoFox_Bot 配置:**
-
-- 在 `mmc` 文件夹中，将 `template/bot_config_template.toml` 复制到 `config/bot_config.toml`。
-- 将 `template/model_config_template.toml` 复制到 `config/model_config.toml`。
-- 根据 [模型配置指南](guides/model_configuration_guide.md) 和 `bot_config.toml` 文件中的注释，填写您的 API Key 和其他相关配置。
+ 
+ - **主配置文件**：在 `mmc` 文件夹中，将 `template/bot_config_template.toml` 复制到 `config/bot_config.toml`。打开这个新文件，至少需要填写你的**机器人QQ号**和**管理员QQ号**。
+ 
+ - **模型配置文件 (关键步骤！)**
+    a. 同样地，将 `template/model_config_template.toml` 复制到 `config/model_config.toml`。
+    b. 打开 `config/model_config.toml` 文件，找到 `[[api_providers]]` 部分。
+    c. **将 `api_key = "your-api-key-here"` 中的 `your-api-key-here` 替换成你自己的 API 密钥。**
+ 
+ > 对于新手，**完成以上步骤即可让机器人开口说话**！我们已经为您提供了一套完整的默认配置。
+ > 如果你想了解更多关于模型的配置，或者想使用本地模型，请参考 [模型配置快速上手指南](guides/quick_start_model_config.md)。
 
 **2. Napcat-Adapter 配置:**
 
@@ -104,7 +110,7 @@ uv run python main.py
 
 ### `model_config.toml`
 
-此文件用于配置 AI 模型和 API 服务提供商。详细配置方法请参考 [模型配置指南](guides/model_configuration_guide.md)。
+此文件用于配置 AI 模型和 API 服务提供商。对于新手，**只需按照上面的步骤填写 API Key 即可**。如需深度定制，请参考 [模型配置进阶指南](guides/model_configuration_guide.md)。
 
 ### 插件配置
 
