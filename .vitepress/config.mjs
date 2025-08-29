@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: "/MoFox-Bot-Docs/",
   title: "MoFox_Bot",
   description: "🚀 基于 MaiCore 的增强版智能体，提供更完善的功能和更好的使用体验",
   head: [
