@@ -33,28 +33,53 @@ pip install uv
 ```
 
 ### 第三步：依赖安装
-
+ 
 **1. 安装 MoFox_Bot 依赖:**
-
+ 
 进入 `mmc` 文件夹，创建虚拟环境并安装依赖。
-
-```shell
-cd mmc
-uv venv
-uv pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple --upgrade
-```
-
+ 
+- **使用 uv (推荐):**
+ 
+  ```shell
+  cd mmc
+  uv venv
+  uv pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple --upgrade
+  ```
+ 
+- **备选方案：使用原生 venv 和 pip:**
+ 
+  ```shell
+  cd mmc
+  python -m venv .venv
+  # 在 Windows 上激活虚拟环境
+  .venv\Scripts\activate
+  pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple --upgrade
+  ```
+ 
 **2. 安装 Napcat-Adapter 依赖:**
-
+ 
 回到上一级目录，进入 `Napcat-Adapter` 文件夹，创建虚拟环境并安装依赖。
-
-```shell
-cd ..
-cd Napcat-Adapter
-uv venv
-uv pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple --upgrade
-```
-
+ 
+- **使用 uv (推荐):**
+ 
+  ```shell
+  cd ..
+  cd Napcat-Adapter
+  uv venv
+  uv pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple --upgrade
+  ```
+ 
+- **备选方案：使用原生 venv 和 pip:**
+ 
+  ```shell
+  cd ..
+  cd Napcat-Adapter
+  python -m venv .venv
+  # 在 Windows 上激活虚拟环境
+  .venv\Scripts\activate
+  pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple --upgrade
+  ```
+ 
 ### 第四步：配置 MoFox_Bot 和 Adapter
 
 **1. MoFox_Bot 配置:**
@@ -72,9 +97,20 @@ uv pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple --u
 **2. Napcat-Adapter 配置:**
 
 - 在 `Napcat-Adapter` 文件夹中，将 `template/template_config.toml` 复制到根目录并改名为 `config.toml`。
-- 打开 `config.toml` 文件，配置 `[Napcat_Server]` 和 `[MaiBot_Server]` 字段。
-  - `[Napcat_Server]` 的 `port` 应与 Napcat 设置的反向代理 URL 中的端口相同。
-  - `[MaiBot_Server]` 的 `port` 应与 MoFox_Bot 的 `bot_config.toml` 中设置的端口相同。
+- 打开 `config.toml` 文件，配置 `[napcat_server]` 和 `[maibot_server]` 字段。
+  - `[napcat_server]` 的 `port` 应与 Napcat 设置的反向代理 URL 中的端口相同。
+  - `[maibot_server]` 的 `port` 应与 MoFox_Bot 的 `bot_config.toml` 中设置的端口相同。
+
+- **配置 Napcat 客户端**:
+  - 在 Napcat 客户端的 `onebot v11` 设置中，添加一个反向 WebSocket 连接/websocket客户端。
+  - URL 应填写为 `ws://127.0.0.1:端口号`，其中 `端口号` 必须与 `config.toml` 中 `[napcat_server]` 的 `port` 保持一致。
+  - ![Napcat 配置示例](assets/napcat_websockets_client.png)
+
+- **功能与白名单配置**:
+  `Napcat-Adapter` 支持通过 `features.toml` 文件进行功能和权限的详细配置。
+  - **创建配置文件**: 在 `Napcat-Adapter` 文件夹中，将 `template/features_template.toml` 复制到根目录并改名为 `features.toml`。
+  - **配置白名单**: 打开 `features.toml` 文件，根据其中的注释配置 `group_list` 和 `private_list` 等选项。
+  > **注意**：`features.toml` 文件支持热重载，修改后无需重启 `Napcat-Adapter` 即可生效。
 
 ### 第五步：运行
 
@@ -83,22 +119,42 @@ uv pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple --u
 请参考 [NapCatQQ 文档](https://napcat-qq.github.io/) 进行部署和启动。
 
 **2. 启动 MoFox_Bot:**
-
-进入 `mmc` 文件夹，使用 `uv` 运行。
-
-```shell
-cd mmc
-uv run python bot.py
-```
-
+ 
+进入 `mmc` 文件夹并启动程序。
+ 
+- **使用 uv:**
+ 
+  ```shell
+  cd mmc
+  uv run python bot.py
+  ```
+ 
+- **不使用 uv:**
+ 
+  ```shell
+  cd mmc
+  # 确保你已经激活了虚拟环境 (.venv\Scripts\activate)
+  python bot.py
+  ```
+ 
 **3. 启动 Napcat-Adapter:**
-
-打开一个新的终端窗口，进入 `Napcat-Adapter` 文件夹，使用 `uv` 运行。
-
-```shell
-cd Napcat-Adapter
-uv run python main.py
-```
+ 
+打开一个新的终端窗口，进入 `Napcat-Adapter` 文件夹并启动程序。
+ 
+- **使用 uv:**
+ 
+  ```shell
+  cd Napcat-Adapter
+  uv run python main.py
+  ```
+ 
+- **不使用 uv:**
+ 
+  ```shell
+  cd Napcat-Adapter
+  # 确保你已经激活了虚拟环境 (.venv\Scripts\activate)
+  python main.py
+  ```
 
 至此，MoFox_Bot 已成功部署并运行。
 
@@ -125,6 +181,8 @@ uv run python main.py
   - 检查 `model_config.toml` 中的 API Key 和 `base_url` 是否正确。
 - **无法连接到 Napcat**:
   - 检查 Napcat 是否正常运行。
-  - 确认 `Napcat-Adapter` 的 `config.toml` 中 `[Napcat_Server]` 的 `port` 是否与 Napcat 设置的端口一致。
+  - 确认 `Napcat-Adapter` 的 `config.toml` 中 `[napcat_server]` 的 `port` 是否与 Napcat 设置的端口一致。
+  - 确保 Napcat 客户端已正确配置反向 WebSocket，并且 URL 和端口无误。
+  - 检查防火墙或安全软件是否阻止了 `Napcat-Adapter` 的网络连接。
 
 如果遇到其他问题，请查看 `logs/` 目录下的日志文件以获取详细的错误信息。
