@@ -59,7 +59,7 @@ async def generate_with_model_with_tools(
 **Args:**
 - `prompt`：提示词。
 - `model_config`：模型配置对象（从 `get_available_models` 获取）。
-- `tool_options`：工具选项列表，包含可用工具的配置，字典为每一个工具的定义，参见[tool-components.md](../tool-components.md#属性说明)，可用`tool_api.get_llm_available_tool_definitions()`获取并选择。
+- `tool_options`：工具选项列表，包含可用工具的配置，字典为每一个工具的定义，参见[tool-components.md](../tool_guide.md#属性说明)，可用`tool_api.get_llm_available_tool_definitions()`获取并选择。
 - `request_type`：请求类型标识，默认为 `"plugin.generate"`。
 - `temperature`：生成内容的温度设置，影响输出的随机性。
 - `max_tokens`：生成内容的最大token数。

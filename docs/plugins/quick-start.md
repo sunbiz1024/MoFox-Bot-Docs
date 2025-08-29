@@ -246,7 +246,7 @@ class HelloWorldPlugin(BasePlugin):
 - `command_pattern` 使用正则表达式匹配用户输入
 - `^/time$` 表示精确匹配 "/time"
 
-有关 Command 组件的更多信息，请参考 [Command组件指南](./command-components.md)。
+有关 Command 组件的更多信息，请参考 [Command组件指南](./PLUS_COMMAND_GUIDE.md)。
 
 ### 8. 测试时间查询Command
 

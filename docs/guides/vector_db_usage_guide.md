@@ -119,9 +119,9 @@ print(f"语义缓存集合中有 {count} 条数据。")
 
 ### 3. 代码位置
 
--   **抽象基类**: [`mmc/src/common/vector_db/base.py`](mmc/src/common/vector_db/base.py)
--   **ChromaDB 实现**: [`mmc/src/common/vector_db/chromadb_impl.py`](mmc/src/common/vector_db/chromadb_impl.py)
--   **服务入口**: [`mmc/src/common/vector_db/__init__.py`](mmc/src/common/vector_db/__init__.py)
+-   **抽象基类**: [`mmc/src/common/vector_db/base.py`]
+-   **ChromaDB 实现**: [`mmc/src/common/vector_db/chromadb_impl.py`]
+-   **服务入口**: [`mmc/src/common/vector_db/__init__.py`]
 
 ---
 
