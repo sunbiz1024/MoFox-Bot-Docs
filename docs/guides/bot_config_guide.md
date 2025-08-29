@@ -198,7 +198,7 @@ angry_prompt = "吵死了！不知道打扰别人睡觉是很不礼貌的事情�
     -   `"mysql"`: 如果您有专业的服务器，并且希望机器人能承受极大的数据量，可以选择这个。否则，请保持 `sqlite`。
 
 #### SQLite 配置
--   `sqlite_path`: 数据库文件的路径。默认是 `"data/MaiBot.db"`，**通常无需修改**。
+-   `sqlite_path`: 数据库文件的路径。默认是 `"data/MoFox-bot.db"`，**通常无需修改**。
 
 #### MySQL 配置
 如果您选择了 `mysql`，才需要填写这部分。

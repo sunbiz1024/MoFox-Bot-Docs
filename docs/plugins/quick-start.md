@@ -145,6 +145,13 @@ class HelloCommand(PlusCommand):
     command_aliases = ["hi", "你好"]  # 命令的别名
     chat_type_allow = ChatType.ALL  # 在群聊和私聊中都可用
 
+    # --- 可用范围控制 ---
+    # chat_type_allow 控制命令在哪些类型的聊天中可用。
+    # - ChatType.ALL: 在群聊和私聊中都可用。
+    # - ChatType.GROUP: 仅在群聊中可用。
+    # - ChatType.PRIVATE: 仅在私聊中可用。
+    chat_type_allow = ChatType.ALL
+
     async def execute(self, args: CommandArgs) -> Tuple[bool, Optional[str], bool]:
         await self.send_text("Hello, World! 我是一个由 MoFox_Bot 驱动的插件。")
         return True, "成功发送问候", True

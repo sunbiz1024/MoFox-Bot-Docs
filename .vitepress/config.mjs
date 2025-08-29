@@ -57,7 +57,8 @@ export default defineConfig({
           { text: '事件系统', link: '/docs/plugins/event-system-guide' },
           { text: '配置指南', link: '/docs/plugins/configuration-guide' },
           { text: '工具指南', link: '/docs/plugins/tool_guide' },
-          { text: 'Plus 命令指南', link: '/docs/plugins/PLUS_COMMAND_GUIDE' },
+          { text: '命令指南', link: '/docs/plugins/PLUS_COMMAND_GUIDE' },
+          { text: '可用范围控制', link: '/docs/plugins/command-scope' },
           {
             text: '插件 API',
             items: [
