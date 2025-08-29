@@ -71,7 +71,7 @@
 
 ## 项目成员
 
--   **核心开发者**: @foxcyber907, @Furina-1013-create, @tt-P607, @ikun-11451, @minecraft1024a
+-   **核心开发者**: @foxcyber907, @Furina-1013-create, @tt-P607, @ikun-11451, @minecraft1024a, @Windpicker-owo
 -   **Reviewer**: 核心开发者及 MoFox_Bot 主仓库的合作者。
 -   **贡献者**: 所有为项目提交过贡献的用户。
 

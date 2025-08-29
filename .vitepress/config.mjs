@@ -13,7 +13,11 @@ export default defineConfig({
     nav: [
       { text: '主页', link: '/' },
       { text: '指南', link: '/docs/deployment_guide' },
-      { text: '架构', link: '/docs/architecture/PERMISSION_SYSTEM' },
+      { text: '架构', items: [
+          { text: '权限系统', link: '/docs/architecture/PERMISSION_SYSTEM' },
+          { text: '技术栈与聊天流分析', link: '/docs/architecture/tech_stack_and_chat_flow' }
+        ]
+      },
       { text: '开发', link: '/docs/plugins/quick-start' },
       { text: '集成(其实是大饼类)', link: '/docs/integrations/Bing' }
     ],
@@ -31,14 +35,16 @@ export default defineConfig({
       {
         text: '架构',
         items: [
-          { text: '权限系统', link: '/docs/architecture/PERMISSION_SYSTEM' }
+          { text: '权限系统', link: '/docs/architecture/PERMISSION_SYSTEM' },
+          { text: '技术栈与聊天流分析', link: '/docs/architecture/tech_stack_and_chat_flow' }
         ]
       },
       {
         text: '贡献指南和开发帮助',
         items: [
           { text: '贡献指南', link: '/docs/development/CONTRIBUTE' },
-          { text: '向量数据库使用指南', link: '/docs/guides/vector_db_usage_guide' }
+          { text: '向量数据库使用指南', link: '/docs/guides/vector_db_usage_guide' },
+          { text: '添加新的向量数据库', link: '/docs/guides/add_new_vector_db_guide' }
         ]
       },
       {
