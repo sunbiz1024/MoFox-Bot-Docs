@@ -275,8 +275,10 @@ angry_prompt = "吵死了！不知道打扰别人睡觉是很不礼貌的事情�
 
 ### [video_analysis] - 视频分析
 -   `enable`: **看视频**。开启后，你把视频发给它，它能“看懂”并告诉你视频内容。这是一个非常消耗资源的功能。
--   `analysis_mode`: 推荐 `"batch_frames"`，速度和效果比较均衡。
--   `max_frames`: 一次分析的图片帧数，数值越高越详细，也越慢。
+
+::: tip
+关于更多视频分析功能的详细配置和使用方法，请参考 [视频识别功能](../video_recognition) 页面。
+:::
 
 ### [web_search] - 网络搜索
 -   `enable_web_search_tool`: **上网冲浪**。让机器人可以搜索网络来回答你的问题。

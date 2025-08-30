@@ -18,12 +18,20 @@
     enable = true
     ```
 
-2.  **配置FFmpeg**：
-    确保 `ffmpeg_path` 指向正确的 FFmpeg 可执行文件路径。
+2.  **下载并配置FFmpeg**：
+    FFmpeg 是一个用于处理多媒体文件的开源工具集。视频识别功能需要 FFmpeg 来提取视频帧(如果是一键包用户的话我已经帮你内置并且配置好了)。
 
-    ```toml
-    ffmpeg_path = "path/to/your/ffmpeg.exe"
-    ```
+    *   **下载 FFmpeg**:
+        *   **Windows**: 访问 [https://www.gyan.dev/ffmpeg/builds/](https://www.gyan.dev/ffmpeg/builds/) 并下载最新的 `essentials` 版本。
+        *   **macOS**: 使用 Homebrew 安装：`brew install ffmpeg`
+        *   **Linux**: 使用您的包管理器安装，例如在 Ubuntu 上：`sudo apt update && sudo apt install ffmpeg`
+
+    *   **配置路径**:
+        解压下载的文件，并将 `bin` 目录下的 `ffmpeg.exe` (Windows) 或 `ffmpeg` (macOS/Linux) 的完整路径配置到 `config/bot_config.toml` 文件中。
+
+        ```toml
+        ffmpeg_path = "E:\\delveoper\\mmc010\\ffmpeg\\bin\\ffmpeg.exe" # 示例路径
+        ```
 
 3.  **选择模型**：
     在 `config/model_config.toml` 文件中，为 `utils_video` 任务配置一个或多个视觉语言模型（VLM）。
