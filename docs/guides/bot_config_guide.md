@@ -1,3 +1,4 @@
+
 # MoFox-Bot 配置文件 (bot_config.toml) 究极详细教程
 
 欢迎使用 MoFox-Bot！这份教程将像一本说明书一样，带您深入了解 `bot_config.toml` 文件中的每一个角落。无论您是初次接触的新手还是寻求深度定制的高级用户，都能在这里找到答案。我们项目的核心是**高度拟人化**，所以接下来的所有配置都将围绕如何创造一个有“灵魂”的 Bot 展开。
@@ -28,6 +29,7 @@
 **“嗨，今天也是充满活力的一天！一起去发现有趣的事情吧！”**
 
 **适合人群**：希望拥有一个活泼开朗、能带来阳光的伙伴的用户。
+**特点**：她像个小太阳，总是充满活力，乐于分享，会主动关心你，让你的群聊充满欢声笑 "
 **特点**：她像个小太阳，总是充满活力，乐于分享，会主动关心你，让你的群聊充满欢声笑语。
 
 ```toml
@@ -72,6 +74,9 @@ emoji_activate_type = "llm" # 表情包激活类型，可选：random，llm
 
 [schedule] #日程管理
 enable = true # 是否启用日程管理功能
+
+[sleep_system]
+enable = true # 是否启用睡眠系统
 enable_flexible_sleep = true # 是否启用弹性睡眠
 enable_pre_sleep_notification = true # 是否在进入“准备入睡”状态时发送一条消息通知
 pre_sleep_prompt = "我有点困啦，准备去睡觉了，你也要早点休息哦！晚安~" # 用于生成睡前消息的提示
@@ -128,6 +133,9 @@ emoji_activate_type = "llm"
 
 [schedule] #日程管理
 enable = true # 是否启用日程管理功能
+
+[sleep_system]
+enable = true # 是否启用睡眠系统
 enable_insomnia_system = true # 偶尔会因为思虑过多而失眠
 insomnia_chance_low_pressure = 0.4 # 压力不足时的失眠基础概率
 ```
@@ -179,10 +187,12 @@ steal_emoji = true # 喜欢收集有趣的表情包来吐槽
 emoji_chance = 0.6
 emoji_activate_type = "llm"
 
-[wakeup_system]
-enable = true #"是否启用唤醒度系统"
-angry_prompt = "吵死了！不知道打扰别人睡觉是很不礼貌的事情吗！快说有什么事，说完赶紧消失！喵！" # "被吵醒后的愤怒提示词"
+[sleep_system]
+enable = true #"是否启用睡眠系统"
+angry_prompt = "吵死了！不知道打扰别人睡觉是很不礼貌的事情吗！快说有什么事，说完赶紧消失！喵！"
 ```
+
+---
 
 ## 一、基础配置
 
@@ -198,13 +208,14 @@ angry_prompt = "吵死了！不知道打扰别人睡觉是很不礼貌的事情�
     -   `"mysql"`: 如果您有专业的服务器，并且希望机器人能承受极大的数据量，可以选择这个。否则，请保持 `sqlite`。
 
 #### SQLite 配置
--   `sqlite_path`: 数据库文件的路径。默认是 `"data/MoFox-bot.db"`，**通常无需修改**。
+-   `sqlite_path`: 数据库文件的路径。默认是 `"data/MaiBot.db"`，**通常无需修改**。
 
 #### MySQL 配置
 如果您选择了 `mysql`，才需要填写这部分。
 -   `mysql_host`: 您的 MySQL 服务器地址。
 -   `mysql_port`: 端口，默认 `3306`。
 -   `mysql_database`, `mysql_user`, `mysql_password`: 您的数据库名、用户名和密码。
+-   其他 `mysql_` 开头的选项：用于更高级的配置，如SSL、连接池等，**通常无需修改**。
 
 ### [permission] - 权限系统
 -   `master_users`: **机器人管理员**的列表。在这里添加您的账号，您将拥有机器人的最高控制权。
@@ -231,17 +242,18 @@ angry_prompt = "吵死了！不知道打扰别人睡觉是很不礼貌的事情�
 -   `identity`: **身份信息**。更具体的设定，例如：“年龄17岁，是女孩子，身高165cm，有金色的长发和绿色的眼睛”。
 -   `reply_style`: **说话风格**。描述它说话的习惯，例如：“喜欢在句末加上'喵~'，回复通常很简短”。
 -   `prompt_mode`: Prompt 模式，保持 `"s4u"` 即可。
--   `compress_personality`, `compress_identity`: **人格压缩**。开启后可以节省一点点资源，但可能会丢失人设细节。如果您的llm api性能不错，建议都设为 `false`。
+-   `compress_personality`, `compress_identity`: **人格压缩**。开启后可以节省一点点资源，但可能会丢失人设细节。如果您的LLM API性能不错，建议都设为 `false`。
 
 ### [chat] - 聊天通用设置
--   `focus_value`: **专注度**。数值越高，机器人越能进行持久的连续对话，但更耗费资源。`1` 是一个很好的平衡点。
--   `talk_frequency`: **活跃度**。数值越高，它在群里发言就越频繁。
--   `force_focus_private`: **私聊强制专注**。开启后，私聊时机器人会变得非常专注，适合需要进行长对话的场景。
 -   `group_chat_mode`: **群聊模式**。`"auto"` 表示自动判断，`"normal"` 表示只进行简单回复，`"focus"` 表示在群里也尝试进行深度对话。
+-   `focus_value`: **专注度**。数值越高，机器人越能进行持久的连续对话，但更耗费资源。`1` 是一个很好的平衡点。仅在 `auto` 模式下生效。
+-   `talk_frequency`: **活跃度**。数值越高，它在群里发言就越频繁。仅在 `normal` 或 `auto` 的 `normal` 模式下生效。
+-   `force_focus_private`: **私聊强制专注**。开启后，私聊时机器人会变得非常专注，适合需要进行长对话的场景。
 -   `max_context_size`: **记忆长度**。机器人能记住的最近对话数量。数值越大，越能理解上下文，但消耗也越大。
 -   `mentioned_bot_inevitable_reply`, `at_bot_inevitable_reply`: **@必回**。开启后，只要有人@它或提到它的名字，它就一定会回复。
+-   `talk_frequency_adjust`: **分时段活跃度**。可以设置机器人在不同时间段有不同的活跃度，非常精细化的配置。
 
-#### 主动思考功能
+#### 主动思考功能 (仅在focus模式下生效)
 -   `enable_proactive_thinking`: **主动说话**。开启后，机器人会在没人理它的时候，自己找话题发起聊天。
 -   `proactive_thinking_interval`: **思考间隔**。大概多久主动说一次话（单位：秒）。
 -   `delta_sigma`: **随机性**。让主动说话的时间变得不那么固定，更像真人。
@@ -253,6 +265,7 @@ angry_prompt = "吵死了！不知道打扰别人睡觉是很不礼貌的事情�
 ### [memory] - 记忆系统
 -   `enable_memory`: **【核心功能】是否开启记忆**。开启后，机器人会记住和用户的对话内容，形成长期记忆。**强烈建议开启**。
 -   `enable_instant_memory`: **瞬时记忆**。让机器人能更好地记住刚刚说过的话，增强对话连贯性。**建议开启**。
+-   其他 `memory_` 和 `consolidate_` 开头的选项：用于调整记忆的构建、遗忘、整合频率，**新手建议保持默认**。
 
 ### [mood] & [emoji] - 情绪与表情包
 -   `enable_mood`: **情绪系统**。让机器人拥有喜怒哀乐，并影响它的回复。
@@ -274,8 +287,14 @@ angry_prompt = "吵死了！不知道打扰别人睡觉是很不礼貌的事情�
 ### [schedule] & [monthly_plan_system] - 日程与计划
 -   `enable`: 开启后，机器人会为自己安排每天的日程和每月的计划，变得更像一个“虚拟生命”。
 
-### [wakeup_system] - 唤醒系统
--   `enable`: 开启后，机器人在“睡觉”时，如果被频繁@，会“生气地”醒来。
+### [sleep_system] - 睡眠系统
+-   `enable`: 开启后，机器人会模拟人的作息，在设定的时间“睡觉”。
+-   `enable_insomnia_system`: **失眠系统**。开启后，机器人可能会因为“压力”等原因失眠。
+-   `enable_flexible_sleep`: **弹性睡眠**。开启后，机器人不会到点就睡，会根据“睡眠压力”稍微推迟一会。
+-   `enable_pre_sleep_notification`: **睡前晚安**。开启后，准备睡觉时会发一条消息。
+
+### [cross_context] & [maizone_intercom] - 上下文共享
+-   `enable`: 开启后，可以让机器人在不同的群聊之间共享上下文，或者在发QQ空间说说时，能“记得”最近群里聊了什么。
 
 ## 四、其他配置
 

@@ -1,13 +1,11 @@
 # 数据库API
 
-数据库API模块提供通用的数据库操作功能，支持查询、创建、更新和删除记录，采用Peewee ORM模型。
+数据库API模块提供基于SQLAlchemy的通用数据库操作功能，支持查询、创建、更新和删除记录。
 
 ## 导入方式
 
 ```python
-from src.plugin_system.apis import database_api
-# 或者
-from src.plugin_system import database_api
+from src.common.database import sqlalchemy_database_api as database_api
 ```
 
 ## 主要功能
@@ -16,7 +14,7 @@ from src.plugin_system import database_api
 
 ```python
 async def db_query(
-    model_class: Type[Model],
+    model_class: Type[Base],
     data: Optional[Dict[str, Any]] = None,
     query_type: Optional[str] = "get",
     filters: Optional[Dict[str, Any]] = None,
@@ -28,12 +26,19 @@ async def db_query(
 执行数据库查询操作的通用接口。
 
 **Args:**
-- `model_class`: Peewee模型类。
-    - Peewee模型类可以在`src.common.database.database_model`模块中找到，如`ActionRecords`、`Messages`等。
+- `model_class`: SQLAlchemy模型类。
+    - SQLAlchemy模型类可以在`src.common.database.sqlalchemy_models`模块中找到。
 - `data`: 用于创建或更新的数据
 - `query_type`: 查询类型
     - 可选值: `get`, `create`, `update`, `delete`, `count`。
-- `filters`: 过滤条件字典，键为字段名，值为要匹配的值。
+- `filters`: 过滤条件字典，键为字段名，值为要匹配的值。支持MongoDB风格的操作符：
+    - `{"field": {"$gt": value}}`: 大于
+    - `{"field": {"$lt": value}}`: 小于
+    - `{"field": {"$gte": value}}`: 大于等于
+    - `{"field": {"$lte": value}}`: 小于等于
+    - `{"field": {"$ne": value}}`: 不等于
+    - `{"field": {"$in": [value1, value2]}}`: 包含
+    - `{"field": {"$nin": [value1, value2]}}`: 不包含
 - `limit`: 限制结果数量。
 - `order_by`: 排序字段列表，使用字段名，前缀'-'表示降序。
     - 排序字段，前缀`-`表示降序，例如`-time`表示按时间字段（即`time`字段）降序
@@ -51,6 +56,8 @@ async def db_query(
 
 1. 查询最近10条消息
 ```python
+from src.common.database.sqlalchemy_models import Messages
+
 messages = await database_api.db_query(
     Messages,
     query_type="get",
@@ -61,12 +68,14 @@ messages = await database_api.db_query(
 ```
 2. 创建一条记录
 ```python
+from src.common.database.sqlalchemy_models import ActionRecords
+import time
+
 new_record = await database_api.db_query(
     ActionRecords,
     data={"action_id": "123", "time": time.time(), "action_name": "TestAction"},
     query_type="create",
-)
-```
+)```
 3. 更新记录
 ```python
 updated_count = await database_api.db_query(
@@ -94,9 +103,10 @@ count = await database_api.db_query(
 ```
 
 ### 2. 数据库保存
+
 ```python
 async def db_save(
-    model_class: Type[Model], data: Dict[str, Any], key_field: Optional[str] = None, key_value: Optional[Any] = None
+    model_class: Type[Base], data: Dict[str, Any], key_field: Optional[str] = None, key_value: Optional[Any] = None
 ) -> Optional[Dict[str, Any]]:
 ```
 保存数据到数据库（创建或更新）
@@ -106,7 +116,7 @@ async def db_save(
 如果没有找到匹配记录，或未提供key_field和key_value，则创建新记录。
 
 **Args:**
-- `model_class`: Peewee模型类。
+- `model_class`: SQLAlchemy模型类。
 - `data`: 要保存的数据字典。
 - `key_field`: 用于查找现有记录的字段名，例如"action_id"。
 - `key_value`: 用于查找现有记录的字段值。
@@ -131,9 +141,10 @@ record = await database_api.db_save(
 ```
 
 ### 3. 数据库获取
+
 ```python
 async def db_get(
-    model_class: Type[Model],
+    model_class: Type[Base],
     filters: Optional[Dict[str, Any]] = None,
     limit: Optional[int] = None,
     order_by: Optional[str] = None,
@@ -146,7 +157,7 @@ async def db_get(
 这是db_query方法的简化版本，专注于数据检索操作。
 
 **Args:**
-- `model_class`: Peewee模型类。
+- `model_class`: SQLAlchemy模型类。
 - `filters`: 过滤条件字典，键为字段名，值为要匹配的值。
 - `limit`: 限制结果数量。
 - `order_by`: 排序字段，使用字段名，前缀'-'表示降序。
@@ -161,7 +172,7 @@ async def db_get(
 record = await database_api.db_get(
     ActionRecords,
     filters={"action_id": "123"},
-    limit=1
+    single_result=True
 )
 ```
 2. 获取最近10条记录
@@ -175,6 +186,7 @@ records = await database_api.db_get(
 ```
 
 ### 4. 动作信息存储
+
 ```python
 async def store_action_info(
     chat_stream=None,
@@ -214,3 +226,25 @@ record = await database_api.store_action_info(
     action_name="reply_action"
 )
 ```
+
+## 可用数据模型
+
+以下是所有可用的SQLAlchemy数据模型，均可在 `src.common.database.sqlalchemy_models` 中导入：
+
+- `Messages`
+- `ActionRecords`
+- `PersonInfo`
+- `ChatStreams`
+- `LLMUsage`
+- `Emoji`
+- `Images`
+- `ImageDescriptions`
+- `OnlineTime`
+- `Memory`
+- `Expression`
+- `ThinkingLog`
+- `GraphNodes`
+- `GraphEdges`
+- `Schedule`
+- `MaiZoneScheduleStatus`
+- `CacheEntries`

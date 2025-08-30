@@ -19,7 +19,15 @@ export default defineConfig({
         ]
       },
       { text: '开发', link: '/docs/plugins/quick-start' },
-      { text: '集成(其实是大饼类)', link: '/docs/integrations/Bing' }
+      { text: '集成(其实是大饼类)', link: '/docs/integrations/Bing' },
+      {
+        text: '相关链接',
+        items: [
+          { text: 'MoFox-Studio', link: 'https://github.com/MoFox-Studio' },
+          { text: 'MoFox_Bot', link: 'https://github.com/MoFox-Studio/MoFox_Bot' },
+          { text: 'MoFox_Docs', link: 'https://github.com/MoFox-Studio/MoFox-Bot-Docs' }
+        ]
+      }
     ],
 
     sidebar: [
@@ -92,9 +100,12 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/MoFox-Studio/MoFox_Bot' }
     ],
+    search: {
+      provider: 'local'
+    },
     footer: {
       message: 'Released under the GPL-3.0 License.',
-      copyright: 'Copyright © 2024 MoFox Studio'
+      copyright: 'Copyright © 2025 MoFox Studio'
     }
   }
 })
