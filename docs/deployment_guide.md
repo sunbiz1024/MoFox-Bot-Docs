@@ -94,7 +94,7 @@ pip install uv
 
 **2. Napcat-Adapter 配置:**
 
-- 在 `Napcat-Adapter` 文件夹中，将 `template/template_config.toml` 复制到根目录并改名为 `config.toml`。
+- 在 `Napcat-Adapter` 文件夹中，将 `template/template_config.toml` 复制到根目录下的config目录并改名为 `config.toml`。
 - 打开 `config.toml` 文件，配置 `[napcat_server]` 和 `[maibot_server]` 字段。
   - `[napcat_server]` 的 `port` 应与 Napcat 设置的反向代理 URL 中的端口相同。
   - `[maibot_server]` 的 `port` 应与 MoFox_Bot 的 `bot_config.toml` 中设置的端口相同。
@@ -106,7 +106,7 @@ pip install uv
 
 - **功能与白名单配置**:
   `Napcat-Adapter` 支持通过 `features.toml` 文件进行功能和权限的详细配置。
-  - **创建配置文件**: 在 `Napcat-Adapter` 文件夹中，将 `template/features_template.toml` 复制到根目录并改名为 `features.toml`。
+  - **创建配置文件**: 在 `Napcat-Adapter` 文件夹中，将 `template/features_template.toml` 复制到根目录下的config目录并改名为 `features.toml`。
   - **配置白名单**: 打开 `features.toml` 文件，根据其中的注释配置 `group_list` 和 `private_list` 等选项。
   > **注意**：`features.toml` 文件支持热重载，修改后无需重启 `Napcat-Adapter` 即可生效。
 
