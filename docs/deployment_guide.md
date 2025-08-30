@@ -87,10 +87,10 @@ pip install uv
  - **主配置文件**：在 `mmc` 文件夹中，将 `template/bot_config_template.toml` 复制到 `config/bot_config.toml`。打开这个新文件，至少需要填写你的**机器人QQ号**和**管理员QQ号**。
  
  - **模型配置文件 (关键步骤！)**
-  - 请参照[模型配置指南](guides/model_configuration_guide.md)指南，创建并配置 `model_config.toml` 文件。
+  - 请参照[模型配置快速上手](guides/quick_start_model_config.md)指南，创建并配置 `model_config.toml` 文件。
  
  > 对于新手，**完成以上步骤即可让机器人开口说话**！我们已经为您提供了一套完整的默认配置。
- > 如果你想了解更多关于模型的配置，或者想使用本地模型，请参考 [模型配置快速上手指南](guides/quick_start_model_config.md)。
+ > 如果你想了解更多关于模型的配置，或者想使用本地模型，请参考 [模型配置指南](guides/model_configuration_guide.md)。
 
 **2. Napcat-Adapter 配置:**
 
