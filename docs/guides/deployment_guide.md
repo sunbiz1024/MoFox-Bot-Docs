@@ -102,7 +102,7 @@ pip install uv
 - **配置 Napcat 客户端**:
   - 在 Napcat 客户端的 `onebot v11` 设置中，添加一个反向 WebSocket 连接/websocket客户端。
   - URL 应填写为 `ws://127.0.0.1:端口号`，其中 `端口号` 必须与 `config.toml` 中 `[napcat_server]` 的 `port` 保持一致。
-  - ![Napcat 配置示例](assets/napcat_websockets_client.png)
+  - ![Napcat 配置示例](../assets/napcat_websockets_client.png)
 
 - **功能与白名单配置**:
   `Napcat-Adapter` 支持通过 `features.toml` 文件进行功能和权限的详细配置。
@@ -168,7 +168,7 @@ pip install uv
 
 ### 插件配置
 
-每个插件都有独立的配置文件，位于 `mmc/config/plugins/` 目录下。插件的配置由其 `config_schema` 自动生成。详细信息请参考 [插件配置完整指南](plugins/configuration-guide.md)。
+每个插件都有独立的配置文件，位于 `mmc/config/plugins/` 目录下。插件的配置由其 `config_schema` 自动生成。详细信息请参考 [插件配置完整指南](../development/plugins/configuration-guide.md)。
 
 ## 4. 故障排除
 

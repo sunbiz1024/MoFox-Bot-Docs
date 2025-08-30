@@ -93,6 +93,7 @@ export default defineConfig({
             { text: '模型配置快速上手', link: '/docs/guides/quick_start_model_config' },
             { text: 'Bot配置文件指南', link: '/docs/guides/bot_config_guide' },
             { text: '模型配置指南(进阶)', link: '/docs/guides/model_configuration_guide' },
+            { text: '指令权限系统使用教程', link: '/docs/guides/permission_usage' },
             {
               text: '常见问题',
               items: [
