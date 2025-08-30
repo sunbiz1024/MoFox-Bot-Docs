@@ -52,8 +52,16 @@ export default defineConfig({
         text: '贡献指南和开发帮助',
         items: [
           { text: '贡献指南', link: '/docs/development/CONTRIBUTE' },
+          { text: '开发准则', link: '/docs/development_guidelines' },
           { text: '向量数据库使用指南', link: '/docs/guides/vector_db_usage_guide' },
-          { text: '添加新的向量数据库', link: '/docs/guides/add_new_vector_db_guide' }
+          { text: '添加新的向量数据库', link: '/docs/guides/add_new_vector_db_guide' },
+          {
+            text: '提问的智慧',
+            items: [
+              { text: '提问的智慧(精简版)', link: '/docs/how-to-ask-questions-the-smart-way' },
+              { text: '如何高效提问', link: '/docs/how-to-ask-questions-efficiently' }
+            ]
+          }
         ]
       },
       {
