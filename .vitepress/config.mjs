@@ -94,7 +94,7 @@ export default defineConfig({
             { text: 'Bot配置文件指南', link: '/docs/guides/bot_config_guide' },
             { text: '模型配置指南(进阶)', link: '/docs/guides/model_configuration_guide' },
             { text: '指令权限系统使用教程', link: '/docs/guides/permission_usage' },
-            { text: '视频识别功能', link: '/docs/video_recognition' },
+            { text: '视频识别功能', link: '/docs/guides/video_recognition' },
             {
               text: '常见问题',
               items: [
