@@ -90,7 +90,7 @@ pip install uv
   - 请参照[模型配置快速上手](guides/quick_start_model_config.md)指南，创建并配置 `model_config.toml` 文件。
  
  > 对于新手，**完成以上步骤即可让机器人开口说话**！我们已经为您提供了一套完整的默认配置。
- > 如果你想了解更多关于模型的配置，或者想使用本地模型，请参考 [模型配置指南](guides/model_configuration_guide.md)。
+ > 如果你想了解更多关于模型的配置，或者想使用本地模型，请参考 [模型配置指南](model_configuration_guide.md)。
 
 **2. Napcat-Adapter 配置:**
 
@@ -160,11 +160,11 @@ pip install uv
 
 ### `bot_config.toml`
 
-这是 MoFox_Bot 的主配置文件，包含了机器人昵称、主人QQ、命令前缀、数据库设置等。请根据文件内的注释进行详细配置。
+这是 MoFox_Bot 的主配置文件，包含了机器人昵称、主人QQ、命令前缀、数据库设置等。请根据文件内的注释和[MoFox-Bot 配置文件究极详细教程](bot_config_guide.md)进行详细配置。
 
 ### `model_config.toml`
 
-此文件用于配置 AI 模型和 API 服务提供商。对于新手，**只需按照上面的步骤填写 API Key 即可**。如需深度定制，请参考 [模型配置进阶指南](guides/model_configuration_guide.md)。
+此文件用于配置 AI 模型和 API 服务提供商。对于新手，**只需按照上面的步骤填写 API Key 即可**。如需深度定制，请参考 [模型配置进阶指南](model_configuration_guide.md)。
 
 ### 插件配置
 

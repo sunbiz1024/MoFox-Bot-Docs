@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: 快速开始
-      link: /docs/deployment_guide
+      link: /docs/guides/deployment_guide
     - theme: alt
       text: 在 GitHub 上查看
       link: https://github.com/MoFox-Studio/MoFox_Bot
