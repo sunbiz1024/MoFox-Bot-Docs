@@ -17,7 +17,7 @@
     *   找到下面这几行：
         ```toml
         [[api_providers]]
-        name = "DeepSeek"
+        name = "siliconflow"
         base_url = "https://api.siliconflow.cn/v1"
         api_key = "your-api-key-here" # <--- 就是这里！
         ```
