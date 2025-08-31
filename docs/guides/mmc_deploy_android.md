@@ -61,6 +61,8 @@ mkdir MoFox_Bot_Deployment
 cd MoFox_Bot_Deployment
 git clone https://github.com/MoFox-Studio/MoFox_Bot.git
 git clone https://github.com/MoFox-Studio/Napcat-Adapter.git
+# 网络问题拉取不下来使用这个git clone https://github.akams.cn/https://github.com/MoFox-Studio/MoFox_Bot.git
+# 网络问题拉取不下来使用这个git clone https://github.akams.cn/https://github.com/MoFox-Studio/Napcat-Adapter.git
 ```
 
 ### 第三步：环境配置与依赖安装
