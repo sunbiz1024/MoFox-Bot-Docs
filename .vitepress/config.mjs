@@ -91,11 +91,21 @@ export default defineConfig({
           items: [
             { text: 'Windows部署指南', link: '/docs/guides/deployment_guide' },
             { text: 'Linux部署指南', link: '/docs/guides/mmc_deploy_linux' },
-            { text: '模型配置快速上手', link: '/docs/guides/quick_start_model_config' },
-            { text: 'Bot配置文件指南', link: '/docs/guides/bot_config_guide' },
-            { text: '模型配置指南(进阶)', link: '/docs/guides/model_configuration_guide' },
-            { text: '指令权限系统使用教程', link: '/docs/guides/permission_usage' },
-            { text: '视频识别功能', link: '/docs/guides/video_recognition' },
+            {
+              text: '配置文件教程',
+              items: [
+                { text: '模型配置快速上手', link: '/docs/guides/quick_start_model_config' },
+                { text: 'Bot配置文件指南', link: '/docs/guides/bot_config_guide' },
+                { text: '模型配置指南(进-阶)', link: '/docs/guides/model_configuration_guide' },
+              ]
+            },
+            {
+              text: '功能使用',
+              items: [
+                { text: '指令权限系统使用教程', link: '/docs/guides/permission_usage' },
+                { text: '视频识别功能', link: '/docs/guides/video_recognition' },
+              ]
+            },
             {
               text: '常见问题',
               items: [
