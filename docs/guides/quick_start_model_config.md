@@ -6,7 +6,9 @@
 
 对于新手，你**唯一**需要做的，就是在配置文件中填入你的 API 密钥。
 
-如果没有，点击[硅基流动注册](https://cloud.siliconflow.cn/i/0ww8zcOn)进行注册
+如果没有，点击[硅基流动注册](https://cloud.siliconflow.cn/)进行注册
+
+ps：如果你[点击这里注册](https://cloud.siliconflow.cn/i/0ww8zcOn)，我和你都能获得14元赠金，感谢支持
 
 ### 操作步骤
 
