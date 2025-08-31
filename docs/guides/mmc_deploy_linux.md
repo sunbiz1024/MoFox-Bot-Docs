@@ -16,6 +16,7 @@
 首先，创建一个用于存放 MoFox_Bot 相关文件的文件夹，并通过 `git` 克隆 MoFox_Bot 主程序和 Napcat 适配器。
 
 ```shell
+cd ~
 mkdir MoFox_Bot_Deployment
 cd MoFox_Bot_Deployment
 git clone https://github.com/MoFox-Studio/MoFox_Bot.git
