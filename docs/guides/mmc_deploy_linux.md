@@ -2,6 +2,10 @@
 
 欢迎使用 MoFox_Bot！本指南将引导您完成在 Linux 环境下部署 MoFox_Bot 的全部过程。
 
+::: warning
+以下内容假设你对Linux系统有一定的了解，如果觉得难以理解，请用使用Windows系统部署Windows部署指南 [MoFox_Bot Windows 部署指南](./deployment_guide.md)，这将帮助您了解部署的核心流程和通用配置。
+:::
+
 ## 1. 系统要求
 
 - **操作系统**: 任何主流的 Linux 发行版 (如 Ubuntu, Debian, CentOS)

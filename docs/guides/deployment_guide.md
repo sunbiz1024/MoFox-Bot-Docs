@@ -2,6 +2,10 @@
 
 欢迎使用 MoFox_Bot！本指南将引导您完成在 Windows 环境下部署 MoFox_Bot 的全部过程。
 
+::: warning
+本教程为部署到QQ平台的教程，不代表其他平台的部署方式相同
+:::
+
 ## 1. 系统要求
 
 - **操作系统**: Windows 10 或 Windows 11
