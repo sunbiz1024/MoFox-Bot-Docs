@@ -29,7 +29,9 @@ git clone https://github.com/MoFox-Studio/Napcat-Adapter.git
 **安装 uv:**
 
 ```shell
-pip install uv
+pip3 install uv --break-system-packages -i https://mirrors.huaweicloud.com/repository/pypi/simple/
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
 ```
 
 ### 第三步：依赖安装
