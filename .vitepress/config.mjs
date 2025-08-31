@@ -90,6 +90,7 @@ export default defineConfig({
           text: '指南',
           items: [
             { text: 'Windows部署指南', link: '/docs/guides/deployment_guide' },
+            { text: 'Linux部署指南', link: '/docs/guides/mmc_deploy_linux' },
             { text: '模型配置快速上手', link: '/docs/guides/quick_start_model_config' },
             { text: 'Bot配置文件指南', link: '/docs/guides/bot_config_guide' },
             { text: '模型配置指南(进阶)', link: '/docs/guides/model_configuration_guide' },

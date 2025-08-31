@@ -1,10 +1,10 @@
-# MoFox_Bot 部署指南
+# MoFox_Bot Linux 部署指南
 
-欢迎使用 MoFox_Bot！本指南将引导您完成在 Windows 环境下部署 MoFox_Bot 的全部过程。
+欢迎使用 MoFox_Bot！本指南将引导您完成在 Linux 环境下部署 MoFox_Bot 的全部过程。
 
 ## 1. 系统要求
 
-- **操作系统**: Windows 10 或 Windows 11
+- **操作系统**: 任何主流的 Linux 发行版 (如 Ubuntu, Debian, CentOS)
 - **Python**: 版本 >= 3.10
 - **Git**: 用于克隆项目仓库
 - **uv**: 推荐的 Python 包管理器 (版本 >= 0.1.0)
@@ -18,7 +18,7 @@
 ```shell
 mkdir MoFox_Bot_Deployment
 cd MoFox_Bot_Deployment
-git clone hhttps://github.com/MoFox-Studio/MoFox_Bot.git
+git clone https://github.com/MoFox-Studio/MoFox_Bot.git
 git clone https://github.com/MoFox-Studio/Napcat-Adapter.git
 ```
 
@@ -40,8 +40,8 @@ pip install uv
 
   ```shell
   uv venv
-  # 在 Windows 上激活虚拟环境
-  .venv\Scripts\activate
+  # 在 Linux 上激活虚拟环境
+  source .venv/bin/activate
   uv pip install -r MoFox_Bot/requirements.txt -i https://mirrors.aliyun.com/pypi/simple --upgrade
   uv pip install -r Napcat-Adapter/requirements.txt -i https://mirrors.aliyun.com/pypi/simple --upgrade
   ```
@@ -49,28 +49,35 @@ pip install uv
 - **备选方案：使用原生 venv 和 pip:**
 
   ```shell
-  python -m venv .venv
-  # 在 Windows 上激活虚拟环境
-  .venv\Scripts\activate
+  python3 -m venv .venv
+  # 在 Linux 上激活虚拟环境
+  source .venv/bin/activate
   pip install -r MoFox_Bot/requirements.txt -i https://mirrors.aliyun.com/pypi/simple --upgrade
   pip install -r Napcat-Adapter/requirements.txt -i https://mirrors.aliyun.com/pypi/simple --upgrade
   ```
- 
+
 ### 第四步：配置 MoFox_Bot 和 Adapter
 
 **1. MoFox_Bot 配置:**
- 
- - **主配置文件**：在 `mmc` 文件夹中，将 `template/bot_config_template.toml` 复制到 `config/bot_config.toml`。打开这个新文件，至少需要填写你的**机器人QQ号**和**管理员QQ号**。
- 
+
+ - **主配置文件**：在 `mmc` 文件夹中，将 `template/bot_config_template.toml` 复制到 `config/bot_config.toml`。
+   ```shell
+   cp mmc/template/bot_config_template.toml mmc/config/bot_config.toml
+   ```
+   打开这个新文件，至少需要填写你的**机器人QQ号**和**管理员QQ号**。
+
  - **模型配置文件 (关键步骤！)**
-  - 请参照[模型配置快速上手](guides/quick_start_model_config.md)指南，创建并配置 `model_config.toml` 文件。
- 
+   - 请参照[模型配置快速上手](guides/quick_start_model_config.md)指南，创建并配置 `model_config.toml` 文件。
+
  > 对于新手，**完成以上步骤即可让机器人开口说话**！我们已经为您提供了一套完整的默认配置。
  > 如果你想了解更多关于模型的配置，或者想使用本地模型，请参考 [模型配置指南](model_configuration_guide.md)。
 
 **2. Napcat-Adapter 配置:**
 
 - 在 `Napcat-Adapter` 文件夹中，将 `template/template_config.toml` 复制到根目录下的config目录并改名为 `config.toml`。
+  ```shell
+  cp Napcat-Adapter/template/template_config.toml Napcat-Adapter/config/config.toml
+  ```
 - 打开 `config.toml` 文件，配置 `[napcat_server]` 和 `[maibot_server]` 字段。
   - `[napcat_server]` 的 `port` 应与 Napcat 设置的反向代理 URL 中的端口相同。
   - `[maibot_server]` 的 `port` 应与 MoFox_Bot 的 `bot_config.toml` 中设置的端口相同。
@@ -83,6 +90,9 @@ pip install uv
 - **功能与白名单配置**:
   `Napcat-Adapter` 支持通过 `features.toml` 文件进行功能和权限的详细配置。
   - **创建配置文件**: 在 `Napcat-Adapter` 文件夹中，将 `template/features_template.toml` 复制到根目录下的config目录并改名为 `features.toml`。
+    ```shell
+    cp Napcat-Adapter/template/features_template.toml Napcat-Adapter/config/features.toml
+    ```
   - **配置白名单**: 打开 `features.toml` 文件，根据其中的注释配置 `group_list` 和 `private_list` 等选项。
   > **注意**：`features.toml` 文件支持热重载，修改后无需重启 `Napcat-Adapter` 即可生效。
 
@@ -93,13 +103,13 @@ pip install uv
 请参考 [NapCatQQ 文档](https://napcat-qq.github.io/) 进行部署和启动。
 
 **2. 启动 MoFox_Bot:**
- 
+
 进入 `mmc` 文件夹并启动程序。
- 
+
 - **使用 uv:**
 
   ```shell
-  # 确保你已经激活了虚拟环境 (.venv\Scripts\activate)
+  # 确保你已经激活了虚拟环境 (source .venv/bin/activate)
   cd MoFox_Bot
   uv run python bot.py
   ```
@@ -107,7 +117,7 @@ pip install uv
 - **不使用 uv:**
 
   ```shell
-  # 确保你已经激活了虚拟环境 (.venv\Scripts\activate)
+  # 确保你已经激活了虚拟环境 (source .venv/bin/activate)
   cd MoFox_Bot
   python bot.py
   ```
@@ -119,7 +129,7 @@ pip install uv
 - **使用 uv:**
 
   ```shell
-  # 确保你已经激活了虚拟环境 (.venv\Scripts\activate)
+  # 确保你已经激活了虚拟环境 (source .venv/bin/activate)
   cd Napcat-Adapter
   uv run python main.py
   ```
@@ -127,7 +137,7 @@ pip install uv
 - **不使用 uv:**
 
   ```shell
-  # 确保你已经激活了虚拟环境 (.venv\Scripts\activate)
+  # 确保你已经激活了虚拟环境 (source .venv/bin/activate)
   cd Napcat-Adapter
   python main.py
   ```
