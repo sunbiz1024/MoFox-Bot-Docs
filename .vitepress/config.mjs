@@ -79,7 +79,8 @@ export default defineConfig({
         items: [
           { text: 'MoFox-Studio', link: 'https://github.com/MoFox-Studio' },
           { text: 'MoFox_Bot', link: 'https://github.com/MoFox-Studio/MoFox_Bot' },
-          { text: 'MoFox_Docs', link: 'https://github.com/MoFox-Studio/MoFox-Bot-Docs' }
+          { text: 'MoFox_Docs', link: 'https://github.com/MoFox-Studio/MoFox-Bot-Docs' },
+          { text: 'MoFox-Bot-QQ群', link: 'https://qm.qq.com/q/jfeu7Dq7VS'},
         ]
       }
     ],
@@ -91,6 +92,7 @@ export default defineConfig({
           items: [
             { text: 'Windows部署指南', link: '/docs/guides/deployment_guide' },
             { text: 'Linux部署指南', link: '/docs/guides/mmc_deploy_linux' },
+            { text: 'android部署指南', link: '/docs/guides/mmc_deploy_android' },
             {
               text: '配置文件教程',
               items: [
@@ -120,7 +122,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/MoFox-Studio/MoFox_Bot' }
+      { icon: 'github', link: 'https://github.com/MoFox-Studio/MoFox_Bot' },
     ],
     search: {
       provider: 'local'
