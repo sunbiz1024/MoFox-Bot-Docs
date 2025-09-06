@@ -36,6 +36,7 @@ const devSidebar = [
       { text: '命令指南', link: '/docs/development/plugins/PLUS_COMMAND_GUIDE' },
       { text: '可用范围控制', link: '/docs/development/plugins/command-scope' },
       { text: 'Action Components', link: '/docs/development/plugins/action-components' },
+      { text: 'planner大脑和小脑选择', link: '/docs/development/plugins/planner_brain_distinction' },
       {
         text: '插件 API',
         items: [
