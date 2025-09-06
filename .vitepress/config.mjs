@@ -106,6 +106,7 @@ export default defineConfig({
               items: [
                 { text: '指令权限系统使用教程', link: '/docs/guides/permission_usage' },
                 { text: '视频识别功能', link: '/docs/guides/video_recognition' },
+                { text: '日程与计划系统介绍', link: '/docs/guides/schedule_and_planning_guide' },
               ]
             },
             {
