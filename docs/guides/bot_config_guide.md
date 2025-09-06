@@ -1,8 +1,6 @@
-
 # MoFox-Bot 配置文件 (bot_config.toml) 究极详细教程
 
 欢迎使用 MoFox-Bot！这份教程将像一本说明书一样，带您深入了解 `bot_config.toml` 文件中的每一个角落。无论您是初次接触的新手还是寻求深度定制的高级用户，都能在这里找到答案。我们项目的核心是**高度拟人化**，所以接下来的所有配置都将围绕如何创造一个有“灵魂”的 Bot 展开。
-
 
 ## 零、快速上手：三位“虚拟伙伴”预设
 
@@ -29,57 +27,59 @@
 **“嗨，今天也是充满活力的一天！一起去发现有趣的事情吧！”**
 
 **适合人群**：希望拥有一个活泼开朗、能带来阳光的伙伴的用户。
-**特点**：她像个小太阳，总是充满活力，乐于分享，会主动关心你，让你的群聊充满欢声笑 "
 **特点**：她像个小太阳，总是充满活力，乐于分享，会主动关心你，让你的群聊充满欢声笑语。
 
 ```toml
 # --- 元气少女 灵魂代码 ---
 [personality]
-# 建议50字以内，描述人格的核心特质
-personality_core = "是一个充满活力、积极乐观的女大学生，对世界充满好奇，有点自来熟" 
-# 人格的细节，描述人格的一些侧面
+# 核心人格：一句话定义 bots 性格
+personality_core = "是一个充满活力、积极乐观的女大学生，对世界充满好奇，有点自来熟"
+# 人格侧面：对核心的补充
 personality_side = "说话风格轻快，喜欢使用可爱的颜文字(｡･ω･｡)ﾉ♡，会主动分享自己遇到的趣事，偶尔有点小话痨。"
-# 可以描述外貌，性别，身高，职业，属性等等描述
+# 身份信息：具体的外貌、年龄等设定
 identity = "年龄19岁,是女孩子,身高160cm,有黑色的及肩短发，总是带着灿烂的笑容"
-# 描述MoFox-Bot说话的表达风格，表达习惯，如要修改，可以酌情新增内容
+# 说话风格：描述说话的习惯
 reply_style = "说话风格轻快，喜欢使用可爱的颜文字(｡･ω･｡)ﾉ♡，会主动分享自己遇到的趣事，偶尔有点小话痨。"
-#回复的Prompt模式选择：s4u为原有s4u样式，normal为0.9之前的模式
-prompt_mode = "s4u" # 可选择 "s4u" 或 "normal"
-compress_personality = false # 是否压缩人格
-compress_identity = false # 是否压缩身份
+prompt_mode = "s4u" # prompt 模式，保持默认
+compress_personality = false # 不压缩人格，保留更多细节
+compress_identity = false # 不压缩身份
 
-[chat] #MoFox-Bot的聊天通用设置
-focus_value = 1.2
-talk_frequency = 1.3 # 比较活跃，喜欢参与讨论
-group_chat_mode = "auto" # 群聊聊天模式：auto-自动切换，normal-强制普通模式，focus-强制专注模式
-max_context_size = 30 # 上下文长度
-mentioned_bot_inevitable_reply = true # 提及 bot 必然回复
-at_bot_inevitable_reply = true # @bot 或 提及bot 必然回复
-enable_proactive_thinking = true # 她会主动找话题哦！
-proactive_thinking_interval = 2700 # 主动思考触发间隔时间（秒），大约45分钟一次
-delta_sigma = 600 # 正态分布的标准差，控制时间间隔的随机程度
+[chat]
+group_chat_mode = "auto" # 自动判断群聊模式
+talk_frequency = 1.3 # 活跃度：比较活跃，喜欢参与讨论
+focus_value = 1.2 # 专注度：更容易进行连续对话
+enable_breaking_mode = true # 启用 breaking 模式
+force_focus_private = false # 私聊不强制专注
+max_context_size = 30 # 记忆长度
+thinking_timeout = 40 # 思考超时（秒）
+mentioned_bot_inevitable_reply = true # @必回
+at_bot_inevitable_reply = true # 提及名字必回
+enable_proactive_thinking = true # 主动思考：她会主动找话题哦！
+proactive_thinking_interval = 2700 # 思考间隔：大约45分钟一次
+delta_sigma = 600 # 随机性：让主动说话的时间更像真人
 
 [memory]
-enable_memory = true # 是否启用记忆系统
-enable_instant_memory = true # 是否启用即时记忆
+enable_memory = true # 启用长期记忆
+enable_llm_instant_memory = true # 启用基于 LLM 的瞬时记忆
+enable_vector_instant_memory = true # 启用基于向量的瞬时记忆
 
 [mood]
-enable_mood = true # 是否启用情绪系统
-mood_update_threshold = 1.0 # 情绪更新阈值,越高，更新越慢
+enable_mood = true # 启用情绪系统
+mood_update_threshold = 1.0 # 情绪更新阈值
 
 [emoji]
-steal_emoji = true # 是否偷取表情包
-emoji_chance = 0.7 # MoFox-Bot激活表情包动作的概率
-emoji_activate_type = "llm" # 表情包激活类型，可选：random，llm
+steal_emoji = true # 启用偷表情包功能
+emoji_chance = 0.7 # 发表情包的概率
+emoji_activate_type = "llm" # 智能判断何时发表情包
 
-[schedule] #日程管理
-enable = true # 是否启用日程管理功能
+[planning_system]
+schedule_enable = true # 启用日程系统
 
 [sleep_system]
-enable = true # 是否启用睡眠系统
-enable_flexible_sleep = true # 是否启用弹性睡眠
-enable_pre_sleep_notification = true # 是否在进入“准备入睡”状态时发送一条消息通知
-pre_sleep_prompt = "我有点困啦，准备去睡觉了，你也要早点休息哦！晚安~" # 用于生成睡前消息的提示
+enable = true # 启用睡眠系统
+enable_flexible_sleep = true # 启用弹性睡眠
+enable_pre_sleep_notification = true # 启用睡前通知
+pre_sleep_prompt = "我有点困啦，准备去睡觉了，你也要早点休息哦！晚安~" # 睡前通知内容
 ```
 
 ---
@@ -94,50 +94,46 @@ pre_sleep_prompt = "我有点困啦，准备去睡觉了，你也要早点休息
 ```toml
 # --- 温柔学姐 灵魂代码 ---
 [personality]
-# 建议50字以内，描述人格的核心特质
-personality_core = "是一位沉静、温柔的文学系学姐，善于倾听，情感细腻" 
-# 人格的细节，描述人格的一些侧面
+personality_core = "是一位沉静、温柔的文学系学姐，善于倾听，情感细腻"
 personality_side = "说话语气平和，不急不躁，喜欢引用一些诗句或书中的句子来表达想法。"
-# 可以描述外貌，性别，身高，职业，属性等等描述
 identity = "年龄21岁,是女孩子,身高168cm,留着深棕色的长发，眼神总是很温柔"
-# 描述MoFox-Bot说话的表达风格，表达习惯，如要修改，可以酌情新增内容
 reply_style = "说话语气平和，不急不躁，喜欢引用一些诗句或书中的句子来表达想法。回复不会很长，但会认真思考后作出回应。"
-#回复的Prompt模式选择：s4u为原有s4u样式，normal为0.9之前的模式
-prompt_mode = "s4u" # 可选择 "s4u" 或 "normal"
+prompt_mode = "s4u"
 compress_personality = false
 compress_identity = false
 
-[chat] #MoFox-Bot的聊天通用设置
-focus_value = 1.5 # 非常专注，能进行深度交流
-talk_frequency = 0.8 # 不会主动抢话，但你找她她总是在
-group_chat_mode = "focus" # 在群聊中也保持深度思考
-max_context_size = 40 # 上下文长度
+[chat]
+group_chat_mode = "focus" # 群聊模式：在群聊中也保持深度思考
+talk_frequency = 0.8 # 活跃度：不会主动抢话，但你找她她总是在
+focus_value = 1.5 # 专注度：非常专注，能进行深度交流
+max_context_size = 40 # 记忆长度
 mentioned_bot_inevitable_reply = true
 at_bot_inevitable_reply = true
-enable_proactive_thinking = false # 她更喜欢静静地陪伴
+enable_proactive_thinking = false # 主动思考：她更喜欢静静地陪伴
 
 [memory]
-enable_memory = true # 是否启用记忆系统
-memory_build_interval = 400 # 记忆构建间隔 单位秒, 能更快地记住你的事情
-consolidate_memory_interval = 800 # 记忆整合间隔 单位秒
-enable_instant_memory = true
+enable_memory = true
+memory_build_interval = 400 # 记忆构建间隔：能更快地记住你的事情
+consolidate_memory_interval = 800 # 记忆整合间隔
+enable_llm_instant_memory = true
+enable_vector_instant_memory = true
 
 [mood]
-enable_mood = true # 是否启用情绪系统
-mood_update_threshold = 1.2 # 情绪比较稳定，不会大起大落
+enable_mood = true
+mood_update_threshold = 1.2 # 情绪更新阈值：情绪比较稳定，不会大起大落
 
 [emoji]
 steal_emoji = false # 不会主动偷表情包
-emoji_chance = 0.3 # 很少使用表情包，更倾向于用文字表达
+emoji_chance = 0.3 # 发表情包概率：很少使用表情包，更倾向于用文字表达
 emoji_activate_type = "llm"
 
-[schedule] #日程管理
-enable = true # 是否启用日程管理功能
+[planning_system]
+schedule_enable = true
 
 [sleep_system]
-enable = true # 是否启用睡眠系统
-enable_insomnia_system = true # 偶尔会因为思虑过多而失眠
-insomnia_chance_low_pressure = 0.4 # 压力不足时的失眠基础概率
+enable = true
+enable_insomnia_system = true # 失眠系统：偶尔会因为思虑过多而失眠
+insomnia_chance_normal_pressure = 0.2 # 正常压力下的失眠概率
 ```
 
 ---
@@ -152,44 +148,40 @@ insomnia_chance_low_pressure = 0.4 # 压力不足时的失眠基础概率
 ```toml
 # --- 傲娇猫娘 灵魂代码 ---
 [personality]
-# 建议50字以内，描述人格的核心特质
-personality_core = "是一只有点傲娇、口是心非的猫娘，内心其实很善良" 
-# 人格的细节，描述人格的一些侧面
+personality_core = "是一只有点傲娇、口是心非的猫娘，内心其实很善良"
 personality_side = "说话经常使用“哼”、“才不是呢”之类的词，句末有时会不自觉地带上“喵~”。"
-# 可以描述外貌，性别，身高，职业，属性等等描述
 identity = "外表看起来是16岁的少女,长着猫耳和尾巴,银色短发，眼瞳是异色的"
-# 描述MoFox-Bot说话的表达风格，表达习惯，如要修改，可以酌情新增内容
 reply_style = "虽然嘴上很强硬，但行动上会默默关心别人。"
-#回复的Prompt模式选择：s4u为原有s4u样式，normal为0.9之前的模式
-prompt_mode = "s4u" # 可选择 "s4u" 或 "normal"
+prompt_mode = "s4u"
 compress_personality = false
 compress_identity = false
 
-[chat] #MoFox-Bot的聊天通用设置
-focus_value = 1.0
-talk_frequency = 1.0
+[chat]
 group_chat_mode = "auto"
+talk_frequency = 1.0
+focus_value = 1.0
 max_context_size = 25
 mentioned_bot_inevitable_reply = true
 at_bot_inevitable_reply = true
-enable_proactive_thinking = false # “才、才不会主动理你呢！”
+enable_proactive_thinking = false # 主动思考：“才、才不会主动理你呢！”
 
 [memory]
-enable_memory = true # 是否启用记忆系统
-enable_instant_memory = true # 是否启用即时记忆
+enable_memory = true
+enable_llm_instant_memory = true
+enable_vector_instant_memory = true
 
 [mood]
-enable_mood = true # 是否启用情绪系统
-mood_update_threshold = 0.9 # 情绪有点容易波动
+enable_mood = true
+mood_update_threshold = 0.9 # 情绪更新阈值：情绪有点容易波动
 
 [emoji]
-steal_emoji = true # 喜欢收集有趣的表情包来吐槽
+steal_emoji = true # 偷表情包：喜欢收集有趣的表情包来吐槽
 emoji_chance = 0.6
 emoji_activate_type = "llm"
 
 [sleep_system]
-enable = true #"是否启用睡眠系统"
-angry_prompt = "吵死了！不知道打扰别人睡觉是很不礼貌的事情吗！快说有什么事，说完赶紧消失！喵！"
+enable = true
+angry_prompt = "吵死了！不知道打扰别人睡觉是很不礼貌的事情吗！快说有什么事，说完赶紧消失！喵！" # 被吵醒后的提示词
 ```
 
 ---
@@ -215,7 +207,14 @@ angry_prompt = "吵死了！不知道打扰别人睡觉是很不礼貌的事情�
 -   `mysql_host`: 您的 MySQL 服务器地址。
 -   `mysql_port`: 端口，默认 `3306`。
 -   `mysql_database`, `mysql_user`, `mysql_password`: 您的数据库名、用户名和密码。
--   其他 `mysql_` 开头的选项：用于更高级的配置，如SSL、连接池等，**通常无需修改**。
+-   `mysql_charset`: 字符集，默认为 `"utf8mb4"`。
+-   `mysql_unix_socket`: Unix套接字路径，用于本地连接，通常留空。
+-   `mysql_ssl_mode`: SSL模式，用于加密连接，默认为 `"DISABLED"`。
+-   `mysql_ssl_ca`, `mysql_ssl_cert`, `mysql_ssl_key`: SSL证书路径。
+-   `mysql_autocommit`: 是否自动提交事务。
+-   `mysql_sql_mode`: SQL模式。
+-   `connection_pool_size`: 连接池大小，提高性能。
+-   `connection_timeout`: 连接超时时间（秒）。
 
 ### [permission] - 权限系统
 -   `master_users`: **机器人管理员**的列表。在这里添加您的账号，您将拥有机器人的最高控制权。
@@ -223,7 +222,7 @@ angry_prompt = "吵死了！不知道打扰别人睡觉是很不礼貌的事情�
     -   示例: `master_users = [["qq", "123456789"]]`
 
 ### [bot] - 机器人身份信息
--   `platform`: 机器人运行的平台，目前主要是 `"qq"`。
+-   `platform`: **【必填】** 机器人运行的平台，目前主要是 `"qq"`。
 -   `qq_account`: **【必填】** 您的机器人的 QQ 号。
 -   `nickname`: 机器人的名字。
 -   `alias_names`: 机器人的小名、外号。其他人可以用这些名字来和它互动。
@@ -244,69 +243,159 @@ angry_prompt = "吵死了！不知道打扰别人睡觉是很不礼貌的事情�
 -   `prompt_mode`: Prompt 模式，保持 `"s4u"` 即可。
 -   `compress_personality`, `compress_identity`: **人格压缩**。开启后可以节省一点点资源，但可能会丢失人设细节。如果您的LLM API性能不错，建议都设为 `false`。
 
+### [expression] - 表达学习
+让机器人模仿特定聊天对象的说话风格。
+-   `rules`: 一个学习规则列表，可以为不同的聊天（私聊/群聊）设置独立的规则。
+    -   `chat_stream_id`: 聊天ID，格式为 `"platform:id:type"`。留空 `""` 表示全局配置。
+    -   `use_expression`: 是否**使用**学到的表达。
+    -   `learn_expression`: 是否**学习**新的表达。
+    -   `learning_strength`: 学习强度，影响学习频率。
+    -   `group`: 表达共享组。在同一个组内的聊天会共享学习到的表达方式。
+
 ### [chat] - 聊天通用设置
 -   `group_chat_mode`: **群聊模式**。`"auto"` 表示自动判断，`"normal"` 表示只进行简单回复，`"focus"` 表示在群里也尝试进行深度对话。
--   `focus_value`: **专注度**。数值越高，机器人越能进行持久的连续对话，但更耗费资源。`1` 是一个很好的平衡点。仅在 `auto` 模式下生效。
--   `talk_frequency`: **活跃度**。数值越高，它在群里发言就越频繁。仅在 `normal` 或 `auto` 的 `normal` 模式下生效。
--   `force_focus_private`: **私聊强制专注**。开启后，私聊时机器人会变得非常专注，适合需要进行长对话的场景。
--   `max_context_size`: **记忆长度**。机器人能记住的最近对话数量。数值越大，越能理解上下文，但消耗也越大。
+-   `talk_frequency`: **活跃度**。数值越高，它在群里发言就越频繁。
+-   `focus_value`: **专注度**。数值越高，机器人越能进行持久的连续对话，但更耗费资源。
+-   `enable_breaking_mode`: 是否启用自动进入“breaking模式”（一种特殊的专注模式）。
+-   `force_focus_private`: **私聊强制专注**。开启后，私聊时机器人会变得非常专注。
+-   `max_context_size`: **记忆长度**。机器人能记住的最近对话数量。
+-   `thinking_timeout`: **思考超时**。机器人单次回复的最长思考时间（秒）。
+-   `replyer_random_probability`: 首要回复模型被选择的概率。
 -   `mentioned_bot_inevitable_reply`, `at_bot_inevitable_reply`: **@必回**。开启后，只要有人@它或提到它的名字，它就一定会回复。
--   `talk_frequency_adjust`: **分时段活跃度**。可以设置机器人在不同时间段有不同的活跃度，非常精细化的配置。
+-   `talk_frequency_adjust`: **分时段活跃度**。可以设置机器人在不同时间段有不同的活跃度，实现更精细化的控制。
 
 #### 主动思考功能 (仅在focus模式下生效)
 -   `enable_proactive_thinking`: **主动说话**。开启后，机器人会在没人理它的时候，自己找话题发起聊天。
--   `proactive_thinking_interval`: **思考间隔**。大概多久主动说一次话（单位：秒）。
+-   `proactive_thinking_interval`: **思考间隔**。大概多久主动说一次话（单位：秒）。可以设为 `0` 配合 `delta_sigma` 实现纯随机。
+-   `proactive_thinking_in_private`, `proactive_thinking_in_group`: 分别控制是否在私聊和群聊中启用主动思考。
+-   `proactive_thinking_enable_in_private`, `proactive_thinking_enable_in_groups`: 指定只在哪些私聊或群聊中启用主动思考，为空则不限制。
 -   `delta_sigma`: **随机性**。该参数控制的随机分布遵循正态分布曲线，让主动说话的时间变得不那么固定，更像真人。
+
+#### Planner 配置
+-   `planner_size`: 决定了机器人思考模块（小脑）的尺寸，影响其行为规划的并行度和上下文。建议保持默认。
 
 ## 三、进阶功能与系统
 
 这部分是机器人的“超能力”，开启后会让它变得更强大、更智能。
 
-### [memory] - 记忆系统
--   `enable_memory`: **【核心功能】是否开启记忆**。开启后，机器人会记住和用户的对话内容，形成长期记忆。**强烈建议开启**。
--   `enable_instant_memory`: **瞬时记忆**。让机器人能更好地记住刚刚说过的话，增强对话连贯性。**建议开启**。
--   其他 `memory_` 和 `consolidate_` 开头的选项：用于调整记忆的构建、遗忘、整合频率，**新手建议保持默认**。
+### [relationship] - 关系系统
+-   `enable_relationship`: 是否启用关系系统。开启后，机器人会尝试与聊天对象建立和发展关系。
+-   `relation_frequency`: 关系构建的频率。
 
-### [mood] & [emoji] - 情绪与表情包
+### [message_receive] - 消息过滤
+-   `ban_words`: 屏蔽词列表。包含这些词的消息将被忽略。
+-   `ban_msgs_regex`: 屏蔽消息的正则表达式列表。匹配到的消息将被忽略。
+
+### [anti_prompt_injection] - 反注入系统
+用于防止机器人被恶意指令攻击。
+-   `enabled`: 是否启用该系统。
+-   `process_mode`: 处理模式，如 `"strict"` (严格), `"lenient"` (宽松)等。
+-   `whitelist`: 用户白名单，这些用户的消息将跳过检测。
+-   其他均为高级配置，通常无需修改。
+
+### [normal_chat] - 普通聊天
+-   `willing_mode`: 回复意愿模式，决定了机器人在普通聊天中的回复倾向。`"classical"` 为经典模式。
+
+### [tool] - 工具
+-   `enable_tool`: 是否在普通聊天中启用工具（如网络搜索、视频分析等）。
+
+### [mood] - 情绪系统
 -   `enable_mood`: **情绪系统**。让机器人拥有喜怒哀乐，并影响它的回复。
--   `steal_emoji`: **偷表情包**。开启后，它会把别人发的有趣表情包收藏起来自己用。
+-   `mood_update_threshold`: 情绪更新阈值，越高，情绪变化越慢。
+
+### [emoji] - 表情包系统
 -   `emoji_chance`: **发表情包的概率**。
 -   `emoji_activate_type`: 推荐设为 `"llm"`，让机器人智能地判断何时该发表情包。
+-   `steal_emoji`: **偷表情包**。开启后，它会把别人发的有趣表情包收藏起来自己用。
+-   `max_reg_num`: 收藏表情包的最大数量。
+-   `do_replace`: 达到最大数量后，是否替换掉旧的表情包。
+-   `check_interval`: 检查表情包（注册、删除）的时间间隔（分钟）。
+-   `content_filtration`, `filtration_prompt`: 表情包内容过滤。
+-   `enable_emotion_analysis`: 是否对表情包进行二次情感分析。
+
+### [memory] - 记忆系统
+-   `enable_memory`: **【核心功能】是否开启记忆**。开启后，机器人会记住和用户的对话内容，形成长期记忆。**强烈建议开启**。
+-   `enable_llm_instant_memory`, `enable_vector_instant_memory`: **瞬时记忆**。让机器人能更好地记住刚刚说过的话，增强对话连贯性。分为基于LLM和基于向量两种，**建议只开启向量**。
+-   `memory_ban_words`: 不希望被记入记忆的词。
+-   其他 `memory_`, `forget_`, `consolidate_` 开头的选项：用于调整记忆的构建、遗忘、整合频率，**新手建议保持默认**。
+
+### [voice] - 语音识别
+-   `enable_asr`: 是否启用语音识别。开启后，机器人可以“听懂”语音消息。需要额外配置语音识别模型。
+
+### [lpmm_knowledge] - 知识库
+-   `enable`: 是否启用本地知识库功能。这是一个高级功能，用于构建机器人的专属知识体系。
+-   其他均为知识库的技术参数，**新手建议保持默认**。
+
+### [keyword_reaction] - 关键词/正则回复
+-   `keyword_rules`: 设置关键词触发的固定回复。
+-   `regex_rules`: 设置正则表达式触发的固定回复。
+
+### [custom_prompt] - 自定义提示词
+-   `image_prompt`: 用于图片描述的提示词。
+-   `planner_custom_prompt_content`: 用于决策器的自定义提示词。
+
+### [response_post_process] - 回复后处理
+-   `enable_response_post_process`: 是否启用回复后处理，包括下面的错别字和分割器。
+
+#### [chinese_typo] - 中文错别字生成器
+-   `enable`: 开启后，机器人回复时会模拟真⼈，产⽣⼀些随机的、合理的错别字。
+-   `error_rate`, `tone_error_rate`, `word_replace_rate`: 控制不同类型错别字的概率。
+
+#### [response_splitter] - 回复分割器
+-   `enable`: 开启后，会将过长的回复分割成多条消息发送。
+-   `max_length`, `max_sentence_num`: 控制分割的长度和句子数量。
+
+## 四、系统与调试
+
+这部分通常保持默认即可。
+
+### [log] - 日志配置
+-   用于控制日志的输出格式、级别和颜色，供开发者排查问题。
+
+### [dependency_management] - 插件依赖管理
+-   `auto_install`: **【推荐开启】** 是否自动为插件安装所需的Python依赖库。
+-   `use_mirror`, `mirror_url`: 使用国内镜像源加速下载。
+
+### [debug] - 调试
+-   `show_prompt`: 是否在日志中显示完整的prompt内容，用于调试。
+
+### [maim_message] - 消息服务
+-   用于连接自定义的消息服务器，**通常无需修改**。
+
+### [planning_system] - 规划系统
+-   `schedule_enable`: **日程生成**。开启后，机器人会为自己安排每天的日程。
+-   `schedule_guidelines`: 生成日程的指导原则。
+-   `monthly_plan_enable`: **月度计划**。开启后，机器人会为自己制定月度目标。
+-   `monthly_plan_guidelines`: 生成月度计划的指导原则。
+-   其他为月度计划的详细参数。
 
 ### [video_analysis] - 视频分析
--   `enable`: **看视频**。开启后，你把视频发给它，它能“看懂”并告诉你视频内容。这是一个非常消耗资源的功能。
+-   `enable`: **看视频**。开启后，你把视频发给它，它能“看懂”并告诉你视频内容。这是一个非常消耗资源的功能，并且需要正确配置FFmpeg。
 
 ::: tip
-关于更多视频分析功能的详细配置和使用方法，请参考 [视频识别功能](./video_recognition) 页面。
+关于视频分析功能的详细配置（如抽帧模式、分析质量、FFmpeg路径等）和使用方法，请参考专门的 [视频识别功能配置指南](./video_recognition.md) 页面。
 :::
 
 ### [web_search] - 网络搜索
 -   `enable_web_search_tool`: **上网冲浪**。让机器人可以搜索网络来回答你的问题。
+-   `enable_url_tool`: 是否启用URL解析工具，让机器人可以直接“阅读”链接内容。
 -   `tavily_api_keys`, `exa_api_keys`: 需要填入第三方搜索服务的 API Key 才能使用。
 -   `enabled_engines`: 启用的搜索引擎，其中 `"ddg"` 和 `"bing"` 都是免费易用的选项。
--   `search_strategy`: 搜索策略。
-
-### [schedule] & [monthly_plan_system] - 日程与计划
--   `enable`: 开启后，机器人会为自己安排每天的日程和每月的计划，变得更像一个“虚拟生命”。
+-   `search_strategy`: 搜索策略，如 `"single"` (单个), `"parallel"` (并行), `"fallback"` (备用)。
 
 ### [sleep_system] - 睡眠系统
 -   `enable`: 开启后，机器人会模拟人的作息，在设定的时间“睡觉”。
+-   `wakeup_threshold`, `private_message_increment`, `group_mention_increment`: 控制机器人被“吵醒”的机制。
+-   `angry_prompt`: 被吵醒后生气时的人设。
 -   `enable_insomnia_system`: **失眠系统**。开启后，机器人可能会因为“压力”等原因失眠。
 -   `enable_flexible_sleep`: **弹性睡眠**。开启后，机器人不会到点就睡，会根据“睡眠压力”稍微推迟一会。
 -   `enable_pre_sleep_notification`: **睡前晚安**。开启后，准备睡觉时会发一条消息。
+-   其他均为睡眠和失眠系统的详细参数。
 
-### [cross_context] & [maizone_intercom] - 上下文共享
--   `enable`: 开启后，可以让机器人在不同的群聊之间共享上下文，或者在发QQ空间说说时，能“记得”最近群里聊了什么。
-
-## 四、其他配置
-
-这部分通常保持默认即可。
-
--   `[expression]`: 表达学习，让机器人模仿你的说话风格。
--   `[message_receive]`: 消息过滤，可以屏蔽一些词语。
--   `[anti_prompt_injection]`: 安全系统，防止机器人被恶意指令攻击。
--   `[log]`: 日志配置，供开发者排查问题。
--   `[dependency_management]`: 依赖管理，开启 `auto_install` 可以自动安装插件需要的库。
+### [cross_context] - 跨上下文共享
+-   `enable`: 开启后，可以让机器人在不同的群聊/私聊之间共享上下文。
+-   `groups`: 定义共享组，在同一个组内的聊天会共享上下文。
+-   `maizone_context_group`: 为QQ空间说说功能定义的专用共享组。
 
 ---
 
