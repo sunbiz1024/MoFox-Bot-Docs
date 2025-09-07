@@ -18,6 +18,12 @@
 
 这是最关键的一步！你需要告诉 Bot 从哪里获取 AI 模型的能力。这通常需要两样东西：`api_key` (你的身份凭证) 和 `base_url` (餐厅的地址)。
 
+`api_key` 现在支持更灵活的配置方式：
+*   **单个密钥**：`api_key = "sk-xxxxxxxx"`
+*   **多个密钥（实现轮询）**：`api_key = ["sk-key1", "sk-key2", "sk-key3"]`
+
+使用多个密钥可以有效分担请求压力，并在某个密钥失效时自动切换，提高稳定性。
+
 请打开你的 `model_config.toml` 文件，找到 `[[api_providers]]` 部分。下面我们提供了几个常用服务商的配置模板，**你只需要选择你拥有的服务商，复制对应的代码块，然后填入你自己的 `api_key` 即可！**
 
 ---
@@ -29,12 +35,25 @@
 > DeepSeek 是一个优秀且经济的选择，官方网站：[https://www.deepseek.com/](https://www.deepseek.com/)
 
 ```toml
-# --- DeepSeek 配置 ---
+# --- DeepSeek 配置 (单个Key示例) ---
 [[api_providers]]
 name = "DeepSeek"                       # 餐厅名字 (我们自己取，方便后面用)
 base_url = "https://api.deepseek.cn/v1" # 餐厅地址 (官方固定的)
 api_key = "sk-xxxxxxxxxxxxxxxxxxxxxxxx"   # 你的API Key (从DeepSeek官网获取，替换这串文字)
 client_type = "openai"                  # 客户端类型 (照抄即可)
+
+# --- DeepSeek 配置 (多个Key轮询示例) ---
+# 如果你有多个DeepSeek的API Key，可以像下面这样配置
+# Bot会在每次请求时自动轮流使用这些Key
+# [[api_providers]]
+# name = "DeepSeek_Polling"
+# base_url = "https://api.deepseek.cn/v1"
+# api_key = [
+#   "sk-key_1_xxxxxxxxxxxx",
+#   "sk-key_2_xxxxxxxxxxxx",
+#   "sk-key_3_xxxxxxxxxxxx"
+# ]
+# client_type = "openai"
 ```
 
 #### 2. 如果你使用 SiliconFlow
@@ -240,6 +259,9 @@ max_tokens = 800
 
 **Q: `api_key` 是什么？从哪里获取？**
 A: `api_key` 就像是你的会员卡号，用来证明你有权使用这家“餐厅”的服务。你需要去对应的服务商官方网站（比如 DeepSeek, SiliconFlow）注册账号，然后在个人中心的“API密钥”或类似页面找到它。它通常是一长串以 `sk-` 开头的字符。
+
+**Q: 我可以配置多个 `api_key` 吗？**
+A: **可以！** 新版配置支持 `api_key` 设置为列表形式，例如 `api_key = ["key1", "key2"]`。当配置为列表时，Bot 会在每次请求时自动轮流使用这些密钥，这有助于分担单个密钥的请求压力，并在某个密钥失效时自动切换到下一个，非常推荐！
 
 **Q: 我怎么知道 `model_identifier` (菜品官方名) 是什么？**
 A: 这也需要去服务商的官方网站查找。它们通常会有一个“模型列表”或“API文档”页面，上面会列出所有支持的模型以及它们的官方名称/ID。
