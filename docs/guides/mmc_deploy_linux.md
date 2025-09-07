@@ -71,7 +71,7 @@ source ~/.bashrc
 
  - **主配置文件**：在 `mmc` 文件夹中，将 `template/bot_config_template.toml` 复制到 `config/bot_config.toml`。
    ```shell
-   cp mmc/template/bot_config_template.toml mmc/config/bot_config.toml
+   cp MoFox_Bot/template/bot_config_template.toml MoFox_Bot/config/bot_config.toml
    ```
    打开这个新文件，至少需要填写你的**机器人QQ号**和**管理员QQ号**。
 

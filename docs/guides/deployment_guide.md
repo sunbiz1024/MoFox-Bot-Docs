@@ -66,7 +66,7 @@ pip install uv
 
 **1. MoFox_Bot 配置:**
  
- - **主配置文件**：在 `mmc` 文件夹中，将 `template/bot_config_template.toml` 复制到 `config/bot_config.toml`。打开这个新文件，至少需要填写你的**机器人QQ号**和**管理员QQ号**。
+ - **主配置文件**：在 `MoFox_Bot` 文件夹中，将 `template/bot_config_template.toml` 复制到 `config/bot_config.toml`。打开这个新文件，至少需要填写你的**机器人QQ号**和**管理员QQ号**。
  
  - **模型配置文件 (关键步骤！)**
   - 请参照[模型配置快速上手](guides/quick_start_model_config.md)指南，创建并配置 `model_config.toml` 文件。
@@ -100,7 +100,7 @@ pip install uv
 
 **2. 启动 MoFox_Bot:**
  
-进入 `mmc` 文件夹并启动程序。
+进入 `MoFox_Bot` 文件夹并启动程序。
  
 - **使用 uv:**
 
