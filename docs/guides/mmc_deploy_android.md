@@ -111,6 +111,7 @@ source ~/.bashrc
     -   复制并重命名 `bot_config_template.toml` 为 `bot_config.toml`。
     -   填写机器人 QQ 号和管理员 QQ 号。
     -   参照 [模型配置快速上手](quick_start_model_config.md) 创建 `model_config.toml` 文件。
+    -   **环境变量文件**：在 `MoFox_Bot` 文件夹中，将 `template/template.env` 复制到项目根目录并改名为 `.env`。
 
 2.  **Napcat-Adapter 配置**:
     -   复制并重命名 `template_config.toml` 为 `config.toml`。

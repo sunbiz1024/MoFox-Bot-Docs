@@ -73,6 +73,8 @@ pip install uv
  
  > 对于新手，**完成以上步骤即可让机器人开口说话**！我们已经为您提供了一套完整的默认配置。
  > 如果你想了解更多关于模型的配置，或者想使用本地模型，请参考 [模型配置指南](model_configuration_guide.md)。
+ 
+ - **环境变量文件**：在 `MoFox_Bot` 文件夹中，将 `template/template.env` 复制到项目根目录并改名为 `.env`。
 
 **2. Napcat-Adapter 配置:**
 
