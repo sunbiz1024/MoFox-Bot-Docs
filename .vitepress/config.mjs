@@ -117,7 +117,8 @@ export default defineConfig({
               text: '常见问题',
               items: [
                 { text: '提问的智慧(精简版)', link: '/docs/guides/how-to-ask-questions-the-smart-way' },
-                { text: '如何高效提问', link: '/docs/guides/how-to-ask-questions-efficiently' }
+                { text: '如何高效提问', link: '/docs/guides/how-to-ask-questions-efficiently' },
+                { text: '模型配置FAQ', link: '/docs/guides/model_config_faq' }
               ]
             }
           ]
