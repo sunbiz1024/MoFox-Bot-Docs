@@ -128,7 +128,7 @@ export default defineConfig({
     },
 
     editLink: {
-      pattern: 'https://github.com/MoFox-Studio/MoFox-Bot-Docs/edit/main/:path',
+      pattern: 'https://github.com/MoFox-Studio/MoFox-Bot-Docs/edit/master/:path',
       text: '在 GitHub 上编辑此页'
     },
 
