@@ -1,4 +1,4 @@
-# 关于 Maibot 的常见错误报告
+# 关于 MoFox-bot 的常见错误报告
 
 ## 1. 使用 Windows 平台 QQ 的用户被下线问题的相关解析
 
@@ -28,6 +28,10 @@
 
 ---
 
+### 模型的提供商和URL填写以及模型调用的帮助
+
+---
+
 ### 小糖人必看内容！！！！！！！！！！！！！
 
 1. 不看的有问题别来问
@@ -37,14 +41,14 @@
 
 # 关于网络问题的相关解析
 
-## 401 问题
+* ## 401 问题
 
 1. API key 的填写
 2. 你可能没有填写对应的 API key
 
 > 默认硅基流动的 API 在 `"MoFox_bot\Bot\config\model_config.toml"` 文件修改
 
-## 403 问题
+* ## 403 问题
 
 1. 没有删除 pro/deepseekai/deepseekV3 的 “pro/” 前缀  
    > 因为这是真钱模型，位置同上
@@ -54,17 +58,17 @@
 
 # 关于数字报错的相关解析
 
-## 服务器问题
+* ## 服务器问题
 
 1. **服务器错误是你的模型平台炸了，请检查平台或服务器的服务器压力或等着恢复**
 
-## 个人中转 API 平台的连接问题
+* ## 个人中转 API 平台的连接问题
 
 2. **连接错误是你与你的 API key 平台的连接错误，请检查**  
    `"MoFox_bot\Bot\config\model_config.toml"`  
    **里的 URL 是否填写正确/是否保存文件/是否挂上了梯子/是否开启对应平台本地服务**
 
-## 文件下载/更新一键包时文件下载失败/下载依赖时文件下载失败
+* ## 文件下载/更新一键包时文件下载失败/下载依赖时文件下载失败
 
 1. 下载失败请开启梯子  
    - [一元机场](https://xn--4gq62f.com/#/register?code=gpwiVnOu) 费用是 12 元一年 100G 每月/7 元一个月 2048G 网速很捉襟见肘  
@@ -89,7 +93,11 @@
    - 复制下面这段命令，粘贴进去点回车
 
      ```shell
-     curl -o napcat.sh https://nclatest.znin.net/NapNeko/NapCat-Installer/main/script/install.sh && sudo bash napcat.sh --tui
+     curl -o \
+     napcat.sh \
+     https://nclatest.znin.net/NapNeko/NapCat-Installer/main/script/install.sh \
+     && sudo bash napcat.sh \
+     --tui
      ```
 
    - 选择第一个 shell 安装，sudo 密码为 123456，不显示密码很正常。
@@ -142,32 +150,38 @@
 
 ---
 
-## 文件/.py/可执行文件报错问题的相关解析
+* ## 文件/.py/可执行文件报错问题的相关解析
 
 1. 可在其所在的根文件夹下寻找 "template"，里面会有你要的模板文件，请复制到原文件的文件夹里，记得在编写完成模板文件后更改其文件名  
    （如我要寻找位于
    ```
-   MaiBotOneKey/modules/MaiBot/config/bot_config
+   "MoFox_bot\Bot\config\model_config.toml"
    ```
    的文件的模板的话我可以去
    ```
-   MaiBotOneKey/modules/MaiBot/template
+   "MoFox_bot\Bot\template"
    ```
-   里寻找 `bot_config_template.toml`，这就是我要的 `bot_config` 的模板文件）
+   里寻找 `model_config_template.toml`，这就是我要的 `model_config` 的模板文件）
 
 ---
 
-## 一键包问题的相关解析
+# 一键包问题的相关解析
 
 1. 一键包控制台是 0.9 版本的，在上面填 key 的信息已经没用了，现在在
    ```
-   MaiBotOneKey/modules/MaiBot/config/model_config.toml
+   MoFox_bot\Bot\config\model_config.toml
    ```
    里修改和填写 key
-
+2. 若你的Ada启动后出现了非常多的  
+   ```
+   无法建立连接:远程计算机拒绝网络连接
+   等待n秒后重试..
+   正在连接到ws://localhost:8000/ws
+   ```  
+   请到主程序输入同意，并深刻阅读 **小糖人必看！！！！！** 的第二则以及全文背诵
 ---
 
-## pip 命令的使用解析和功能解析
+# pip 命令的使用解析和功能解析
 
 1. pip 是 Python 的包管理器，主要命令有  
    `pip show` / `pip install` / `pip uninstall` / `pip upgrade`
@@ -194,7 +208,7 @@
 
 ---
 
-## pip uninstall 与 pip install 十分类似
+* ## pip uninstall 与 pip install 十分类似
 
 - `pip uninstall -r requirements.txt` 根据依赖文件进行批量卸载
 - `pip uninstall {package_name}` 用于卸载包
@@ -202,11 +216,11 @@
   ```
   pip uninstall name_1 name_2 name_3
   ```
-  不同 name 中间要加上空格，install 同理，下载多个包是加上空格
+  不同 name 中间要加上空格，install 同理，下载多个包也是加上空格
 
 ---
 
-## pip upgrade 也就是 pip update，用来更新包名与 install/uninstall 类似
+* ## pip upgrade 也就是 pip update，用来更新包名与 install/uninstall 类似
 
 - `pip install --upgrade <package_name> -i https://pypi.tuna.tsinghua.edu.cn/simple`  
   使用清华源更新名为 package_name 的包
@@ -214,11 +228,44 @@
 
 ---
 
-## 常用源
+* ## 常用源
 
 - 清华：https://pypi.tuna.tsinghua.edu.cn/simple
 - 阿里云：https://mirrors.aliyun.com/pypi/simple
 
+---
+
+# 模型的提供商和URL填写以及模型调用的帮助  
+1. 如何认清什么是URL，什么是模型供应商
+```
+   [[api_providers]] # API服务提供商（可以配置多个）
+   name = "DeepSeek"                       # API服务商名称（可随意命名，在models的api-provider中需使用这个命名）
+   base_url = "https://api.deepseek.cn/v1" # API服务商的BaseURL
+   api_key = "your-api-key-here"           # API密钥（请替换为实际的API密钥）
+   client_type = "openai"                  # 请求客户端（可选，默认值为"openai"，使用gimini等Google系模型时请配置为"gemini"）
+   max_retry = 2                           # 最大重试次数（单个模型API调用失败，最多重试的次数）
+   timeout = 30                            # API请求超时时间（单位：秒）
+   retry_interval = 10                     # 重试间隔时间（单位：秒）
+```
+- `name =`是你的供应商名
+- `base_url =`是你的模型供应商的URL地址  
+- `api-key =`是你的api-key的填写处 **若出现401报错请重点查看你的api-key是否填写错误**  
+- 可用以上为模板来复制修改成你要的`api_providers`  
+
+2. 如何正确调用你想要的模型
+```
+   model_identifier = "deepseek-chat" # 模型标识符（API服务商提供的模型标识符）
+   name = "deepseek-v3"               # 模型名称（可随意命名，在后面中需使用这个命名）
+   api_provider = "DeepSeek"          # API服务商名称（对应在api_providers中配置的服务商名称）
+   price_in = 2.0                     # 输入价格（用于API调用统计，单位：元/ M token）（可选，若无该字段，默认值为0）
+   price_out = 8.0                    # 输出价格（用于API调用统计，单位：元/ M token）（可选，若无该字段，默认值为0）
+   #force_stream_mode = true          # 强制流式输出模式（若模型不支持非流式输出，请取消该注释，启用强制流式输出，若无该字段，默认值为false）
+```
+- `model_identifier =`是你的模型标识符
+- `name =`是你的模型名，请到你所使用的模型提供商那里寻找你要的模型的模型名 **若出现400报错请重点查看你的模型名是否填写错误**
+- `api_providers =`是你在上文中提到的api服务提供商的`name`，需与填写`name`填写一致  
+
+3. 调用模型时仅在`[]`中填写 **2.** 中的name，格式为['model_name','model_name']
 ---
 
 # 小糖人必看！！！！
@@ -230,4 +277,4 @@
 
 ---
 
-# 完！
+# 终于啊......
