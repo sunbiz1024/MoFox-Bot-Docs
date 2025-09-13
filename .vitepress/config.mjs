@@ -127,6 +127,11 @@ export default defineConfig({
       '/docs/development/': devSidebar,
     },
 
+    editLink: {
+      pattern: 'https://github.com/MoFox-Studio/MoFox-Bot-Docs/edit/main/docs/:path',
+      text: '在 GitHub 上编辑此页'
+    },
+
     socialLinks: [
       { icon: 'github', link: 'https://github.com/MoFox-Studio/MoFox_Bot' },
     ],
