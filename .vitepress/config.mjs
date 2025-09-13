@@ -135,6 +135,9 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/MoFox-Studio/MoFox_Bot' },
     ],
+
+    lastUpdated: true,
+
     search: {
       provider: 'local'
     },
