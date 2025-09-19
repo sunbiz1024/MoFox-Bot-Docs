@@ -1,172 +1,465 @@
-# MoFox_Bot 部署指南
+# MoFox_Bot Windows 部署指南 (内置适配器版)
 
-欢迎使用 MoFox_Bot！本指南将引导您完成在 Windows 环境下部署 MoFox_Bot 的全部过程。
+## 概述
 
-::: warning
-本教程为部署到QQ平台的教程，不代表其他平台的部署方式相同
-:::
+欢迎使用 MoFox_Bot，一个高度可定制化的 AI Bot 框架。
 
-## 1. 系统要求
+本指南将引导您在 Windows 环境下，使用项目**内置的 Napcat 适配器插件**完成 MoFox_Bot 的全部署流程。该方式是官方推荐的最佳实践，具有以下优势：
 
-- **操作系统**: Windows 10 或 Windows 11
-- **Python**: 版本 >= 3.10
-- **Git**: 用于克隆项目仓库
-- **uv**: 推荐的 Python 包管理器 (版本 >= 0.1.0)
+*   **部署简化**：仅需下载和运行 MoFox_Bot 主项目。
+*   **操作便捷**：只需管理单个进程。
+*   **配置统一**：所有相关设置均在主项目的配置文件中完成。
 
-## 2. 部署步骤
+本教程将覆盖从环境准备到成功运行的每一个步骤，旨在为初学者提供一条清晰、高效的部署路径。
 
-### 第一步：获取必要的文件
+---
 
-首先，创建一个用于存放 MoFox_Bot 相关文件的文件夹，并通过 `git` 克隆 MoFox_Bot 主程序和 Napcat 适配器。
+## 第一章：准备工作——万丈高楼平地起
 
-```shell
-mkdir MoFox_Bot_Deployment
-cd MoFox_Bot_Deployment
-git clone https://github.com/MoFox-Studio/MoFox_Bot.git
-git clone https://github.com/MoFox-Studio/Napcat-Adapter.git
-# 网络问题拉取不下来使用这个git clone https://github.akams.cn/https://github.com/MoFox-Studio/MoFox_Bot.git
-# 网络问题拉取不下来使用这个git clone https://github.akams.cn/https://github.com/MoFox-Studio/Napcat-Adapter.git
+在正式开始部署之前，我们需要先搭建好稳固的地基。请确保你的系统中已正确安装并配置了以下软件。
+
+### 1.1 系统要求
+
+*   **操作系统**: Windows 10 或 Windows 11
+
+### 1.2 软件三件套：Python、Git 与 uv
+
+这三款软件是部署流程的核心工具，缺一不可。
+
+#### 1.2.1 Python (版本 >= 3.10)
+
+Python 是 MoFox_Bot 运行的编程语言环境。
+
+1.  **下载**: 前往 [Python 官方网站](https://www.python.org/downloads/) 下载最新版本的 Python 安装程序。请确保下载的版本号 **大于等于 3.10**。
+
+2.  **安装 (关键步骤)**:
+    *   运行下载好的安装程序。
+    *   在安装界面的最下方，**务必勾选 `Add Python to PATH`** 选项。这会将 Python 添加到系统环境变量中，让我们可以从任何地方访问它。
+    *   点击 `Install Now`，等待安装完成。
+
+3.  **验证**:
+    *   按下 `Win + R` 键，输入 `cmd` 并回车，打开命令提示符。
+    *   输入以下命令并回车：
+        ```shell
+        python --version
+        ```
+    *   如果屏幕上显示出你安装的 Python 版本号（如 `Python 3.11.4`），则证明安装成功。
+
+#### 1.2.2 Git
+
+Git 是一个版本控制工具，我们用它来从 GitHub 上获取 MoFox_Bot 的项目代码。
+
+1.  **下载**: 前往 [Git 官方网站](https://git-scm.com/downloads) 下载适用于 Windows 的安装程序。
+
+2.  **安装**: 运行安装程序。安装过程中会弹出多个选项，对于初学者，**保持所有选项默认，一路点击 `Next`** 即可。
+
+3.  **验证**:
+    *   同样在命令提示符中，输入以下命令并回车：
+        ```shell
+        git --version
+        ```
+    *   如果显示出 Git 的版本号（如 `git version 2.41.0.windows.1`），则证明安装成功。
+
+#### 1.2.3 uv (推荐的 Python 包管理器)
+
+uv 是一个速度极快的 Python 包管理器，可以把它看作是 `pip` 和 `venv` 的“高速升级版”。我们强烈推荐使用它来管理项目依赖，能节省大量时间。
+
+1.  **安装**:
+    *   在命令提示符中，输入以下命令并回车：
+        ```shell
+        pip install uv
+        ```
+2.  **验证**:
+    *   输入以下命令并回车：
+        ```shell
+        uv --version
+        ```
+    *   如果显示出 uv 的版本号，则证明安装成功。
+
+### 1.3 Napcat QQ 客户端
+
+Napcat QQ 是一个 QQ 客户端，也是 MoFox_Bot 与 QQ 平台沟通的桥梁。
+
+在继续下一步之前，请**务必参考 [NapCatQQ 官方文档](https://napcat-qq.github.io/)，完成客户端的安装、配置，并确保你的 QQ 账号能够成功登录**。这是整个部署流程的重要前置条件。
+
+---
+
+## 第二章：获取核心——请君入瓮
+
+万事俱备，现在我们正式开始请“君”入瓮——将 MoFox_Bot 的核心代码下载到你的电脑中。
+
+### 2.1 创建你的“机器人基地” (图形化操作)
+
+首先，我们需要为机器人创建一个专属的“家”。
+
+1.  **打开文件资源管理器**：点击任务栏上的黄色文件夹图标，或者按下 `Win + E` 快捷键。
+2.  **选择位置**：在左侧导航栏选择一个空间充裕的磁盘，比如 `D:` 盘或 `E:` 盘。
+3.  **新建文件夹**：在空白处点击鼠标右键，选择 `新建` -> `文件夹`。
+4.  **命名文件夹**：将新文件夹命名为 `MoFox_Bot_Deployment`。
+
+> **⚠️ 重要提示**: 为了避免未来可能出现的奇怪问题，请确保文件夹的**完整路径中不包含任何中文、空格或特殊字符**。例如，`D:\MoFox_Bot_Deployment` 是一个好路径，但 `D:\我的机器人 1号` 则不推荐。
+
+### 2.2 `git clone` 神威
+
+现在，我们需要在这个“基地”里打开命令行，来执行代码下载命令。
+
+1.  **快速打开命令行**:
+    *   双击进入你刚刚创建的 `MoFox_Bot_Deployment` 文件夹。
+    *   点击文件资源管理器顶部的**地址栏**。
+    *   删除地址栏里原来的路径，输入 `cmd`，然后按下**回车键**。
+    *   这时，一个黑色的命令提示符窗口会弹出，并且它的路径已经自动定位到了你的“机器人基地”里。
+
+2.  **执行克隆命令**:
+    *   在弹出的命令提示符窗口中，粘贴并执行以下命令：
+        ```shell
+        git clone https://github.com/MoFox-Studio/MoFox_Bot.git
+        ```
+
+> **🌐 网络小贴士**:
+> 如果你发现下载速度极慢或连接失败，这通常是由于网络问题。可以尝试使用以下备用镜像地址：
+> ```shell
+> # 备用地址1
+> git clone https://kgithub.com/MoFox-Studio/MoFox_Bot.git
+> # 备用地址2
+> git clone https://github.com.cnpmjs.org/MoFox-Studio/MoFox_Bot.git
+> ```
+
+执行命令后，Git 会开始下载项目文件。当进度条走完，命令行界面不再滚动时，就代表克隆完成了。
+
+此时，回到你的文件资源管理器，会发现 `MoFox_Bot_Deployment` 文件夹里多出了一个名为 `MoFox_Bot` 的新文件夹。恭喜，你已经成功获取了机器人的“素体”！
+
+---
+
+## 第三章：激活环境——注入灵魂
+
+我们已经有了机器人的“素体”（项目代码），现在需要为它创建一个纯净的生存空间，并注入“灵魂”——安装所有必需的程序库。
+
+### 3.1 虚拟环境：干净又卫生
+
+在安装程序库之前，我们要先创建一个“虚拟环境”。
+
+你可以把它想象成一个**专属工具箱**。我们为 MoFox_Bot 项目创建一个独立的、与外界隔离的工具箱，所有它需要的工具（程序库）都放在这个箱子里。这样做的好处是：
+
+*   **避免冲突**：不会和你电脑上安装的其他 Python 程序产生冲突。
+*   **保持纯净**：保证了项目环境的干净和稳定。
+*   **方便管理**：日后删除整个项目时，直接把这个工具箱（文件夹）删掉就行，不会留下任何垃圾。
+
+这是 Python 开发的最佳实践，也是我们强烈推荐的做法。
+
+### 3.2 `uv` 的魔法时刻
+
+接下来，我们将使用 `uv` 这个神器来完成环境的创建和激活。
+
+1.  **进入项目目录**:
+    *   首先，确保你的命令行终端还开着，并且路径在 `MoFox_Bot_Deployment` 文件夹下。
+    *   我们需要进入刚刚克隆下来的 `MoFox_Bot` 文件夹。执行以下命令：
+        ```shell
+        cd MoFox_Bot
+        ```
+
+2.  **创建虚拟环境**:
+    *   执行以下命令来创建工具箱：
+        ```shell
+        uv venv
+        ```
+    *   命令执行后，你会发现 `MoFox_Bot` 文件夹里多出了一个名为 `.venv` 的新文件夹。这就是我们的“专属工具箱”。
+
+3.  **激活虚拟环境 (核心步骤)**:
+    *   光有工具箱还不行，我们得把它“打开”，这样后续的命令才能使用里面的工具。这个“打开”的动作，就叫做“激活”。
+    *   **根据你使用的终端类型，选择对应的激活命令**：
+
+        *   **如果你使用的是 `cmd` (传统命令提示符)**:
+            ```shell
+            .venv\Scripts\activate
+            ```
+
+        *   **如果你使用的是 `PowerShell` (Windows Terminal 或 VS Code 默认终端)**:
+            ```shell
+            .venv\Scripts\Activate.ps1
+            ```
+
+    *   **观察变化！** 成功激活后，你会看到命令行提示符的最前面，多出了一个 `(.venv)` 的标记。这表示你已经成功进入了 MoFox_Bot 的专属环境。
+
+    > **⚠️ PowerShell 用户注意**:
+    > 如果你在 PowerShell 中执行激活命令失败，并看到红色错误提示，很可能是因为系统禁止执行脚本。请执行以下命令来临时解除限制，然后再重新尝试激活：
+    > ```powershell
+    > Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+    > ```
+    > 这条命令只在当前窗口生效，是安全的。
+
+    > **⚠️ 重要提示**:
+    > 之后所有的安装、运行操作，都**必须**在这个带有 `(.venv)` 标记的命令行窗口中进行。如果某天你关闭了窗口，下次想继续操作时，需要重新进入项目文件夹并执行对应的 `activate` 命令来激活环境。
+
+### 3.3 依赖安装：一行代码搞定
+
+环境激活好了，现在我们可以开始安装 MoFox_Bot 所需的所有程序库了。项目文件夹里的 `requirements.txt` 文件，就是一张详细的“购物清单”。
+
+*   在**已激活虚拟环境**的命令行窗口中，执行以下命令：
+
+    ```shell
+    uv pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple
+    ```
+
+*   **命令解析**:
+    *   `uv pip install`: 使用 uv 来安装包。
+    *   `-r requirements.txt`: `-r` 表示 read，即读取“购物清单”文件。
+    *   `-i https://...`: `-i` 表示 index，即指定从哪个“商店”下载。这里我们使用了阿里云的镜像源，可以极大地提高国内用户的下载速度。
+
+命令执行后，你会看到屏幕上开始飞速滚动各种下载和安装信息。请耐心等待，直到它全部完成，并重新出现可以输入命令的提示符。
+
+> **💡 依赖安装失败怎么办？**
+> 如果安装过程中出现大量红色错误，不要慌，通常是以下几个原因：
+> 1.  **网络问题**：检查你的网络连接。虽然我们已经指定了国内镜像，但偶尔网络波动也可能导致失败。可以尝试重新执行一遍安装命令。
+> 2.  **缺少编译环境**：某些库需要编译才能安装。如果你看到错误信息中包含 `Microsoft Visual C++` 等字样，说明缺少编译工具。可以访问 [Visual Studio 官网](https://visualstudio.microsoft.com/zh-hans/visual-cpp-build-tools/) 下载并安装 "Visual Studio 生成工具" (Build Tools)。
+> 3.  **权限不足**：尝试关闭当前的命令行窗口，然后**以管理员身份**重新打开一个新的终端，再进入项目目录、激活环境、执行安装命令。
+
+至此，机器人的“灵魂”已经注入完毕。它所需的一切软件依赖都已准备就绪！
+
+---
+
+## 第四章：核心配置——让机器人“认识”你
+
+环境和依赖都已就绪，现在到了最激动人心的环节——通过修改配置文件，赋予机器人身份和智慧。
+
+> **🔧 编辑器推荐**:
+> 为了避免不必要的格式或编码错误，强烈建议使用专业的代码编辑器来修改配置文件，例如 **Visual Studio Code**、**Notepad++** 或 **Sublime Text**。请**不要**使用 Windows 自带的“记事本”。
+
+在本章，我们只修改三个最核心的文件，以保证机器人能顺利启动并响应。所有配置文件都可以在 `MoFox_Bot` 文件夹内的 `template` 文件夹中找到模板。
+
+### 4.1 `.env` 文件：最初的约定
+
+这个文件负责最基础的环境变量设置。
+
+1.  **定位与复制**:
+    *   在 `MoFox_Bot` 文件夹中，找到 `template` 文件夹。
+    *   将里面的 `template.env` 文件复制到 `MoFox_Bot` 文件夹的**根目录**。
+    *   将复制出来的新文件重命名为 `.env` (注意，前面有一个点)。
+
+2.  **修改内容**:
+    *   用编辑器打开 `.env` 文件。
+    *   找到 `EULA_CONFIRMED=false` 这一行，将 `false` 修改为 `true`。这代表你同意并遵守项目的用户许可协议。
+        ```
+        EULA_CONFIRMED=true
+        ```
+    *   文件中的 `HOST` 和 `PORT` 选项通常保持默认 (`127.0.0.1` 和 `8000`) 即可，暂时无需修改。
+
+### 4.2 `bot_config.toml`：机器人的“身份证”
+
+这个文件定义了机器人的基本身份信息和主人。
+
+1.  **定位与复制**:
+    *   进入 `MoFox_Bot/template` 文件夹。
+    *   将 `bot_config_template.toml` 文件复制到 `MoFox_Bot/config` 文件夹中。
+    *   将复制到 `config` 文件夹里的新文件重命名为 `bot_config.toml`。
+
+2.  **修改内容 (至少修改以下两项)**:
+    *   用编辑器打开 `config/bot_config.toml` 文件。
+    *   **机器人 QQ 号**: 找到 `[bot]` 配置节下的 `qq_account`，将其值修改为你准备用于运行机器人的 QQ 号。
+        ```toml
+        [bot]
+        platform = "qq"
+        qq_account = 123456789 # <--- 修改这里
+        ```
+    *   **主人 QQ 号**: 找到 `[permission]` 配置节下的 `master_users`，将其配置为你的 QQ 号。
+        > **⚠️ 格式注意**: 请严格按照 `[["platform", "user_id"]]` 的格式填写，注意**双层方括号**和**英文引号**。
+        ```toml
+        [permission]
+        master_users = [["qq", "987654321"]] # <--- 修改这里的QQ号
+        ```
+
+### 4.3 `model_config.toml`：机器人的“大脑”
+
+这个文件用于配置机器人使用的大语言模型（LLM），是机器人能否思考和回答问题的关键。
+
+1.  **定位与复制**:
+    *   同样，从 `MoFox_Bot/template` 文件夹中，将 `model_config_template.toml` 文件复制到 `MoFox_Bot/config` 文件夹。
+    *   将其重命名为 `model_config.toml`。
+
+2.  **进行配置 (关键步骤)**:
+    *   为了让机器人能够开口说话，你必须至少配置一个可用的大语言模型服务。
+    *   我们已经为您准备了一份专门的快速上手指南，请**点击并参照以下链接**完成模型配置：
+        *   **[模型配置快速上手指南](guides/quick_start_model_config.md)**
+    *   对于初次部署的用户，**只需完成上述快速上手指南中的步骤即可**。更详细和高级的模型配置方法，可以在机器人成功运行后，再参考 [模型配置进阶指南](model_configuration_guide.md)。
+
+---
+
+## 第五章：连接世界——内置适配器插件配置
+
+现在，机器人的“身份证”和“大脑”都有了，但它还活在自己的世界里。我们需要为它接上“神经”，让它能够连接到 QQ 平台，接收和发送消息。这一步，我们通过配置官方内置的 **Napcat 适配器插件**来完成。
+
+### 5.1 生成插件配置文件
+
+MoFox_Bot 拥有强大的插件管理系统。在我们第一次启动程序时，它会自动检测所有内置插件，并为它们创建默认的配置文件。
+
+1.  **首次启动**:
+    *   确保你的命令行终端**已激活虚拟环境** (前面带有 `(.venv)` 标记)。
+    *   确保你当前的目录是 `MoFox_Bot` 文件夹。
+    *   执行以下命令，来启动一次 MoFox_Bot：
+        ```shell
+        uv run python bot.py
+        ```
+    *   程序启动后，你会看到大量的日志信息在屏幕上滚动。当日志滚动停止，并且没有新的信息出现时，说明程序已经完成了初始化工作。
+
+    > **💡 第一次启动就失败了怎么办？**
+    > 如果程序在启动过程中直接报错并退出了，**99% 的可能性是第四章的核心配置有误**。请回头仔细检查：
+    > *   `.env` 文件中的 `EULA_CONFIRMED` 是否为 `true`？
+    > *   `bot_config.toml` 中的 `qq_account` 和 `master_users` 是否已正确填写？
+    > *   `model_config.toml` 中是否至少配置好了一个**可用**的 API Key？
+    > 解决了这些问题后，再重新尝试启动。
+
+2.  **生成配置并关闭**:
+    *   当程序稳定运行后，这次启动的主要目的——生成配置文件——就已经达成了。现在，请在命令行窗口中，按下 `Ctrl + C` 来关闭程序。程序会进行“优雅关闭”，请稍等片刻直至其完全退出。
+
+### 5.2 启用并配置插件
+
+经过上一步，所有内置插件的默认配置文件都已经被自动创建好了。
+
+1.  **找到配置文件**:
+    *   现在，请打开 `MoFox_Bot/config/plugins/` 文件夹。你会发现里面出现了很多以插件名命名的文件夹。
+    *   这说明 MoFox_Bot 的所有内置插件（如权限管理、戳一戳、Web搜索等）的配置文件都在这里生成了，方便你未来探索和开启更多功能。
+    *   我们当前的目标是找到 `napcat_adapter_plugin` 文件夹，进入后用你的代码编辑器打开 `config.toml` 文件。
+
+2.  **启用插件 (第一步)**:
+    *   在打开的 `config.toml` 文件中，找到 `[plugin]` 配置节，将 `enabled` 的值从 `false` 修改为 `true`。这是启动适配器的总开关。
+        ```toml
+        [plugin]
+        enabled = true # <--- 修改这里
+        ```
+
+3.  **配置 Napcat 连接 (核心)**:
+    *   找到 `[napcat_server]` 配置节。
+    *   确认 `port` 的值（默认为 `8095`）与你在 **Napcat QQ 客户端**的 `OneBot v11` 设置中，添加的**反向 WebSocket** 地址中的端口号**完全一致**。
+    *   如果不一致，请修改此处的 `port` 值，使其与 Napcat 客户端的设置保持统一。
+
+    > **示例**: 如果你在 Napcat 客户端中设置的 URL 是 `ws://127.0.0.1:12345`，那么这里的 `port` 就应该修改为 `12345`。
+
+4.  **检查内部服务连接**:
+    *   找到 `[maibot_server]` 配置节。
+    *   确认 `port` 的值（默认为 `8000`）与你在 `MoFox_Bot` 根目录下的 `.env` 文件中设置的 `PORT` 值一致。通常情况下，两者默认都是 `8000`，无需修改。
+
+完成以上步骤，机器人的“神经系统”就已经成功搭建。它现在知道了该如何与 QQ 世界进行通信。
+
+---
+
+## 第六章：启动！——见证奇迹的时刻
+
+所有准备工作和配置都已完成，现在，是时候唤醒你的机器人了！
+
+### 6.1 启动顺序
+
+请严格按照以下顺序来启动各个组件。
+
+1.  **第一步：启动并登录 Napcat QQ**
+    *   打开你已经安装好的 Napcat QQ 客户端。
+    *   确保你的机器人 QQ 账号已经**成功登录**，并且客户端处于正常运行状态。
+
+2.  **第二步：运行 MoFox_Bot**
+    *   回到你的命令行终端窗口。
+    *   **检查两件事**:
+        1.  确认命令行提示符最左边有 `(.venv)` 标记，代表虚拟环境已激活。
+        2.  确认当前路径在 `MoFox_Bot` 文件夹内。
+    *   执行最终的启动命令：
+        ```shell
+        uv run python bot.py
+        ```
+
+> **⚠️ 重要提示**:
+> 这个命令行窗口就是机器人的“生命维持系统”。**请不要关闭它**，最小化即可。一旦关闭，机器人就会下线。
+
+### 6.2 观察日志，判断成功
+
+程序运行后，日志会开始在命令行窗口中滚动。学会看日志，是判断机器人状态的关键。
+
+当你看到类似以下几条关键信息时，就代表你的机器人已经成功启动并连接到了 QQ 平台：
+
+```log
+# ... (其他日志)
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit) # MoFox_Bot 内部服务启动
+# ...
+napcat_adapter - INFO - 正在启动 adapter，连接模式: reverse
+napcat_adapter - INFO - WebSocket server is listening on localhost:8095 # 适配器服务器在指定端口监听
+# ...
+napcat_adapter - INFO - Napcat client connected from ... # Napcat 客户端已成功连接
+# ...
+napcat_adapter - INFO - MaiBot router连接已建立 # 适配器与 MoFox_Bot 内核连接成功
+# ...
+main - INFO - MoFox_Bot 初始化完成 # 主程序加载完成
 ```
 
-### 第二步：环境配置
+> **💡 日志解读**:
+> *   日志中的端口号（如 `8095`）会根据你的配置而变化。
+> *   看到 `Napcat client connected` 是最关键的一步，它标志着机器人与 QQ 的“神经连接”已打通。
 
-我们推荐使用 `uv` 来管理 Python 环境和依赖，因为它提供了更快的安装速度和更好的依赖管理体验。
+### 6.3 测试机器人
 
-**安装 uv:**
+现在，打开你的 QQ，向你的机器人账号发送一条消息，或者在一个它所在的群里 `@它`。
 
-```shell
-pip install uv
-```
+如果它回复了你，那么……
 
-### 第三步：依赖安装
+**恭喜你，部署成功！你的第一个 AI Bot 已经正式诞生！**
 
-在 `MoFox_Bot_Deployment` 根目录下创建并激活虚拟环境，然后安装所有依赖。
+---
 
-- **使用 uv (推荐):**
+## 第七章：故障排除
 
-  ```shell
-  uv venv
-  # 在 Windows 上激活虚拟环境
-  .venv\Scripts\activate
-  uv pip install -r MoFox_Bot/requirements.txt -i https://mirrors.aliyun.com/pypi/simple --upgrade
-  uv pip install -r Napcat-Adapter/requirements.txt -i https://mirrors.aliyun.com/pypi/simple --upgrade
-  ```
+当机器人没有按照预期工作时，请不要灰心。99% 的问题都可以通过仔细检查配置和日志来解决。
 
-- **备选方案：使用原生 venv 和 pip:**
+<details>
+<summary><b>Q1: 启动成功，但日志里迟迟没有 `Napcat client connected` 信息？</b></summary>
 
-  ```shell
-  python -m venv .venv
-  # 在 Windows 上激活虚拟环境
-  .venv\Scripts\activate
-  pip install -r MoFox_Bot/requirements.txt -i https://mirrors.aliyun.com/pypi/simple --upgrade
-  pip install -r Napcat-Adapter/requirements.txt -i https://mirrors.aliyun.com/pypi/simple --upgrade
-  ```
- 
-### 第四步：配置 MoFox_Bot 和 Adapter
+这通常意味着 MoFox_Bot 和 Napcat QQ 客户端之间的“神经”没有接上。请按以下步骤排查：
 
-**1. MoFox_Bot 配置:**
- 
- - **主配置文件**：在 `MoFox_Bot` 文件夹中，将 `template/bot_config_template.toml` 复制到 `config/bot_config.toml`。打开这个新文件，至少需要填写你的**机器人QQ号**和**管理员QQ号**。
- 
- - **模型配置文件 (关键步骤！)**
-  - 请参照[模型配置快速上手](guides/quick_start_model_config.md)指南，创建并配置 `model_config.toml` 文件。
- 
- > 对于新手，**完成以上步骤即可让机器人开口说话**！我们已经为您提供了一套完整的默认配置。
- > 如果你想了解更多关于模型的配置，或者想使用本地模型，请参考 [模型配置指南](model_configuration_guide.md)。
- 
- - **环境变量文件**：在 `MoFox_Bot` 文件夹中，将 `template/template.env` 复制到项目根目录并改名为 `.env`。
+1.  **检查 Napcat QQ**: 确保 Napcat QQ 客户端本身已成功登录并处于在线状态。
+2.  **检查端口号**: 这是最常见的原因。请再次核对 `config/plugins/napcat_adapter_plugin/config.toml` 文件中 `[napcat_server]` 下的 `port` 值，是否与你 Napcat QQ 客户端里设置的**反向 WebSocket 端口**完全一致。
+3.  **检查防火墙**: 确保 Windows 防火墙或任何第三方杀毒软件没有阻止 MoFox_Bot 的网络连接。可以尝试暂时关闭防火墙进行测试。
+4.  **检查 IP 地址**: 确保 `config.toml` 中的 `host` (`localhost`) 和 Napcat 中的 IP (`127.0.0.1`) 是匹配的。通常保持默认即可。
 
-**2. Napcat-Adapter 配置:**
+</details>
 
-- 在 `Napcat-Adapter` 文件夹中，将 `template/template_config.toml` 复制到根目录下的config目录并改名为 `config.toml`。
-- 打开 `config.toml` 文件，配置 `[napcat_server]` 和 `[maibot_server]` 字段。
-  - `[napcat_server]` 的 `port` 应与 Napcat 设置的反向代理 URL 中的端口相同。
-  - `[maibot_server]` 的 `port` 应与 MoFox_Bot 的 `bot_config.toml` 中设置的端口相同。
+<details>
+<summary><b>Q2: 机器人成功连接，但在 QQ 里 @它 或私聊它，它不回复？</b></summary>
 
-- **配置 Napcat 客户端**:
-  - 在 Napcat 客户端的 `onebot v11` 设置中，添加一个反向 WebSocket 连接/websocket客户端。
-  - URL 应填写为 `ws://127.0.0.1:端口号`，其中 `端口号` 必须与 `config.toml` 中 `[napcat_server]` 的 `port` 保持一致。
-  - ![Napcat 配置示例](../assets/napcat_websockets_client.png)
+这通常是配置问题或模型服务问题。
 
-- **功能与白名单配置**:
-  `Napcat-Adapter` 支持通过 `features.toml` 文件进行功能和权限的详细配置。
-  - **创建配置文件**: 在 `Napcat-Adapter` 文件夹中，将 `template/features_template.toml` 复制到根目录下的config目录并改名为 `features.toml`。
-  - **配置白名单**: 打开 `features.toml` 文件，根据其中的注释配置 `group_list` 和 `private_list` 等选项。
-  > **注意**：`features.toml` 文件支持热重载，修改后无需重启 `Napcat-Adapter` 即可生效。
+1.  **检查 Napcat QQ**: 确保 Napcat QQ 客户端本身已成功登录并处于在线状态。
+2.  **检查模型配置**: 确认 `config/model_config.toml` 里的 API Key 是**有效且可用**的。可以检查一下你的模型服务商后台，看看 Key 是否填错、账户是否欠费。
+3.  **检查白名单**: 检查 `config/plugins/napcat_adapter_plugin/config.toml` 文件中 `[features]` 部分的 `group_list` 和 `private_list`。如果你开启了白名单，请确保你测试的群聊或私聊已经被加了进去。
+4.  **查看日志**: 观察机器人后台的命令行窗口。当你给机器人发消息时，看看日志是否刷新。如果有 `ERROR` 级别的红色错误信息，通常能定位到问题所在。
 
-### 第五步：运行
+</details>
 
-**1. 启动 Napcat:**
+<details>
+<summary><b>Q3: 日志里出现关于 `API KEY`、`authentication` 或 `401` 的错误？</b></summary>
 
-请参考 [NapCatQQ 文档](https://napcat-qq.github.io/) 进行部署和启动。
+这个错误非常明确，就是你的大语言模型配置出了问题。
 
-**2. 启动 MoFox_Bot:**
- 
-进入 `MoFox_Bot` 文件夹并启动程序。
- 
-- **使用 uv:**
+*   请打开 `config/model_config.toml` 文件，仔细检查你配置的 `api_key` 和 `base_url` 是否有误。
+*   登录你的模型服务商网站，检查 Key 是否被禁用、账户是否到期或欠费。
 
-  ```shell
-  # 确保你已经激活了虚拟环境 (.venv\Scripts\activate)
-  cd MoFox_Bot
-  uv run python bot.py
-  ```
+</details>
 
-- **不使用 uv:**
+<details>
+<summary><b>Q4: 我修改了配置文件，但好像没有生效？</b></summary>
 
-  ```shell
-  # 确保你已经激活了虚拟环境 (.venv\Scripts\activate)
-  cd MoFox_Bot
-  python bot.py
-  ```
+MoFox_Bot 在启动时会加载所有配置文件。如果你在机器人运行中修改了配置，需要**重启**才能生效。
 
-**3. 启动 Napcat-Adapter:**
+*   请在命令行窗口中，按下 `Ctrl + C` 关闭机器人。
+*   待程序完全退出后，再重新执行 `uv run python bot.py` 命令来启动机器人。
 
-打开一个新的终端窗口，**确保激活了同一个虚拟环境**，然后进入 `Napcat-Adapter` 文件夹并启动程序。
+</details>
 
-- **使用 uv:**
+## 结语：你的冒险才刚刚开始
 
-  ```shell
-  # 确保你已经激活了虚拟环境 (.venv\Scripts\activate)
-  cd Napcat-Adapter
-  uv run python main.py
-  ```
+至此，你已经成功走完了 MoFox_Bot 的部署全程，并拥有了一个属于自己的、能够思考和对话的 AI 伙伴。恭喜你！
 
-- **不使用 uv:**
+但这仅仅是一个开始。本指南带你完成的，是让机器人“活过来”的最小化配置。MoFox_Bot 的真正魅力，在于其强大的可塑性和扩展性。你可以像搭乐高一样，通过调整配置文件，来塑造它的性格、学习它的表达、开启或关闭它的各项功能（如画图、Web搜索、记忆系统等）。
 
-  ```shell
-  # 确保你已经激活了虚拟环境 (.venv\Scripts\activate)
-  cd Napcat-Adapter
-  python main.py
-  ```
+当你想进一步探索时，我们推荐你阅读以下文档：
 
-至此，MoFox_Bot 已成功部署并运行。
+*   **[机器人人格详细配置指南](./bot_config_guide.md)**: 深入了解如何塑造机器人的性格、说话风格和行为模式。
+*   **[模型配置进阶指南](./model_configuration_guide.md)**: 学习如何配置多个模型、本地模型以及更复杂的调用策略。
+*   **插件系统**: MoFox_Bot 的所有功能都由插件实现。你可以通过 `config/plugins/` 目录下的配置文件，来探索和启用更多有趣的内置功能。
 
-## 3. 详细配置说明
+如果你在探索的路上遇到了任何无法解决的难题，欢迎通过项目的 GitHub Issues 或社区与其他开发者交流。
 
-### `bot_config.toml`
-
-这是 MoFox_Bot 的主配置文件，包含了机器人昵称、主人QQ、命令前缀、数据库设置等。请根据文件内的注释和[MoFox-Bot 配置文件究极详细教程](bot_config_guide.md)进行详细配置。
-
-### `model_config.toml`
-
-此文件用于配置 AI 模型和 API 服务提供商。对于新手，**只需按照上面的步骤填写 API Key 即可**。如需深度定制，请参考 [模型配置进阶指南](model_configuration_guide.md)。
-
-### 插件配置
-
-每个插件都有独立的配置文件，位于 `mmc/config/plugins/` 目录下。插件的配置由其 `config_schema` 自动生成。详细信息请参考 [插件配置完整指南](../development/plugins/configuration-guide.md)。
-
-## 4. 故障排除
-
-- **依赖安装失败**:
-  - 尝试更换 PyPI 镜像源。
-  - 检查网络连接。
-- **API 调用失败**:
-  - 检查 `model_config.toml` 中的 API Key 和 `base_url` 是否正确。
-- **无法连接到 Napcat**:
-  - 检查 Napcat 是否正常运行。
-  - 确认 `Napcat-Adapter` 的 `config.toml` 中 `[napcat_server]` 的 `port` 是否与 Napcat 设置的端口一致。
-  - 确保 Napcat 客户端已正确配置反向 WebSocket，并且 URL 和端口无误。
-  - 检查防火墙或安全软件是否阻止了 `Napcat-Adapter` 的网络连接。
-
-如果遇到其他问题，请查看 `logs/` 目录下的日志文件以获取详细的错误信息。
+现在，去和你的新伙伴聊天吧！
