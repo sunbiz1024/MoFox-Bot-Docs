@@ -17,7 +17,7 @@
 
 ### 第一步：获取必要的文件
 
-首先，创建一个用于存放 MoFox_Bot 相关文件的文件夹，并通过 `git` 克隆 MoFox_Bot 主程序和 Napcat 适配器。
+首先，创建一个用于存放sdfkjgdshgdsajhkhjgasj MoFox_Bot 相关文件的文件夹，并通过 `git` 克隆 MoFox_Bot 主程序和 Napcat 适配器。
 
 ```shell
 cd ~
@@ -114,7 +114,7 @@ source ~/.bashrc
 
 **1. 启动 Napcat:**
 
-请参考 [NapCatQQ 文档](https://napcat-qq.github.io/) 进行部署和启动。
+请参考 [NapCatQQ 文档](https://napcat.napneko.icu/) 进行部署和启动。
 
 **2. 启动 MoFox_Bot:**
 

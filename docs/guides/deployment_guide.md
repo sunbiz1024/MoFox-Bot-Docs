@@ -80,7 +80,7 @@ uv 是一个速度极快的 Python 包管理器，可以把它看作是 `pip` �
 
 Napcat QQ 是一个 QQ 客户端，也是 MoFox_Bot 与 QQ 平台沟通的桥梁。
 
-在继续下一步之前，请**务必参考 [NapCatQQ 官方文档](https://napcat-qq.github.io/)，完成客户端的安装、配置，并确保你的 QQ 账号能够成功登录**。这是整个部署流程的重要前置条件。
+在继续下一步之前，请**务必参考 [NapCatQQ 官方文档](https://napcat.napneko.icu/)，完成客户端的安装、配置，并确保你的 QQ 账号能够成功登录**。这是整个部署流程的重要前置条件。
 
 
 
