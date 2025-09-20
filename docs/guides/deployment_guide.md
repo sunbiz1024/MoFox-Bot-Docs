@@ -121,7 +121,7 @@ Napcat QQ 是一个 QQ 客户端，也是 MoFox_Bot 与 QQ 平台沟通的桥梁
 > # 备用地址1
 > git clone https://kgithub.com/MoFox-Studio/MoFox_Bot.git
 > # 备用地址2
-> git clone https://github.com.cnpmjs.org/MoFox-Studio/MoFox_Bot.git
+> git clone https://xget.xi-xu.me/gh/MoFox-Studio/MoFox_Bot.git
 > ```
 
 执行命令后，Git 会开始下载项目文件。当进度条走完，命令行界面不再滚动时，就代表克隆完成了。

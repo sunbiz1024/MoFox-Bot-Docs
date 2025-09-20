@@ -1,286 +1,268 @@
-# 模型配置指南 (新手友好版)
+# 模型配置高级指南：从资源调度到智能策略
 
-欢迎！这份指南将用最简单的方式，带你一步步搞定 MoFox-Bot 的“大脑”——也就是 `model_config.toml` 文件。即使你对代码一窍不通，跟着这篇教程也能轻松完成配置！
+**欢迎，指挥官。**
 
-## 零、一个简单的比喻
+这份指南不再是简单的“点餐教程”。我们将引导你从一位使用者，蜕变为一位运筹帷幄的 **AI 算力指挥官**。你将学习如何构建、管理并优化你的 AI Bot 的核心——`model_config.toml`，使其在性能、成本和稳定性之间达到完美的平衡。
 
-让我们把配置模型想象成去一家餐厅点餐，这样就很容易理解了：
-
-1.  **API 服务商 (API Providers)**：这就是**“餐厅”**。比如“DeepSeek餐厅”、“Google餐厅”或者你自己开的“本地模型餐厅”。
-2.  **模型 (Models)**：这就是餐厅菜单上的**“菜品”**。每家餐厅都有自己的招牌菜，比如 DeepSeek 餐厅的 `deepseek-chat`。
-3.  **模型任务 (Model Tasks)**：这就是你**“点餐的目的”**。比如，“我要点一份 `deepseek-chat` 用来**聊天**”，“再点一份 `qwen-vl-max` 用来**看懂图片**”。
-
-我们的配置过程，就是先告诉 Bot 有哪些“餐厅”可以去，然后从菜单上“点”几道菜并给它们取好我们自己叫的“小名”，最后再告诉 Bot 在执行不同任务（聊天、思考、记忆）时，分别该用哪道“菜”。
+准备好了吗？让我们开始搭建专属于你的“AI 算力调度中心”。
 
 ---
 
-## 第一步：配置你的“餐厅” (API Providers)
+## 第一章：核心概念重构 - 搭建你的“AI算力调度中心”
 
-这是最关键的一步！你需要告诉 Bot 从哪里获取 AI 模型的能力。这通常需要两样东西：`api_key` (你的身份凭证) 和 `base_url` (餐厅的地址)。
+忘掉“餐厅”和“菜单”吧。现在，请将 `model_config.toml` 想象成一个精密的 **AI 算力调度中心**。这个中心由三个层次分明的架构组成，它们协同工作，将原始的 AI 能力转化为 Bot 的智能行为。
 
-`api_key` 现在支持更灵活的配置方式：
-*   **单个密钥**：`api_key = "sk-xxxxxxxx"`
-*   **多个密钥（实现轮询）**：`api_key = ["sk-key1", "sk-key2", "sk-key3"]`
+### 1.1 三层核心架构
 
-使用多个密钥可以有效分担请求压力，并在某个密钥失效时自动切换，提高稳定性。
+1.  **资源层 (API Providers)**：这是算力的源头，如同你的“**发电厂**”。无论是来自 DeepSeek、SiliconFlow 的云端服务，还是你自己部署的本地模型（如 Ollama），它们都为整个系统提供最基础的计算能力。
 
-请打开你的 `model_config.toml` 文件，找到 `[[api_providers]]` 部分。下面我们提供了几个常用服务商的配置模板，**你只需要选择你拥有的服务商，复制对应的代码块，然后填入你自己的 `api_key` 即可！**
+2.  **能力层 (Models)**：这是将原始算力转化为具体能力的“**引擎车间**”。在这里，你将来自不同“发电厂”的算力，封装成一个个具有明确标识、成本和特性的“AI 引擎”。例如，一个名为 `powerful-chat-engine` 的引擎，可能源自 DeepSeek 的最新模型。
+
+3.  **应用层 (Model Tasks)**：这是指挥“AI 引擎”执行具体任务的“**任务控制室**”。Bot 的每一个行为，从简单的聊天回复 (`replyer`) 到复杂的决策规划 (`planner`)，都是一个独立的“任务”。你将在这里为每个任务指派最合适的“引擎”，甚至可以组建一支“引擎小队”来协同完成。
+
+### 1.2 数据流向可视化
+
+下面的图清晰地展示了这三层架构之间的依赖关系和数据流向：
+
+```mermaid
+graph LR
+    subgraph 资源层 [API Providers - 发电厂]
+        P1[Provider A: SiliconFlow]
+        P2[Provider B: Google Gemini]
+        P3[Provider C: Local Ollama]
+    end
+
+    subgraph 能力层 [Models - 引擎车间]
+        M1["name: deepseek-v3.1<br>provider: SiliconFlow"]
+        M2["name: qwen-14b<br>provider: SiliconFlow"]
+        M3["name: gemini-pro<br>provider: Google Gemini"]
+        M4["name: llama3-local<br>provider: Local Ollama"]
+    end
+
+    subgraph 应用层 [Model Tasks - 任务控制室]
+        T1["task: replyer_1<br>model_list: [deepseek-v3.1, gemini-pro]"]
+        T2["task: planner<br>model_list: [qwen-14b]"]
+        T3["task: utils_small<br>model_list: [llama3-local]"]
+    end
+
+    P1 --> M1
+    P1 --> M2
+    P2 --> M3
+    P3 --> M4
+
+    M1 --> T1
+    M3 --> T1
+    M2 --> T2
+    M4 --> T3
+```
+*   **解读**：`replyer_1` 任务由 `deepseek-v3.1` 和 `gemini-pro` 两个引擎共同负责，它们分别来自 `SiliconFlow` 和 `Google Gemini` 这两个不同的发电厂。这种灵活的调度机制，正是高级配置的核心所在。
 
 ---
 
-### 常用服务商配置模板
+## 第二章：资源层 (API Providers) 深度解析 - 构筑稳定算力基石
 
-#### 1. 如果你使用 DeepSeek
+资源层是整个系统的基石。一个稳定、可靠、多元化的资源层，是 Bot 能够持续提供高质量服务的前提。
 
-> DeepSeek 是一个优秀且经济的选择，官方网站：[https://www.deepseek.com/](https://www.deepseek.com/)
+### 2.1 多供应商策略：永不宕机的秘密
+
+为什么要配置多个 Provider？
+
+*   **风险对冲**：当某个服务商（如 DeepSeek）的 API 临时宕机或网络波动时，系统可以无缝切换到备用服务商（如 SiliconFlow），保证服务的连续性。
+*   **成本优化**：不同的服务商对同一款模型可能有不同的定价。你可以通过多供应商配置，灵活选择当前性价比最高的渠道。
+*   **能力互补**：某些特殊模型（如 Google 的 Gemini）只有特定的服务商提供。配置多个供应商可以让你博采众长。
+
+### 2.2 关键参数详解
+
+让我们以一个推荐的 **SiliconFlow** 配置为例，深入了解每个参数的含义和作用。SiliconFlow 聚合了众多优秀模型，是新手和专家的理想选择。
 
 ```toml
-# --- DeepSeek 配置 (单个Key示例) ---
+# --- SiliconFlow 配置 (推荐) ---
 [[api_providers]]
-name = "DeepSeek"                       # 餐厅名字 (我们自己取，方便后面用)
-base_url = "https://api.deepseek.cn/v1" # 餐厅地址 (官方固定的)
-api_key = "sk-xxxxxxxxxxxxxxxxxxxxxxxx"   # 你的API Key (从DeepSeek官网获取，替换这串文字)
-client_type = "openai"                  # 客户端类型 (照抄即可)
-
-# --- DeepSeek 配置 (多个Key轮询示例) ---
-# 如果你有多个DeepSeek的API Key，可以像下面这样配置
-# Bot会在每次请求时自动轮流使用这些Key
-# [[api_providers]]
-# name = "DeepSeek_Polling"
-# base_url = "https://api.deepseek.cn/v1"
-# api_key = [
-#   "sk-key_1_xxxxxxxxxxxx",
-#   "sk-key_2_xxxxxxxxxxxx",
-#   "sk-key_3_xxxxxxxxxxxx"
-# ]
-# client_type = "openai"
+name = "SiliconFlow"                       # 名字，方便在 Models 层引用
+base_url = "https://api.siliconflow.cn/v1" # 官方API地址
+# highlight-start
+api_key = [
+  "sk-key_1_xxxxxxxxxxxx",
+  "sk-key_2_xxxxxxxxxxxx"
+]                                          # 推荐使用多Key轮询，提高稳定性
+# highlight-end
+client_type = "openai"                     # 客户端类型，SiliconFlow 兼容OpenAI格式
+# highlight-start
+max_retry = 3                              # 最大重试次数，建议设置为3
+timeout = 45                               # API请求超时（秒），网络不好可适当调高
+retry_interval = 10                        # 重试间隔（秒）
+# highlight-end
 ```
 
-#### 2. 如果你使用 SiliconFlow
+#### `api_key`：从“单兵作战”到“集团军”
 
-> SiliconFlow 聚合了多种模型，非常方便，官方网站：[https://www.siliconflow.cn/](https://www.siliconflow.cn/)
+*   **单个密钥**：`api_key = "sk-xxxxxxxx"`，简单直接。
+*   **多个密钥（推荐）**：`api_key = ["sk-key1", "sk-key2"]`。Bot 会在每次请求时**自动轮流使用**这些密钥。这不仅能分摊单个 Key 的请求限额，还能在某个 Key 失效时自动切换到下一个，实现“**自动故障转移**”，极大提升了系统的健壮性。
 
-```toml
-# --- SiliconFlow 配置 ---
-[[api_providers]]
-name = "SiliconFlow"
-base_url = "https://api.siliconflow.cn/v1"
-api_key = "sk-xxxxxxxxxxxxxxxxxxxxxxxx" # 你的API Key (从SiliconFlow官网获取)
-client_type = "openai"
-```
+#### `client_type`：选择正确的“通信协议”
 
-#### 3. 如果你使用 Google Gemini
+*   `openai`：绝大多数兼容 OpenAI 接口的服务商（如 DeepSeek, SiliconFlow, Ollama）都使用此类型。
+*   `aiohttp_gemini`：专门用于请求 Google Gemini 原生 API 的特殊客户端。
+*   选择错误的客户端类型，会导致通信失败。
 
-> 注意：Gemini 的配置稍有不同。
+#### 韧性设计：`max_retry`, `timeout`, `retry_interval`
 
-```toml
-# --- Google Gemini 配置 ---
-[[api_providers]]
-name = "Google"
-base_url = "https://generativelanguage.googleapis.com/v1beta"
-api_key = "xxxxxxxxxxxxxxxxxxxxxxxx" # 你的API Key (从Google AI Studio获取)
-client_type = "aiohttp_gemini"  # 注意：Gemini需要使用这个特殊的客户端类型
-```
+这三个参数共同构成了系统的“**韧性铁三角**”，是应对复杂网络环境的关键。
 
-#### 4. 如果你在本地运行模型 (例如使用 Ollama)
+*   `max_retry`：当一次 API 请求因为网络问题或服务器临时错误而失败时，系统会自动重新尝试的次数。设置为 `3` 可以在不影响用户体验的前提下，有效对抗瞬时网络抖动。
+*   `timeout`：发出请求后，等待服务器响应的最长时间。如果你的网络环境较差，或者调用的模型推理时间较长，可以适当增加此值（如 `60` 或 `90` 秒），避免因等待超时而导致的失败。
+*   `retry_interval`：两次重试之间的等待时间。设置一个合理的间隔（如 `10` 秒）可以避免因过于频繁的重试而对 API 服务端造成冲击。
 
-> 如果你在自己的电脑上通过 Ollama 等工具运行本地大模型。
+#### 安全与隐私：`enable_content_obfuscation`
 
-```toml
-# --- 本地 Ollama 配置 ---
-[[api_providers]]
-name = "LocalOllama"
-base_url = "http://127.0.0.1:11434/v1" # 你的本地Ollama地址 (默认是这个)
-api_key = "ollama" # 对于Ollama，API Key随便填，比如 "ollama"
-client_type = "openai"
-```
+*   这是一个高级安全功能，`enable_content_obfuscation = true`。启用后，系统会在向某些需要内容审核的 API 发送请求前，对文本进行轻微的、不影响语义的混淆，以降低被误判或审查的风险。`obfuscation_intensity`（混淆强度）可设置为 1 到 3。请注意，这并非万能，且可能会对模型理解产生微小影响，请谨慎使用。
 
-**小提示**：你可以同时配置多家“餐厅”！只需将它们的配置代码块依次粘贴到文件中即可。
+---
 
+## 第三章：能力层 (Models) 精细化调优 - 锻造专属AI引擎
 
-## 第二步：从“菜单”上“点菜” (Models)
+在“引擎车间”，我们将来自“发电厂”的原始算力，打造成一个个性能各异、随时待命的“AI 引擎”。
 
-现在我们已经有了“餐厅”，接下来就要点菜了。点菜的过程就是告诉 Bot，这家餐厅的哪道菜（`model_identifier`），我们想给它取个什么“小名”（`name`），方便我们后面使唤它。
+### 3.1 命名与标识：`name` vs `model_identifier`
 
-请找到 `[[models]]` 部分。
+*   `model_identifier`：这是模型在服务商那里的“**官方型号**”，必须严格按照服务商的文档填写，例如 `"deepseek-ai/deepseek-v3.1"`。
+*   `name`：这是你在自己的“调度中心”里为这个引擎取的“**内部代号**”，例如 `"deepseek-v3.1-chat"`。这个代号必须是唯一的，并且将在应用层 (Model Tasks) 中被频繁调用。一个好的命名习惯（如 `供应商-模型名-用途`）能极大提升配置文件的可读性。
 
-### 点菜示例
+### 3.2 成本控制单元：`price_in` & `price_out`
 
-假设我们已经在第一步配置好了名为 `"SiliconFlow"` 的餐厅，现在想用它菜单上的 `deepseek-ai/deepseek-v2-chat` 这道菜。
+这两个参数是实现精细化成本管理的关键。
 
 ```toml
-# --- 点一道菜的示例 ---
 [[models]]
-model_identifier = "deepseek-ai/deepseek-v2-chat"  # 菜品的官方全名 (从SiliconFlow官网的模型列表里抄)
-name = "deepseek-v2-for-chat"               # 我们给它取的小名 (方便自己记忆)
-api_provider = "SiliconFlow"          # 这道菜来自哪个餐厅 (必须和第一步里的 name 完全一样)
+model_identifier = "deepseek-ai/deepseek-v3.1"
+name = "deepseek-v3.1-chat"
+api_provider = "SiliconFlow"
+# highlight-start
+price_in = 2.0                     # 输入价格（元 / M token）
+price_out = 8.0                    # 输出价格（元 / M token）
+# highlight-end
 ```
 
-你可以用同样的方式，从你配置好的所有“餐厅”里，点很多道不同的“菜”，并给它们取不同的小名。
+*   通过精确填写每个模型的调用成本，你可以利用 Bot 内置的统计功能，清晰地了解每一项任务、每一次对话的具体开销，为后续的成本优化提供数据支持。
 
+### 3.3 模型行为微调
 
-## 第三步：分配“菜品”给不同的“用途” (Model Tasks)
+#### `force_stream_mode`：应对“急性子”模型
 
-这是最后一步！我们需要告诉 Bot，在执行各种具体任务时，应该用我们刚刚点的哪道“菜”。
+*   某些模型或服务商默认或只支持流式输出（打字机效果）。当遇到非流式请求就报错时，开启 `force_stream_mode = true` 可以强制系统以流式方式与该模型通信，确保兼容性。
 
-请找到 `[model_task_config]` 部分。这里有很多任务，比如 `utils` (通用工具), `replyer_1` (主要聊天), `planner` (思考决策) 等等。
+#### `anti_truncation`：保证信息的完整性
 
-你只需要在每个任务的 `model_list` 里，填上你在第二步中给模型取的**“小名”**。
+*   在一些需要完整、结构化输出的场景（例如生成代码或长篇报告），模型的回答可能会因为达到最大长度限制而被“拦腰截断”。启用 `anti_truncation = true` 会激活一套特殊机制,如果侦测到被截断的话就会自动重试
 
-### 通用分配方案 (推荐新手使用)
+#### `extra_params`：释放模型的隐藏潜能
 
-如果你不想一个个研究，可以直接使用下面这个高性价比的分配方案。这个方案假设你已经在第二步中，为你最主要的聊天模型取了**“deepseek-v2-for-chat”**这个小名，并为另一个备用的小模型（如果有的话）取了**“mini-model”**的小名。
+*   这是一个高级定制功能，允许你向模型传递服务商 API 支持的、但 `model_config.toml` 中没有直接提供的额外参数。
 
-```toml
-# --- 任务分配示例 (直接复制并根据你的“小名”修改) ---
-# 下方是默认的任务分配方案，你可以直接将 `model_list` 中的模型"小名"
-# 替换为你自己在第二步中定义好的“小名”。
-
-### utils - 工具模型
-# 用于表情包模块、取名模块、关系模块等核心功能：
-[model_task_config.utils]
-model_list = ["siliconflow-deepseek-v3"]
-temperature = 0.2
-max_tokens = 800
-
-### utils_small - 小型工具模型
-# 用于高频率调用的场景，建议使用速度快的小模型：
-[model_task_config.utils_small]
-model_list = ["qwen3-8b"]
-temperature = 0.7
-max_tokens = 800
-
-### replyer_1 - 主要回复模型
-# 首要回复模型，也用于表达器和表达方式学习：
-[model_task_config.replyer_1]
-model_list = ["siliconflow-deepseek-v3"]
-temperature = 0.2
-max_tokens = 800
-
-### replyer_2 - 次要回复模型
-[model_task_config.replyer_2]
-model_list = ["siliconflow-deepseek-v3"]
-temperature = 0.7
-max_tokens = 800
-
-### planner - 决策模型
-# 负责决定MoFox_Bot该做什么：
-[model_task_config.planner]
-model_list = ["siliconflow-deepseek-v3"]
-temperature = 0.3
-max_tokens = 800
-
-### emotion - 情绪模型
-# 负责MoFox_Bot的情绪变化：
-[model_task_config.emotion]
-model_list = ["siliconflow-deepseek-v3"]
-temperature = 0.3
-max_tokens = 800
-
-### memory - 记忆模型
-[model_task_config.memory]
-model_list = ["qwen3-30b"]
-temperature = 0.7
-max_tokens = 800
-
-### vlm - 视觉语言模型
-# 用于图像识别：
-[model_task_config.vlm]
-model_list = ["qwen2.5-vl-72b"]
-max_tokens = 800
-
-### voice - 语音识别模型
-[model_task_config.voice]
-model_list = ["sensevoice-small"]
-
-### embedding - 嵌入模型
-[model_task_config.embedding]
-model_list = ["bge-m3"]
-
-### tool_use - 工具调用模型
-# 需要使用支持工具调用的模型：
-[model_task_config.tool_use]
-model_list = ["qwen3-14b"]
-temperature = 0.7
-max_tokens = 800
-
-### lpmm_entity_extract - 实体提取模型
-[model_task_config.lpmm_entity_extract]
-model_list = ["siliconflow-deepseek-v3"]
-temperature = 0.2
-max_tokens = 800
-
-### lpmm_rdf_build - RDF构建模型
-[model_task_config.lpmm_rdf_build]
-model_list = ["siliconflow-deepseek-v3"]
-temperature = 0.2
-max_tokens = 800
-
-### lpmm_qa - 问答模型
-[model_task_config.lpmm_qa]
-model_list = ["deepseek-r1-distill-qwen-32b"]
-temperature = 0.7
-max_tokens = 800
-
-### schedule_generator - 日程生成模型
-[model_task_config.schedule_generator]
-model_list = ["deepseek-v3"]
-temperature = 0.5
-max_tokens = 1024
-
-### monthly_plan_generator - 月度计划生成模型
-[model_task_config.monthly_plan_generator]
-model_list = ["deepseek-v3"]
-temperature = 0.7
-max_tokens = 1024
-
-### emoji_vlm - 表情包VLM模型
-[model_task_config.emoji_vlm]
-model_list = ["qwen-vl-max"]
-max_tokens = 800
-
-### anti_injection - 反注入模型
-[model_task_config.anti_injection]
-model_list = ["deepseek-v3"]
-temperature = 0.1
-max_tokens = 512
-
-### utils_video - 视频分析模型
-[model_task_config.utils_video]
-model_list = ["qwen-vl-max"]
-max_tokens = 800
-```
-
-**核心思想**：对于新手来说，最简单的方法就是把你最强大、最主要的聊天模型（你给它取的小名）填到**所有**你想要启用的任务的 `model_list` 中。
+    ```toml
+    [[models]]
+    model_identifier = "Qwen/Qwen3-8B"
+    name = "qwen3-8b-fast"
+    api_provider = "SiliconFlow"
+    # highlight-start
+    [models.extra_params]
+    enable_thinking = false # 示例：关闭qwen3模型的“思考”过程，以换取更快的响应速度
+    # highlight-end
+    ```
+*   要使用此功能，你必须仔细阅读并理解对应模型供应商的 API 文档，了解它们支持哪些独特的参数。
 
 ---
 
-## 常见问题解答 (FAQ)
+## 第四章：应用层 (Model Tasks) 策略与艺术 - 指挥你的AI军团
 
-**Q: `api_key` 是什么？从哪里获取？**
-A: `api_key` 就像是你的会员卡号，用来证明你有权使用这家“餐厅”的服务。你需要去对应的服务商官方网站（比如 DeepSeek, SiliconFlow）注册账号，然后在个人中心的“API密钥”或类似页面找到它。它通常是一长串以 `sk-` 开头的字符。
+这里是“任务控制室”，是你作为指挥官智慧的最终体现。合理的任务分配策略，能让你的 Bot 在不同场景下都表现得像个专家。
 
-**Q: 我可以配置多个 `api_key` 吗？**
-A: **可以！** 新版配置支持 `api_key` 设置为列表形式，例如 `api_key = ["key1", "key2"]`。当配置为列表时，Bot 会在每次请求时自动轮流使用这些密钥，这有助于分担单个密钥的请求压力，并在某个密钥失效时自动切换到下一个，非常推荐！
+### 4.1 任务角色分析
 
-**Q: 我怎么知道 `model_identifier` (菜品官方名) 是什么？**
-A: 这也需要去服务商的官方网站查找。它们通常会有一个“模型列表”或“API文档”页面，上面会列出所有支持的模型以及它们的官方名称/ID。
+每个 `[model_task_config.*]` 都定义了一个独特的工作流。以下是几个核心任务的策略建议：
 
-**Q: 我可以只用一个模型完成所有任务吗？**
-A: **完全可以！** 对于新手来说，这是最推荐的方式。把你最好的模型的小名填到所有任务的 `model_list` 里，机器人就能正常工作了。
+*   **`replyer_1` / `replyer_2` (主要/次要回复)**：这是 Bot 的“门面”。建议为 `replyer_1` 配置你最强大、最昂贵的模型（如 DeepSeek V3.1, Kimi K2），以保证核心聊天体验。`replyer_2` 可作为备用或用于风格切换。
 
-**Q: 那些 `temperature`, `max_tokens` 是什么意思？**
-A: 这些是做菜时的“火候”和“份量”。
--   `temperature` (温度)：越高，模型回答越有创造性、越随机；越低，回答越稳定、越精确。通常保持默认值即可。
--   `max_tokens` (最大份量)：限制一次回答最长能说多少话。也可以暂时不管，使用默认值。
+*   **`planner` (决策模型)**：这是 Bot 的“大脑”。它负责理解用户意图，并决定下一步该做什么。此任务对模型的逻辑推理和指令遵循能力要求极高。推荐使用逻辑性强的模型，即使它不是最“能聊”的。
 
+*   **`utils_small` (高频工具)**：用于处理一些内部的、高频次的简单文本处理任务。**强烈建议**为此任务配置一个速度快、成本极低的小模型（甚至是本地模型），能显著降低整体运营成本。
 
-## 进阶调优 (新手可跳过)
+*   **`vlm` / `voice` / `embedding` (多模态与嵌入)**：这些是功能性任务，必须配置支持相应能力的专用模型。例如，`vlm` 任务需要配置像 `qwen-vl-max` 这样的视觉语言模型。
 
-当你熟悉了基本配置后，可以尝试以下进阶玩法：
--   **`extra_params`**：为特定模型添加一些“特殊调料”。比如某些模型支持关闭“思考”功能以加快速度。这需要你阅读对应服务商的 API 文档来了解具体有哪些参数可以配置。
--   **`force_stream_mode`**：强制使用“流式输出”（打字机效果）。某些模型必须开启这个才能正常工作。
--   **成本优化**：为不同的任务选择不同成本和性能的模型。比如，让便宜快速的小模型处理高频的简单任务，让昂贵强大的大模型处理核心的聊天和思考任务。
+### 4.2 混合模型策略：因材施教
 
+单一模型打天下的时代已经过去。现代化的配置思路是“因材施教”，为不同任务匹配最合适的模型。
 
-恭喜你！到这里，你的模型配置就完成了。保存好 `model_config.toml` 文件，然后重启你的 MoFox-Bot，它现在就拥有了强大的“大脑”！
+```toml
+# --- 混合模型策略示例 ---
+
+# 核心聊天，使用最强模型
+[model_task_config.replyer_1]
+model_list = ["deepseek-v3.1-chat"]
+temperature = 0.2
+
+# 决策规划，使用逻辑强的模型
+[model_task_config.planner]
+model_list = ["kimi-k2-instruct"]
+temperature = 0.3
+
+# 高频工具，使用廉价快速的本地模型
+[model_task_config.utils_small]
+model_list = ["llama3-8b-local"]
+temperature = 0.7
+
+# 图像识别，使用专用VLM模型
+[model_task_config.vlm]
+model_list = ["qwen-vl-plus"]
+```
+
+### 4.3 负载均衡与故障转移
+
+`model_list` 不仅可以填一个模型，更可以填多个，这是实现 **负载均衡** 和 **故障自动转移 (Failover)** 的核心。
+
+```toml
+[model_task_config.replyer_1]
+# highlight-start
+model_list = ["deepseek-v3.1-chat", "kimi-k2-instruct", "gemini-pro-backup"]
+# highlight-end
+```
+
+*   **工作机制**：当 `replyer_1` 任务被触发时，系统会首先尝试使用列表中的第一个模型 (`deepseek-v2-chat`)。
+    *   如果调用成功，流程结束。
+    *   如果调用失败（例如 API Key 失效、服务商宕机），系统**会自动、无缝地**尝试列表中的第二个模型 (`kimi-k2-instruct`)。
+    *   如果第二个依然失败，则继续尝试第三个，以此类推。
+*   这套机制，是你构建一个 7x24 小时高可用 AI Bot 的终极武器。
+
+### 4.4 并发与性能：`concurrency_count`
+
+*   对于某些高频调用的任务（如 `emoji_vlm` 表情包识别），你可以设置 `concurrency_count = 2` 或更高。这将允许系统同时向该模型发起多个请求，在不阻塞主流程的情况下，并行处理任务，从而大幅提升在高并发场景下的响应速度。
+
+---
+
+## 第五章：高级策略与故障排查
+
+### 5.1 实战策略
+
+*   **本地与云端的混合部署**：将 Ollama 等本地模型作为 `utils_small`  的主力，可以实现近乎零成本处理大量基础任务，仅在需要高质量输出时才调用昂贵的云端 API。这是一种极致的成本优化策略。
+
+*   **A/B 测试**：想知道两个模型哪个在特定任务上表现更好？在 `model_list` 中配置 `["model-A", "model-B"]`，并观察 Bot 的行为和日志。由于轮询机制，你可以近似实现对两个模型的 A/B 测试。
+
+### 5.2 故障排查 (Troubleshooting)
+
+配置一个复杂的系统，难免会遇到问题。学会诊断问题是成为指挥官的必修课。
+
+*   **API Key 失效 / `401 Unauthorized`**：这是最常见的问题。请检查 `api_key` 是否填写正确、是否已过期、账户是否欠费。
+*   **连接超时**：如果日志中频繁出现 `Timeout` 错误，请适当增加对应 `api_provider` 的 `timeout` 值。
+*   **配置不生效**：修改 `model_config.toml` 后，需要**重启 Bot** 才能让新的配置生效。
+
+> **需要更详细的帮助？**
+> 我们为您整理了一份详尽的常见问题列表。当您遇到棘手的错误时，请首先查阅：
+> *   **[模型配置常见问题解答 (FAQ)](./model_config_faq.md)**
+
+---
+
+**恭喜你，指挥官。**
+
+你已经完成了从基础配置到高级策略的全部课程。现在，你手中的 `model_config.toml` 不再是一堆冰冷的参数，而是能够灵活调度全球 AI 算力、实现复杂智能策略的指挥中心。
+
+去实践吧，不断调整、优化你的配置，打造出独一无二、真正属于你的 AI 伙伴。冒险，才刚刚开始。
