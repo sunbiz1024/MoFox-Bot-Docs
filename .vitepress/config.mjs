@@ -1,4 +1,8 @@
 import { defineConfig } from 'vitepress'
+import { 
+  GitChangelog, 
+  GitChangelogMarkdownSection, 
+} from '@nolebase/vitepress-plugin-git-changelog/vite'
 
 const devSidebar = [
   {
@@ -63,6 +67,21 @@ const devSidebar = [
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   base: "/MoFox-Bot-Docs/",
+  vite: { 
+    plugins: [ 
+      GitChangelog({ 
+        // Fill in your repository URL here
+        repoURL: () => 'https://github.com/nolebase/https://github.com/MoFox-Studio/MoFox-Bot-Docs', 
+      }), 
+      GitChangelogMarkdownSection(), 
+    ],
+  }, 
+  locales: {
+    root: {
+      label: 'Chinese',
+      lang: 'zh-CN'
+    },
+  },
   ignoreDeadLinks: true,
   title: "MoFox_Bot",
   description: "🚀 基于 MaiCore 的增强版智能体，提供更完善的功能和更好的使用体验",

@@ -4,6 +4,12 @@ import Giscus from './Giscus.vue'
 import { h } from 'vue'
 import { NolebaseEnhancedReadabilitiesMenu, NolebaseEnhancedReadabilitiesScreenMenu, NolebaseEnhancedReadabilitiesPlugin } from '@nolebase/vitepress-plugin-enhanced-readabilities/client'
 import '@nolebase/vitepress-plugin-enhanced-readabilities/client/style.css'
+import { 
+  NolebaseGitChangelogPlugin ,
+  InjectionKey
+} from '@nolebase/vitepress-plugin-git-changelog/client'
+
+import '@nolebase/vitepress-plugin-git-changelog/client/style.css'
 
 // 动态加载外部脚本的函数
 function loadScript(src) {
@@ -24,5 +30,8 @@ export default {
       'nav-bar-content-after': () => h(NolebaseEnhancedReadabilitiesMenu),
       'nav-screen-content-after': () => h(NolebaseEnhancedReadabilitiesScreenMenu),
     })
-  }
+  },
+  enhanceApp({ app }) {
+    app.use(NolebaseGitChangelogPlugin)  
+}
 }
