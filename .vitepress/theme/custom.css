@@ -33,6 +33,11 @@
   --scrollbar-thumb-hover-bg: #636363;
 }
 
+html:not(.dark) {
+  --vp-c-bg: #e5e7eb; /* 更深的灰色 */
+  --vp-c-bg-soft: #d1d5db; /* 配套的柔和背景色 */
+}
+
 /* 基础样式调整 */
 body {
   font-family: 'Noto Sans SC', 'Helvetica Neue', Arial, sans-serif;
@@ -113,7 +118,7 @@ blockquote {
 
 .VPHero .text,
 .VPHero .tagline {
-  background: -webkit-linear-gradient(120deg, #367BF0 30%, #ffffff 100%);
+  background: -webkit-linear-gradient(120deg, #367BF0 20%, #e0d7d7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

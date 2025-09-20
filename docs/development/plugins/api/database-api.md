@@ -75,7 +75,8 @@ new_record = await database_api.db_query(
     ActionRecords,
     data={"action_id": "123", "time": time.time(), "action_name": "TestAction"},
     query_type="create",
-)```
+)
+```
 3. 更新记录
 ```python
 updated_count = await database_api.db_query(
