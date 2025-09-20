@@ -66,7 +66,7 @@ const members = [
   {
     avatar: 'https://avatars.githubusercontent.com/u/140055845?v=4',
     name: '一闪',
-    title: '项目发起人之一<br/>核心开发者<br/>超级黑奴()',
+    title: '1.项目发起人之一<br/>2.核心开发者<br/>3.超级黑奴()',
     links: [
       { icon: 'github', link: 'https://github.com/minecraft1024a' }
     ]
@@ -74,7 +74,7 @@ const members = [
   {
     avatar: 'https://avatars.githubusercontent.com/u/189647097?v=4',
     name: '阿范',
-    title: '项目发起人之一<br/>核心开发者<br/>音游领域大神',
+    title: '1.项目发起人之一<br/>2.核心开发者<br/>3.音游领域大神',
     links: [
       { icon: 'github', link: 'https://github.com/Furina-1013-create' }
     ]
@@ -82,7 +82,7 @@ const members = [
   {
     avatar: 'https://avatars.githubusercontent.com/u/68868379?v=4',
     name: '言柒',
-    title: '项目发起人之一<br/>核心（打杂）开发者<br/>神秘插件适配大师',
+    title: '1.项目发起人之一<br/>2.核心（打杂）开发者<br/>3.神秘插件适配大师',
     links: [
       { icon: 'github', link: 'https://github.com/tt-P607' }
     ]
@@ -90,7 +90,7 @@ const members = [
   {
     avatar: 'https://avatars.githubusercontent.com/u/214268555?v=4',
     name: 'ikun',
-    title: '项目初期开发人之一<br/>文档单推人<br/>神秘猫娘',
+    title: '1.项目初期开发人之一<br/>2.文档单推人<br/>3.神秘猫娘',
     links: [
       { icon: 'github', link: 'https://github.com/ikun-11451' }
     ]
@@ -98,7 +98,7 @@ const members = [
   {
     avatar: 'https://avatars.githubusercontent.com/u/212194964?v=4',
     name: '雅诺狐',
-    title: '项目发起人之一<br/>核心开发者<br/>技术"猛"新',
+    title: '1.项目发起人之一<br/>2.核心开发者<br/>3.技术"猛"新',
     links: [
       { icon: 'github', link: 'https://github.com/foxcyber907' }
     ]
