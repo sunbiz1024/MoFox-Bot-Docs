@@ -67,7 +67,7 @@ uv 是一个速度极快的 Python 包管理器，可以把它看作是 `pip` �
 1.  **安装**:
     *   在命令提示符中，输入以下命令并回车：
         ```shell
-        pip install uv -i https://repo.huaweicloud.com/repository/pypi/simple
+        pip install uv
         ```
 2.  **验证**:
     *   输入以下命令并回车：
