@@ -109,3 +109,11 @@ blockquote {
   color: var(--vp-c-text-2);
   transition: border-color 0.3s ease;
 }
+/* Hero section gradient text - v2 */
+
+.VPHero .text,
+.VPHero .tagline {
+  background: -webkit-linear-gradient(120deg, #367BF0 30%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
