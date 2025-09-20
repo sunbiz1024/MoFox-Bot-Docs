@@ -28,8 +28,10 @@ const calculateReadingTime = () => {
   });
 };
 
-watch(() => page.value.relativePath, calculateReadingTime, { immediate: true });
-watch(() => page.value.relativePath, calculateReadingTime);
+onMounted(() => {
+  calculateReadingTime();
+  watch(() => page.value.relativePath, calculateReadingTime);
+});
 </script>
 
 <style scoped>
