@@ -1,6 +1,8 @@
 import DefaultTheme from 'vitepress/theme'
 import './custom.css'
 import Giscus from './Giscus.vue'
+import GuideCards from './GuideCards.vue'
+import BibleDisplay from './BibleDisplay.vue'
 import { h } from 'vue'
 import { NolebaseEnhancedReadabilitiesMenu, NolebaseEnhancedReadabilitiesScreenMenu, NolebaseEnhancedReadabilitiesPlugin } from '@nolebase/vitepress-plugin-enhanced-readabilities/client'
 import '@nolebase/vitepress-plugin-enhanced-readabilities/client/style.css'
@@ -31,8 +33,8 @@ export default {
   },
   enhanceApp({ app }) {
     app.use(NolebaseEnhancedReadabilitiesPlugin)
-  },
-  enhanceApp({ app }) {
-    app.use(NolebaseGitChangelogPlugin)  
-}
+    app.use(NolebaseGitChangelogPlugin)
+    app.component('GuideCards', GuideCards)
+    app.component('BibleDisplay', BibleDisplay)
+  }
 }

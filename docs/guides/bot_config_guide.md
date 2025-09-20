@@ -11,7 +11,7 @@
 以下提供的预设是**“灵魂代码片段”**，并非完整的配置文件！请**不要**直接将片段当作完整的 `bot_config.toml` 文件使用，否则机器人将**无法启动**！
 
 **正确的使用方法是**：
-1.  首先，将项目中的 `mmc/template/bot_config_template.toml` 文件**完整复制**一份。
+1.  首先，将项目中的 `template/bot_config_template.toml` 文件**完整复制**一份。
 2.  将复制出来的文件放到 `mmc/config/` 目录下，并重命名为 `bot_config.toml`。
 3.  从下面选择一个您喜欢的预设，**复制其代码**。
 4.  最后，在您新建的 `bot_config.toml` 文件中，用您复制的预设代码**覆盖掉对应的配置区块里面对应的项**（例如，用【元气少女】的 `personality_core` 和 `personality_side` 等代码，替换掉您文件中原有的 `personality_core` 和 `personality_side` 等部分）。

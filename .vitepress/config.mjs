@@ -109,7 +109,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: '主页', link: '/' },
-      { text: '指南', link: '/docs/guides/deployment_guide' },
+      { text: '指南', link: '/docs/guides/' },
       { text: '开发', link: '/docs/development/' },
       {
         text: '相关链接',
@@ -127,6 +127,7 @@ export default defineConfig({
         {
           text: '指南',
           items: [
+            { text: '部署指南主页', link: '/docs/guides/' },
             { text: 'Windows部署指南', link: '/docs/guides/deployment_guide' },
             { text: 'Linux部署指南', link: '/docs/guides/mmc_deploy_linux' },
             { text: 'android部署指南', link: '/docs/guides/mmc_deploy_android' },
