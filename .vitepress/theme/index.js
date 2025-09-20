@@ -3,6 +3,7 @@ import './custom.css'
 import Giscus from './Giscus.vue'
 import GuideCards from './GuideCards.vue'
 import BibleDisplay from './BibleDisplay.vue'
+import ForceRead from './ForceRead.vue'
 import { h } from 'vue'
 import { NolebaseEnhancedReadabilitiesMenu, NolebaseEnhancedReadabilitiesScreenMenu, NolebaseEnhancedReadabilitiesPlugin } from '@nolebase/vitepress-plugin-enhanced-readabilities/client'
 import '@nolebase/vitepress-plugin-enhanced-readabilities/client/style.css'
@@ -26,6 +27,7 @@ export default {
   ...DefaultTheme,
   Layout() {
     return h(DefaultTheme.Layout, null, {
+      'layout-top': () => h(ForceRead),
       'doc-after': () => h(Giscus),
       'nav-bar-content-after': () => h(NolebaseEnhancedReadabilitiesMenu),
       'nav-screen-content-after': () => h(NolebaseEnhancedReadabilitiesScreenMenu),
@@ -36,5 +38,6 @@ export default {
     app.use(NolebaseGitChangelogPlugin)
     app.component('GuideCards', GuideCards)
     app.component('BibleDisplay', BibleDisplay)
+    app.component('ForceRead', ForceRead)
   }
 }
