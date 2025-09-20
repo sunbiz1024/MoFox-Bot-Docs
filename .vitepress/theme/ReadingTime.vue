@@ -18,9 +18,6 @@ const wordCountText = ref('');
 import { nextTick } from 'vue';
 
 const calculateReadingTime = () => {
-  if (typeof window === 'undefined') {
-    return;
-  }
   nextTick(() => {
     const content = document.querySelector('.vp-doc');
     if (content) {
