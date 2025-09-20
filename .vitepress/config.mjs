@@ -34,13 +34,16 @@ const devSidebar = [
       { text: '快速开始', link: '/docs/development/plugins/quick-start' },
       { text: '插件清单指南', link: '/docs/development/plugins/manifest-guide' },
       { text: '依赖管理', link: '/docs/development/plugins/dependency-management' },
-      { text: '事件系统', link: '/docs/development/plugins/event-system-guide' },
       { text: '配置指南', link: '/docs/development/plugins/configuration-guide' },
-      { text: '工具指南', link: '/docs/development/plugins/tool_guide' },
-      { text: '命令指南', link: '/docs/development/plugins/PLUS_COMMAND_GUIDE' },
       { text: '可用范围控制', link: '/docs/development/plugins/command-scope' },
-      { text: 'Action Components', link: '/docs/development/plugins/action-components' },
-      { text: 'planner大脑和小脑选择', link: '/docs/development/plugins/planner_brain_distinction' },
+      { text: '插件可用组件', 
+        items: [
+          { text: 'Action Components', link: '/docs/development/plugins/action-components' },
+          { text: '工具指南', link: '/docs/development/plugins/tool_guide' },
+          { text: '命令指南', link: '/docs/development/plugins/PLUS_COMMAND_GUIDE' },
+          { text: '事件系统', link: '/docs/development/plugins/event-system-guide' },
+        ]
+      },
       {
         text: '插件 API',
         items: [
