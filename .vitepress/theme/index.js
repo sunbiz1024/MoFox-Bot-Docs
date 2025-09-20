@@ -6,9 +6,7 @@ import { NolebaseEnhancedReadabilitiesMenu, NolebaseEnhancedReadabilitiesScreenM
 import '@nolebase/vitepress-plugin-enhanced-readabilities/client/style.css'
 import { 
   NolebaseGitChangelogPlugin ,
-  InjectionKey
 } from '@nolebase/vitepress-plugin-git-changelog/client'
-
 import '@nolebase/vitepress-plugin-git-changelog/client/style.css'
 
 // 动态加载外部脚本的函数
@@ -30,6 +28,9 @@ export default {
       'nav-bar-content-after': () => h(NolebaseEnhancedReadabilitiesMenu),
       'nav-screen-content-after': () => h(NolebaseEnhancedReadabilitiesScreenMenu),
     })
+  },
+  enhanceApp({ app }) {
+    app.use(NolebaseEnhancedReadabilitiesPlugin)
   },
   enhanceApp({ app }) {
     app.use(NolebaseGitChangelogPlugin)  

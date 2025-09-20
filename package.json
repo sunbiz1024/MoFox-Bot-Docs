@@ -2,6 +2,7 @@
   "devDependencies": {
     "@nolebase/vitepress-plugin-enhanced-readabilities": "^2.18.2",
     "@nolebase/vitepress-plugin-git-changelog": "^2.18.2",
+    "@vitejs/plugin-vue": "^3.0.0",
     "vitepress": "^2.0.0-alpha.12"
   },
   "scripts": {
