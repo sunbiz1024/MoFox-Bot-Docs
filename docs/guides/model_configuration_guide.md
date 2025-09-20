@@ -227,7 +227,7 @@ model_list = ["deepseek-v3.1-chat", "kimi-k2-instruct", "gemini-pro-backup"]
 # highlight-end
 ```
 
-*   **工作机制**：当 `replyer_1` 任务被触发时，系统会首先尝试使用列表中的第一个模型 (`deepseek-v2-chat`)。
+*   **工作机制**：当 `replyer_1` 任务被触发时，系统会首先尝试使用列表中的第一个模型 (`deepseek-v3.1-chat`)。
     *   如果调用成功，流程结束。
     *   如果调用失败（例如 API Key 失效、服务商宕机），系统**会自动、无缝地**尝试列表中的第二个模型 (`kimi-k2-instruct`)。
     *   如果第二个依然失败，则继续尝试第三个，以此类推。
