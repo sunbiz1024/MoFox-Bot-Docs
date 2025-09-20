@@ -74,7 +74,7 @@ export default defineConfig({
     plugins: [ 
       GitChangelog({ 
         // Fill in your repository URL here
-        repoURL: () => 'https://github.com/nolebase/https://github.com/MoFox-Studio/MoFox-Bot-Docs', 
+        repoURL: () => 'https://github.com/MoFox-Studio/MoFox-Bot-Docs', 
       }), 
       GitChangelogMarkdownSection(), 
     ],
