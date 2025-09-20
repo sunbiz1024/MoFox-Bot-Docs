@@ -5,10 +5,11 @@
 </template>
 
 <script setup>
-import { onMounted, watch } from 'vue';
-import { useData } from 'vitepress';
+import { onMounted, watch, onUnmounted } from 'vue';
+import { useData, useRoute } from 'vitepress';
 
 const { isDark } = useData();
+const route = useRoute();
 
 const giscusAttributes = {
   "src": "https://giscus.app/client.js",
@@ -27,12 +28,36 @@ const giscusAttributes = {
   "async": ""
 };
 
-onMounted(() => {
+let giscusScriptLoaded = false;
+
+function loadGiscus() {
+  // 如果脚本已经加载过，则先移除旧的
+  if (giscusScriptLoaded) {
+    const existingContainer = document.querySelector('.giscus');
+    if (existingContainer) {
+      // 清空容器
+      while (existingContainer.firstChild) {
+        existingContainer.removeChild(existingContainer.firstChild);
+      }
+    }
+  }
+
+  // 创建并加载 Giscus 脚本
   const script = document.createElement('script');
   Object.entries(giscusAttributes).forEach(([key, value]) => {
     script.setAttribute(key, value);
   });
   document.querySelector('.giscus').appendChild(script);
+  giscusScriptLoaded = true;
+}
+
+// 监听路由变化
+watch(() => route.path, () => {
+  loadGiscus();
+});
+
+onMounted(() => {
+  loadGiscus();
 });
 
 watch(isDark, (dark) => {
@@ -43,6 +68,18 @@ watch(isDark, (dark) => {
       'https://giscus.app'
     );
   }
+});
+
+// 在组件卸载前移除监听
+onUnmounted(() => {
+  const existingContainer = document.querySelector('.giscus');
+  if (existingContainer) {
+    // 清空容器以移除 Giscus 的 iframe
+    while (existingContainer.firstChild) {
+      existingContainer.removeChild(existingContainer.firstChild);
+    }
+  }
+  giscusScriptLoaded = false;
 });
 </script>
 
