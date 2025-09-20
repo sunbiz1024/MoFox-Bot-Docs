@@ -102,6 +102,14 @@ const members = [
     links: [
       { icon: 'github', link: 'https://github.com/foxcyber907' }
     ]
+  },
+  {
+    avatar: 'https://avatars.githubusercontent.com/u/221029311?v=4',
+    name: '拾风',
+    title: '1.项目重构负责人<br/>2.核心开发者<br/>3.插件化大师',
+    links: [
+      { icon: 'github', link: 'https://github.com/Windpicker-owo' }
+    ]
   }
 ]
 
