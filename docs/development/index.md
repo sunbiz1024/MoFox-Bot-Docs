@@ -32,7 +32,7 @@ const devGuides = [
     avatar: '🧩',
     name: '插件开发',
     title: '学习如何从零开始，创造属于你自己的强大插件。',
-    link: '../plugins/index'
+    link: './plugins'
   }
 ]
 </script>
