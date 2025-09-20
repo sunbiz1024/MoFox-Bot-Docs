@@ -51,35 +51,35 @@ function loadGiscus() {
   giscusScriptLoaded = true;
 }
 
-// 监听路由变化
-watch(() => route.path, () => {
-  loadGiscus();
-});
-
 onMounted(() => {
   loadGiscus();
-});
 
-watch(isDark, (dark) => {
-  const iframe = document.querySelector('.giscus-frame');
-  if (iframe) {
-    iframe.contentWindow.postMessage(
-      { giscus: { setConfig: { theme: dark ? 'noborder_dark' : 'noborder_light' } } },
-      'https://giscus.app'
-    );
-  }
-});
+  // 监听路由变化
+  watch(() => route.path, () => {
+    loadGiscus();
+  });
 
-// 在组件卸载前移除监听
-onUnmounted(() => {
-  const existingContainer = document.querySelector('.giscus');
-  if (existingContainer) {
-    // 清空容器以移除 Giscus 的 iframe
-    while (existingContainer.firstChild) {
-      existingContainer.removeChild(existingContainer.firstChild);
+  watch(isDark, (dark) => {
+    const iframe = document.querySelector('.giscus-frame');
+    if (iframe) {
+      iframe.contentWindow.postMessage(
+        { giscus: { setConfig: { theme: dark ? 'noborder_dark' : 'noborder_light' } } },
+        'https://giscus.app'
+      );
     }
-  }
-  giscusScriptLoaded = false;
+  });
+
+  // 在组件卸载前移除监听
+  onUnmounted(() => {
+    const existingContainer = document.querySelector('.giscus');
+    if (existingContainer) {
+      // 清空容器以移除 Giscus 的 iframe
+      while (existingContainer.firstChild) {
+        existingContainer.removeChild(existingContainer.firstChild);
+      }
+    }
+    giscusScriptLoaded = false;
+  });
 });
 </script>
 
