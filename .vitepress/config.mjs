@@ -69,7 +69,6 @@ const devSidebar = [
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  base: "/MoFox-Bot-Docs/",
   vite: { 
     plugins: [ 
       GitChangelog({ 
