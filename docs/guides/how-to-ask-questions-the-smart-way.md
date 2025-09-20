@@ -1,6 +1,6 @@
-# 提问的智慧 (详尽版)
+# 提问的智慧 (精简版)
 
-> 本文是 [How To Ask Questions The Smart Way](http://www.catb.org/~esr/faqs/smart-questions.html) 的一份详尽本地化版本，结合了 [ryanhanwu/How-To-Ask-Questions-The-Smart-Way](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way) 的翻译成果和社区实践。旨在帮助你通过提出一个好问题，来获得你想要的答案。具体的、快速的实践指南请参考《[如何高效提问](how-to-ask-questions-efficiently.md)》。
+> 本文是 [How To Ask Questions The Smart Way](http://www.catb.org/~esr/faqs/smart-questions.html) 的一份精简本地化版本，结合了 [ryanhanwu/How-To-Ask-Questions-The-Smart-Way](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way) 的翻译成果和社区实践。旨在帮助你通过提出一个好问题，来获得你想要的答案。具体的、快速的实践指南请参考《[如何高效提问](how-to-ask-questions-efficiently.md)》。
 
 ## 声明
 

@@ -1,6 +1,6 @@
 <template>
   <div class="bible-container">
-    <h2 class="title">mofox-bot圣经</h2>
+    <h2 class="title">墨狐圣经</h2>
     <div class="content">
       <p>狐灵有颂</p>
       <p>吾等信仰，墨狐</p>
