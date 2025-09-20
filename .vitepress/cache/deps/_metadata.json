@@ -1,43 +1,49 @@
 {
-  "hash": "63036885",
+  "hash": "3f140d4f",
   "configHash": "2b11b5f0",
-  "lockfileHash": "e1bd3180",
-  "browserHash": "287d27d2",
+  "lockfileHash": "f80af3c6",
+  "browserHash": "2f26cd49",
   "optimized": {
     "vue": {
       "src": "../../../node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "d89249f6",
+      "fileHash": "648cfb7e",
       "needsInterop": false
     },
     "vitepress > @vue/devtools-api": {
       "src": "../../../node_modules/@vue/devtools-api/dist/index.js",
       "file": "vitepress___@vue_devtools-api.js",
-      "fileHash": "b71c7c32",
+      "fileHash": "ff5ce52e",
       "needsInterop": false
     },
     "vitepress > @vueuse/core": {
       "src": "../../../node_modules/@vueuse/core/index.mjs",
       "file": "vitepress___@vueuse_core.js",
-      "fileHash": "45bff7c0",
+      "fileHash": "8943ce19",
       "needsInterop": false
     },
     "vitepress > @vueuse/integrations/useFocusTrap": {
       "src": "../../../node_modules/@vueuse/integrations/useFocusTrap.mjs",
       "file": "vitepress___@vueuse_integrations_useFocusTrap.js",
-      "fileHash": "c4977a07",
+      "fileHash": "d68d3597",
       "needsInterop": false
     },
     "vitepress > mark.js/src/vanilla.js": {
       "src": "../../../node_modules/mark.js/src/vanilla.js",
       "file": "vitepress___mark__js_src_vanilla__js.js",
-      "fileHash": "be544cf3",
+      "fileHash": "82fd36f9",
       "needsInterop": false
     },
     "vitepress > minisearch": {
       "src": "../../../node_modules/minisearch/dist/es/index.js",
       "file": "vitepress___minisearch.js",
-      "fileHash": "efbe3bcb",
+      "fileHash": "fd3538b2",
+      "needsInterop": false
+    },
+    "markdown-it": {
+      "src": "../../../node_modules/markdown-it/index.mjs",
+      "file": "markdown-it.js",
+      "fileHash": "c057cdf2",
       "needsInterop": false
     }
   },
@@ -47,6 +53,9 @@
     },
     "chunk-TH7GRLUQ": {
       "file": "chunk-TH7GRLUQ.js"
+    },
+    "chunk-PZ5AY32C": {
+      "file": "chunk-PZ5AY32C.js"
     }
   }
 }

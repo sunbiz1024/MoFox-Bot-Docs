@@ -24,7 +24,7 @@ const myGuides = [
   {
     avatar: '🤖',
     name: 'Android 部署指南',
-    title: '为 Android 用户准备的图形化界面部署教程...',
+    title: '为 Android 用户准备的部署教程...',
     link: './mmc_deploy_android'
   },
   // ... 你可以根据需要添加任意多个卡片对象
@@ -65,8 +65,8 @@ import { VPTeamMembers } from 'vitepress/theme'
 const members = [
   {
     avatar: 'https://avatars.githubusercontent.com/u/140055845?v=4',
-    name: 'yishan/一闪',
-    title: '项目发起人之一 / 核心开发者 / 超级黑奴()',
+    name: '一闪',
+    title: '项目发起人之一<br/>核心开发者<br/>超级黑奴()',
     links: [
       { icon: 'github', link: 'https://github.com/minecraft1024a' }
     ]
@@ -74,7 +74,7 @@ const members = [
   {
     avatar: 'https://avatars.githubusercontent.com/u/189647097?v=4',
     name: '阿范',
-    title: '项目发起人之一 / 核心开发者 / 音游领域大神(据说他屁股肉丝Rks离理论只差0.09（）)',
+    title: '项目发起人之一<br/>核心开发者<br/>音游领域大神',
     links: [
       { icon: 'github', link: 'https://github.com/Furina-1013-create' }
     ]
@@ -82,7 +82,7 @@ const members = [
   {
     avatar: 'https://avatars.githubusercontent.com/u/68868379?v=4',
     name: '言柒',
-    title: '项目发起人之一 / 核心（虽然实际是在打杂）开发者 / 神秘插件适配大师',
+    title: '项目发起人之一<br/>核心（打杂）开发者<br/>神秘插件适配大师',
     links: [
       { icon: 'github', link: 'https://github.com/tt-P607' }
     ]
@@ -90,7 +90,7 @@ const members = [
   {
     avatar: 'https://avatars.githubusercontent.com/u/214268555?v=4',
     name: 'ikun',
-    title: '项目初期开发人之一 / 文档单推人 / 神秘猫娘',
+    title: '项目初期开发人之一<br/>文档单推人<br/>神秘猫娘',
     links: [
       { icon: 'github', link: 'https://github.com/ikun-11451' }
     ]
@@ -98,12 +98,15 @@ const members = [
   {
     avatar: 'https://avatars.githubusercontent.com/u/212194964?v=4',
     name: '雅诺狐',
-    title: '项目发起人之一 / 核心开发者 / 技术"猛"新',
+    title: '项目发起人之一<br/>核心开发者<br/>技术"猛"新',
     links: [
       { icon: 'github', link: 'https://github.com/foxcyber907' }
     ]
-  },
-  {
+  }
+]
+
+const org = [
+    {
     avatar: 'https://avatars.githubusercontent.com/u/225730003',
     name: 'MoFox-Studio',
     title: '官方组织',
@@ -114,4 +117,8 @@ const members = [
 ]
 </script>
 
-<VPTeamMembers size="small" :members="members" />
+<!-- <VPTeamMembers size="small" :members="members" /> -->
+
+<MoFoxTeamCard :members="members" size="medium" />
+<br/>
+<MoFoxTeamCard :members="org" size="large" />
