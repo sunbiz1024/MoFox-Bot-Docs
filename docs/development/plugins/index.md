@@ -39,6 +39,7 @@ Command vs Action 选择指南
 - [📤 发送API](api/send-api.md) - 各种类型消息发送接口
 - [消息API](api/message-api.md) - 消息获取，消息构建，消息查询接口
 - [聊天流API](api/chat-api.md) - 聊天流管理和查询接口
+- [适配器命令API](api/adapter-command-api.md) - 一个向适配器对应的平台发送适配器不直接支持命令的接口
 
 ### AI与生成API  
 - [LLM API](api/llm-api.md) - 大语言模型交互接口，可以使用内置LLM生成内容
