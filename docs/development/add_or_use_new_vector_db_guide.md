@@ -225,6 +225,6 @@ class MyVectorDBImpl(VectorDBBase):
 
 ## 4. 代码结构参考
 
--   **抽象基类**: [`mmc/src/common/vector_db/base.py`](./base.py)
--   **ChromaDB 实现 (范例)**: [`mmc/src/common/vector_db/chromadb_impl.py`](./chromadb_impl.py)
--   **服务入口与工厂函数**: [`mmc/src/common/vector_db/__init__.py`](./__init__.py)
+-   **抽象基类**: `mmc/src/common/vector_db/base.py`
+-   **ChromaDB 实现 (范例)**: `mmc/src/common/vector_db/chromadb_impl.py`
+-   **服务入口与工厂函数**: `mmc/src/common/vector_db/__init__.py`
