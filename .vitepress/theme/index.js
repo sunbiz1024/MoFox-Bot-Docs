@@ -7,6 +7,7 @@ import MoFoxTeamCard from './MoFoxTeamCard.vue'
 import { h } from 'vue'
 import ReadingTime from './ReadingTime.vue'
 import BackToTop from './BackToTop.vue'
+import CollapsibleSidebar from './CollapsibleSidebar.vue'
 import { NolebaseEnhancedReadabilitiesMenu, NolebaseEnhancedReadabilitiesScreenMenu, NolebaseEnhancedReadabilitiesPlugin } from '@nolebase/vitepress-plugin-enhanced-readabilities/client'
 import '@nolebase/vitepress-plugin-enhanced-readabilities/client/style.css'
 import { 
@@ -33,7 +34,7 @@ export default {
       'doc-after': () => h(Giscus),
       'nav-bar-content-after': () => h(NolebaseEnhancedReadabilitiesMenu),
       'nav-screen-content-after': () => h(NolebaseEnhancedReadabilitiesScreenMenu),
-      'layout-bottom': () => h(BackToTop),
+      'layout-bottom': () => [h(BackToTop), h(CollapsibleSidebar)],
     })
   },
   enhanceApp({ app }) {
@@ -44,5 +45,6 @@ export default {
     app.component('ReadingTime', ReadingTime)
     app.component('MoFoxTeamCard', MoFoxTeamCard)
     app.component('BackToTop', BackToTop)
+    app.component('CollapsibleSidebar', CollapsibleSidebar)
   }
 }
