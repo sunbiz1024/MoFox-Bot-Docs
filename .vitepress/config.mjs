@@ -153,7 +153,8 @@ export default defineConfig({
               items: [
                 { text: '提问的智慧(精简版)', link: '/docs/guides/how-to-ask-questions-the-smart-way' },
                 { text: '如何高效提问', link: '/docs/guides/how-to-ask-questions-efficiently' },
-                { text: '模型配置FAQ', link: '/docs/guides/model_config_faq' }
+                { text: '模型配置FAQ', link: '/docs/guides/model_config_faq' },
+                { text: '如何更换端口', link: '/docs/guides/how_to_change_port' }
               ]
             }
           ]
