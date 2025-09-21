@@ -23,8 +23,7 @@ const devSidebar = [
     items: [
       { text: '贡献指南', link: '/docs/development/CONTRIBUTE' },
       { text: '开发准则', link: '/docs/development/development_guidelines' },
-      { text: '向量数据库使用指南', link: '/docs/development/vector_db_usage_guide' },
-      { text: '添加新的向量数据库', link: '/docs/development/add_new_vector_db_guide' }
+      { text: '添加/使用新的向量数据库', link: '/docs/development/add_or_use_new_vector_db_guide' }
     ]
   },
   {
