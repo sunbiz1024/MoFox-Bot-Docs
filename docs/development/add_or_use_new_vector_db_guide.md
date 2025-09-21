@@ -132,7 +132,7 @@ print(f"语义缓存集合中有 {count} 条数据。")
 
 ### 步骤 1：创建实现文件
 
-在 `mmc/src/common/vector_db/` 目录下创建一个新的 Python 文件，例如 `my_vectordb_impl.py`。
+在 `MoFox-Bot/src/common/vector_db/` 目录下创建一个新的 Python 文件，例如 `my_vectordb_impl.py`。
 
 ### 步骤 2：继承 `VectorDBBase` 并实现接口
 
