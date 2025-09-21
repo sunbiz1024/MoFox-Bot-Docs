@@ -6,6 +6,7 @@ import BibleDisplay from './BibleDisplay.vue'
 import MoFoxTeamCard from './MoFoxTeamCard.vue'
 import { h } from 'vue'
 import ReadingTime from './ReadingTime.vue'
+import BackToTop from './BackToTop.vue'
 import { NolebaseEnhancedReadabilitiesMenu, NolebaseEnhancedReadabilitiesScreenMenu, NolebaseEnhancedReadabilitiesPlugin } from '@nolebase/vitepress-plugin-enhanced-readabilities/client'
 import '@nolebase/vitepress-plugin-enhanced-readabilities/client/style.css'
 import { 
@@ -28,11 +29,11 @@ export default {
   ...DefaultTheme,
   Layout() {
     return h(DefaultTheme.Layout, null, {
-      'doc-before': () => h('ReadingTime'),
       'doc-before': () => h(ReadingTime),
       'doc-after': () => h(Giscus),
       'nav-bar-content-after': () => h(NolebaseEnhancedReadabilitiesMenu),
       'nav-screen-content-after': () => h(NolebaseEnhancedReadabilitiesScreenMenu),
+      'layout-bottom': () => h(BackToTop),
     })
   },
   enhanceApp({ app }) {
@@ -42,5 +43,6 @@ export default {
     app.component('BibleDisplay', BibleDisplay)
     app.component('ReadingTime', ReadingTime)
     app.component('MoFoxTeamCard', MoFoxTeamCard)
+    app.component('BackToTop', BackToTop)
   }
 }
