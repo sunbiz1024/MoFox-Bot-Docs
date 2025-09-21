@@ -147,7 +147,7 @@ print(f"语义缓存集合中有 {count} 条数据。")
 *   **`count(self, collection_name: str) -> int`**: 获取集合中的条目总数。
 *   **`delete_collection(self, name: str) -> None`**: 删除一个集合。
 
-您可以参考现有的 [`ChromaDBImpl`](./chromadb_impl.py) 作为实现范例。
+您可以参考现有的 `ChromaDBImpl` 作为实现范例。
 
 **代码骨架示例:**
 
@@ -225,6 +225,6 @@ class MyVectorDBImpl(VectorDBBase):
 
 ## 4. 代码结构参考
 
--   **抽象基类**: `mmc/src/common/vector_db/base.py`
--   **ChromaDB 实现 (范例)**: `mmc/src/common/vector_db/chromadb_impl.py`
--   **服务入口与工厂函数**: `mmc/src/common/vector_db/__init__.py`
+-   **抽象基类**: `MoFox-Bot/src/common/vector_db/base.py`
+-   **ChromaDB 实现 (范例)**: `MoFox-Bot/src/common/vector_db/chromadb_impl.py`
+-   **服务入口与工厂函数**: `MoFox-Bot/src/common/vector_db/__init__.py`
