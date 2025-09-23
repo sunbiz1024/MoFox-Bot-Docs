@@ -13,6 +13,11 @@ import {
   NolebaseGitChangelogPlugin ,
 } from '@nolebase/vitepress-plugin-git-changelog/client'
 import '@nolebase/vitepress-plugin-git-changelog/client/style.css'
+import { 
+  NolebaseInlineLinkPreviewPlugin, 
+} from '@nolebase/vitepress-plugin-inline-link-preview/client'
+
+import '@nolebase/vitepress-plugin-inline-link-preview/client/style.css'
 
 // 动态加载外部脚本的函数
 function loadScript(src) {
@@ -44,5 +49,6 @@ export default {
     app.component('ReadingTime', ReadingTime)
     app.component('MoFoxTeamCard', MoFoxTeamCard)
     app.component('BackToTop', BackToTop)
+    app.use(NolebaseInlineLinkPreviewPlugin) 
   }
 }

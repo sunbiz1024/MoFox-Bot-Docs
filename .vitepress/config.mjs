@@ -4,6 +4,9 @@ import {
   GitChangelog, 
   GitChangelogMarkdownSection, 
 } from '@nolebase/vitepress-plugin-git-changelog/vite'
+import { 
+  InlineLinkPreviewElementTransform 
+} from '@nolebase/vitepress-plugin-inline-link-preview/markdown-it'
 
 const devSidebar = [
   {
@@ -70,6 +73,12 @@ const devSidebar = [
 
 // https://vitepress.dev/reference/site-config
 export default withMermaid(defineConfig({
+  markdown: { 
+      config(md) { 
+        // other markdown-it configurations...
+        md.use(InlineLinkPreviewElementTransform) 
+      } 
+    },
   vite: {
     plugins: [
       GitChangelog({
@@ -80,6 +89,7 @@ export default withMermaid(defineConfig({
     ],
     optimizeDeps: {
       exclude: [
+        '@nolebase/vitepress-plugin-inline-link-preview/client', 
         '@nolebase/vitepress-plugin-enhanced-readabilities/client',
         'vitepress',
         '@nolebase/ui',
@@ -88,6 +98,7 @@ export default withMermaid(defineConfig({
     ssr: {
       noExternal: [
         // If there are other packages that need to be processed by Vite, you can add them here.
+        '@nolebase/vitepress-plugin-inline-link-preview',
         '@nolebase/vitepress-plugin-enhanced-readabilities',
         '@nolebase/ui',
       ],
