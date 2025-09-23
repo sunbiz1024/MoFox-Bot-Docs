@@ -132,8 +132,18 @@ blockquote {
   padding-left: 0;
 }
 
+.sidebar-collapsed .VPNavBarTitle {
+  transform: translateX(-100%);
+  opacity: 0;
+  visibility: hidden;
+}
+
 .sidebar-collapsed .sidebar-toggle-button {
   left: 20px;
+}
+
+.VPNavBarTitle {
+  transition: all 0.3s ease;
 }
 
 .VPSidebar {
@@ -145,5 +155,5 @@ blockquote {
 }
 
 .sidebar-toggle-button {
-  transition: left 0.3s ease;
+  transition: all 0.3s ease;
 }

@@ -1,6 +1,8 @@
 <template>
-  <button @click="toggleSidebar" class="sidebar-toggle-button">
-    {{ isSidebarCollapsed ? '»' : '«' }}
+  <button @click="toggleSidebar" class="sidebar-toggle-button" :class="{ 'is-collapsed': isSidebarCollapsed }">
+    <svg class="arrow" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+      <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
+    </svg>
   </button>
 </template>
 
@@ -26,8 +28,8 @@ onMounted(() => {
 <style scoped>
 .sidebar-toggle-button {
   position: fixed;
-  left: 20px; /* Adjust as needed */
-  bottom: 20px; /* Adjust as needed */
+  left: 20px;
+  bottom: 20px;
   z-index: 100;
   width: 40px;
   height: 40px;
@@ -39,7 +41,16 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.sidebar-toggle-button .arrow {
+  transition: transform 0.3s ease-in-out;
+  fill: currentColor;
+}
+
+.sidebar-toggle-button.is-collapsed .arrow {
+  transform: rotate(180deg);
 }
 
 .sidebar-toggle-button:hover {
