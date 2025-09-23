@@ -138,11 +138,21 @@ export default withMermaid(defineConfig({
         {
           text: '指南',
           items: [
-            { text: '部署指南主页', link: '/docs/guides/' },
-            { text: 'Windows部署指南', link: '/docs/guides/deployment_guide' },
-            { text: 'Linux部署指南', link: '/docs/guides/mmc_deploy_linux' },
-            { text: 'android部署指南', link: '/docs/guides/mmc_deploy_android' },
-            { text: '更新指南', link: '/docs/guides/update_guide' },
+            { text: '部署相关', 
+              items:[
+                { text: '部署指南主页', link: '/docs/guides/' },
+                { text: 'Windows部署指南', link: '/docs/guides/deployment_guide' },
+                { text: 'Linux部署指南', link: '/docs/guides/mmc_deploy_linux' },
+                { text: 'android部署指南', link: '/docs/guides/mmc_deploy_android' },
+              ]
+             },
+            { text: "适配器列表", 
+              items: [
+                { text: '适配器介绍/列表总览', link: '/docs/guides/adapter_list' },
+                { text: 'OneBot/Napcat 适配器(内置版)', link: '/docs/guides/adapter_list/onebot_v11_config' },
+                { text: 'OneBot/Napcat 适配器(独立版)', link: '/docs/guides/adapter_list/napcat_adapter' },
+              ]
+            },
             {
               text: '配置文件教程',
               items: [
@@ -167,7 +177,8 @@ export default withMermaid(defineConfig({
                 { text: '提问的智慧(精简版)', link: '/docs/guides/how-to-ask-questions-the-smart-way' },
                 { text: '如何高效提问', link: '/docs/guides/how-to-ask-questions-efficiently' },
                 { text: '模型配置FAQ', link: '/docs/guides/model_config_faq' },
-                { text: '如何更换端口', link: '/docs/guides/how_to_change_port' }
+                { text: '如何更换端口', link: '/docs/guides/how_to_change_port' },
+                { text: '更新指南', link: '/docs/guides/update_guide' },
               ]
             }
           ]
