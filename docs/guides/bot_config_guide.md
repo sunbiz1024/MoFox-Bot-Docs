@@ -7,8 +7,8 @@
 想让机器人动起来？那你就得先给它一份名为 `bot_config.toml` 的“身份卡”。
 
 **正确姿势如下**：
-1.  找到项目里的 `mmc/template/bot_config_template.toml` 文件，**完整地**复制一份。别缺斤少两的。
-2.  把复制出来的文件，丢到 `mmc/config/` 目录下面，然后把它改名为 `bot_config.toml`。
+1.  找到项目里的 `template/bot_config_template.toml` 文件，**完整地**复制一份。别缺斤少两的。
+2.  把复制出来的文件，丢到 `config/` 目录下面，然后把它改名为 `bot_config.toml`。
 3.  打开这个新文件，跟着本指南，开始你的“创世之旅”吧。
 
 ::: tip 
