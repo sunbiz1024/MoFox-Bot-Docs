@@ -122,3 +122,28 @@ blockquote {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* Collapsible Sidebar Styles */
+.sidebar-collapsed .VPSidebar {
+  transform: translateX(-100%);
+}
+
+.sidebar-collapsed .VPContent {
+  padding-left: 0;
+}
+
+.sidebar-collapsed .sidebar-toggle-button {
+  left: 20px;
+}
+
+.VPSidebar {
+  transition: transform 0.3s ease;
+}
+
+.VPContent {
+  transition: padding-left 0.3s ease;
+}
+
+.sidebar-toggle-button {
+  transition: left 0.3s ease;
+}
