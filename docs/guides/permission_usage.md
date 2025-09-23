@@ -93,14 +93,15 @@ A: 不用担心，立即使用 `/permission revoke` 指令将错误的权限撤�
 
 ```mermaid
 graph TD
-    A[开始：配置机器人] --&gt; B{配置文件中是否已设置 Master User?};
-    B --&gt;|否| C[打开配置文件 config.json];
-    C --&gt; D[找到 master_users 字段];
-    D --&gt; E[填入你自己的用户ID];
-    E --&gt; F[保存配置文件并重启机器人];
-    B --&gt;|是| G[机器人正常启动];
-    F --&gt; G;
-    G --&gt; H[使用 /permission 指令为其他管理员授权];
-    H --&gt; I[根据需要为普通用户授予特定功能权限];
-    I --&gt; J[完成权限配置];
+    A[开始：配置机器人] --> B{配置文件中是否已设置 Master User?};
+    B -->|否| C[打开配置文件 config/bot_config.toml];
+    C --> D[找到 master_users 字段];
+    D --> E[填入你自己的用户ID];
+    E --> F[保存配置文件并重启机器人];
+    B -->|是| G[机器人正常启动];
+    F --> G;
+    G --> H[使用 /permission 指令为其他管理员授权];
+    H --> I[根据需要为普通用户授予特定功能权限];
+    I --> J[完成权限配置];
+    J --> K[结束：权限系统配置完成];
 ```

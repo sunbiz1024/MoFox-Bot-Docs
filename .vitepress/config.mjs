@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import { withMermaid } from "vitepress-plugin-mermaid";
 import { 
   GitChangelog, 
   GitChangelogMarkdownSection, 
@@ -68,10 +69,10 @@ const devSidebar = [
 ];
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
-  vite: { 
-    plugins: [ 
-      GitChangelog({ 
+export default withMermaid(defineConfig({
+  vite: {
+    plugins: [
+      GitChangelog({
         // Fill in your repository URL here
         repoURL: () => 'https://github.com/MoFox-Studio/MoFox-Bot-Docs', 
       }), 
@@ -182,5 +183,5 @@ export default defineConfig({
       copyright: 'Copyright © 2025 MoFox Studio'
     },
     backToTop: true
-  }
-})
+  },
+}));
