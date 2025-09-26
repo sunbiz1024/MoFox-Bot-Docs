@@ -138,7 +138,7 @@ export default withMermaid(defineConfig({
         {
           text: '指南',
           items: [
-            { text: '部署相关', 
+            { text: '部署相关',
               items:[
                 { text: '部署指南主页', link: '/docs/guides/' },
                 { text: 'Windows部署指南', link: '/docs/guides/deployment_guide' },
@@ -146,6 +146,7 @@ export default withMermaid(defineConfig({
                 { text: 'android部署指南', link: '/docs/guides/mmc_deploy_android' },
               ]
              },
+             { text: '最终用户许可协议', link: '/docs/guides/eula' },
             { text: "适配器列表", 
               items: [
                 { text: '适配器介绍/列表总览', link: '/docs/guides/adapter_list' },
