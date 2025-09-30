@@ -1,5 +1,5 @@
 import { defineConfig } from 'vitepress'
-
+import { withMermaid } from "vitepress-plugin-mermaid";
 import { 
   GitChangelog, 
   GitChangelogMarkdownSection, 
@@ -7,7 +7,6 @@ import {
 import { 
   InlineLinkPreviewElementTransform 
 } from '@nolebase/vitepress-plugin-inline-link-preview/markdown-it'
-import { VitePWA } from 'vite-plugin-pwa'
 
 const devSidebar = [
   {
@@ -73,7 +72,7 @@ const devSidebar = [
 ];
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+export default withMermaid(defineConfig({
   markdown: { 
       config(md) { 
         // other markdown-it configurations...
@@ -86,21 +85,7 @@ export default defineConfig({
         // Fill in your repository URL here
         repoURL: () => 'https://github.com/MoFox-Studio/MoFox-Bot-Docs', 
       }), 
-      GitChangelogMarkdownSection(),
-      VitePWA({
-        registerType: 'autoUpdate',
-        workbox: {
-          globPatterns: ['**/*.{js,css,html,svg,png,ico,webp}'],
-        },
-        manifest: {
-          name: 'MoFox_Bot Docs',
-          short_name: 'MoFox Docs',
-          theme_color: '#ffffff',
-          background_color: '#ffffff',
-          display: 'standalone',
-          start_url: '/'
-        }
-      }),
+      GitChangelogMarkdownSection(), 
     ],
     optimizeDeps: {
       exclude: [
@@ -223,4 +208,4 @@ export default defineConfig({
     },
     backToTop: true
   },
-});
+}));
